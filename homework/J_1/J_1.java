@@ -45,6 +45,13 @@ public class J_1 {
 			if (ascii < 78 || ascii > 86) {
 				throw new LabException(String.format("%s is not a capital between N and V!", capital.charAt(0), ascii));
 			}
+
+			System.out.print("Enter a number that satisfies the equation x^2+5x+6=0: ");
+			int quad = Integer.parseInt(br.readLine());
+
+			if ((quad*quad + 5 * quad + 6) != 0) {
+				throw new LabException(String.format("%d^2 + 5 * %d + 6 != 0 !!", quad, quad));
+			}
 		} catch (NumberFormatException ex) {
 			System.out.println("You must enter an Integer Number");
 			return;
