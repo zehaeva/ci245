@@ -13,9 +13,9 @@ public class L2_28 {
 		  		System.out.print("Enter the radius of a circle: ");
 				radius 	= input.nextInt();
 
-				System.out.printf("Diameter: %f", 2f * radius);
-				System.out.printf("Circumfrence: %f", Math.PI * radius * 2);
-				System.out.printf("Diameter: %f", Math.PI * radius * radius);
+				System.out.printf("Diameter: %f\n", 2f * radius);
+				System.out.printf("Circumfrence: %f\n", Math.PI * radius * 2);
+				System.out.printf("Area: %f\n", Math.PI * radius * radius);
 
 		  		System.out.print("Again? (y/n): ");
 				cont = input.next().charAt(0);
