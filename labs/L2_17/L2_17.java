@@ -10,8 +10,11 @@ class L2_17 {
 
 		char cont = 'y';
 
+		int largest;
+		int smallest;
+
 		try {
-			while (conto == 'y') {
+			while (cont == 'y') {
 				System.out.print("Please enter an integer: ");
 				first = input.nextInt();
 				System.out.print("Please enter another integer: ");
@@ -23,7 +26,28 @@ class L2_17 {
 				System.out.printf("Average: %d\n", (first + second + third) / 3);
 				System.out.printf("Product: %d\n", first * second * third);
 
-				System.out.printf("Product: %d\n", first * second * third);
+				if (first >= second && first >= third) { 
+					largest = first;
+				} 
+				else if (second >= first && second >= third) {
+					largest = second;
+				}
+				else {
+					largest = third;
+				}
+
+				if (first <= second && first <= third) { 
+					smallest = first;
+				} 
+				else if (second <= first && second <= third) {
+					smallest = second;
+				}
+				else {
+					smallest = third;
+				}
+
+				System.out.printf("Largest: %d\n", largest);
+				System.out.printf("Smallest: %d\n", smallest);
 
 				System.out.print("Again? (y/n): ");
 				cont = input.next().charAt(0);
