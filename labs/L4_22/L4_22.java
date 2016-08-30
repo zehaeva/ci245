@@ -12,8 +12,8 @@ public class L4_22 {
 				System.out.print("Enter the number of cycles: ");
 				n = input.nextInt();
 
-				System.out.println("N\t10*N\t100*N\t1000*N");
-				for (int i=0;i<n;i++) {
+				System.out.print("N\t10*N\t100*N\t1000*N\n\n");
+				for (int i=1;i<=n;i++) {
 					System.out.printf("%d\t%d\t%d\t%d\n", i, i * 10, i * 100, i * 1000);
 				}
 
