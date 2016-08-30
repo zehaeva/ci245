@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class L4_24 {
 	public static void main(String[] args) {
@@ -9,17 +10,24 @@ public class L4_24 {
 		int studentCounter = 1;
 
 		while (studentCounter <= 10) {
-			System.out.print("Enter result (1 = pass, 2 = fail): ");
-			int result = input.nextInt();
+			try {
+				System.out.print("Enter result (1 = pass, 2 = fail): ");
+				int result = input.nextInt();
 
-			if (result == 1) {
-				passes++;
-			}
-			else {
-				failures++;
-			}
+				if (result == 1 || result == 2) {
+					if (result == 1) {
+						passes++;
+					}
+					else {
+						failures++;
+					}
 
-			studentCounter++;
+					studentCounter++;
+				}
+			}
+			catch (InputMismatchException ex) {
+				input.nextLine();
+			}
 		}
 
 		System.out.printf("Passed: %d\nFailed: %d\n", passes, failures);
