@@ -5,14 +5,19 @@ public class H2_31 {
 		Scanner input = new Scanner(System.in);
 
 		int max_n;
+		char cont = 'y';
 
-		System.out.print("Enter the max number to compute: ");
-		max_n = input.nextInt();
+		while (cont == 'y') {
+			System.out.print("Enter the max number to compute: ");
+			max_n = input.nextInt();
 
+			System.out.printf("number\tsquare\tcube\n");
+			for (int i=0;i<=max_n;i++) {
+				System.out.printf("%d\t%d\t%d\n", i, i*i, i*i*i);
+			}
 
-		System.out.printf("number\tsquare\tcube\n");
-		for (int i=0;i<=max_n;i++) {
-			System.out.printf("%d\t%d\t%d\n", i, i*i, i*i*i);
+			System.out.print("Do you wish to run this again? (y/n): ");
+			cont = input.next().charAt(0);
 		}
 	}
 }
