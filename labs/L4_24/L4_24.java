@@ -9,7 +9,7 @@ public class L4_24 {
 		int failures = 0;
 		int studentCounter = 1;
 
-		while (studentCounter <= 10) {
+		while (studentCounter < 10) {
 			try {
 				System.out.print("Enter result (1 = pass, 2 = fail): ");
 				int result = input.nextInt();
