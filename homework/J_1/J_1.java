@@ -1,20 +1,18 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class J_1 {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String[] args) {
+		Scanner br = new Scanner(System.in);
 
 		try {
 			System.out.print("Enter an odd number: ");
-			int odd = Integer.parseInt(br.readLine());
+			int odd = br.nextInt();
 			if (odd % 2 == 0) {
 				throw new LabException("Number is not odd!");
 			}
 
 			System.out.print("Enter a prime number that is smaller than 100: ");
-			int prime = Integer.parseInt(br.readLine());
+			int prime = br.nextInt();
 			if (prime < 100 || prime > 1) {
 				boolean[] sieve = primeSieve();
 				if (!sieve[prime]) {
@@ -26,32 +24,34 @@ public class J_1 {
 			}
 
 			System.out.print("Enter a multiple of two: ");
-			int even = Integer.parseInt(br.readLine());
+			int even = br.nextInt();
 
 			if (even % 2 != 0) {
 				throw new LabException("Number is not a multiple of two!");
 			}
 
 			System.out.print("Enter a negative number: ");
-			int negative = Integer.parseInt(br.readLine());
+			int negative = br.nextInt();
 
 			if (negative > 0) {
 				throw new LabException("Number is not a negative number!");
 			}
 
+			br.nextLine();
 			System.out.print("Enter a Capital letter between N and V: ");
-			String capital = br.readLine();
-			int ascii = capital.charAt(0);
+			char capital = br.nextLine().charAt(0);
+			int ascii = capital;
 			if (ascii < 78 || ascii > 86) {
-				throw new LabException(String.format("%s is not a capital between N and V!", capital.charAt(0), ascii));
+				throw new LabException(String.format("%s is not a capital between N and V!", capital, ascii));
 			}
 
 			System.out.print("Enter a number that satisfies the equation x^2+5x+6=0: ");
-			int quad = Integer.parseInt(br.readLine());
+			int quad = br.nextInt();
 
 			if ((quad*quad + 5 * quad + 6) != 0) {
 				throw new LabException(String.format("%d^2 + 5 * %d + 6 != 0 !!", quad, quad));
 			}
+			System.out.println("Congratulations! You've passed the test");
 		} catch (NumberFormatException ex) {
 			System.out.println("You must enter an Integer Number");
 			return;
