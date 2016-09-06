@@ -1,16 +1,16 @@
 public class J_5 {
 	public static void main(String[] args) {
-		int[][] matrix = {{1,4,7}, {3,0,5}, {-1,9,11}};
+		double[][] matrix = {{1,4,7}, {3,0,5}, {-1,9,11}};
 
 		for (int i=0;i<matrix.length;i++) {
 			for (int j=0;j<matrix.length;j++) {
-				System.out.printf("%d\n", minor(matrix, i, j));
+				System.out.printf("%f\n", minor(matrix, i, j));
 			}
 		}
 	}
 
-	public static int minor(int[][] matrix, int ith, int jth) {
-		int[][] sub_matrix = new int[matrix.length - 1][matrix.length - 1];
+	public static double minor(double[][] matrix, int ith, int jth) {
+		double[][] sub_matrix = new double[matrix.length - 1][matrix.length - 1];
 		int sub_row = 0; int sub_col = 0;
 
 		try {
@@ -34,7 +34,7 @@ public class J_5 {
 		return determinant(sub_matrix);
 	}
 
-	public static int determinant(int[][] matrix) {
+	public static double determinant(double[][] matrix) {
 		return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];		
 	}
 }
