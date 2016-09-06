@@ -9,7 +9,7 @@ import java.util.Scanner;
 * @author jcovey
 *
 */
-public class BasicStrategy {
+public class J_6 {
 
 	public static void main(String[] args) {
 
@@ -17,6 +17,7 @@ public class BasicStrategy {
 			
 		Scanner input = new Scanner(System.in);
 		System.out.print("Enter the dealer's up card: ");
+		String dCard = input.next();
 		System.out.print("Enter the player's first card: ");
 		String pCard1 = input.next();
 		System.out.print("Enter the player's second card: ");
@@ -59,5 +60,38 @@ public class BasicStrategy {
 		} else {
 			return Integer.parseInt(card);
 		}
+	}
+
+	public static String player_action(int card1, int card2, int dealer) {
+	//	encode matrix
+		String[][] actions = {{"H","H","H","H","H","H","H","H","H","H",},
+							  {"H","D","D","D","D","H","H","H","H","H",},
+							  {"D","D","D","D","D","D","D","D","H","H",},
+							  {"D","D","D","D","D","D","D","D","D","H",},
+							  {"H","H","S","S","S","H","H","H","H","H",},
+							  {"S","S","S","S","S","H","H","H","H","H",},
+							  {"S","S","S","S","S","H","H","H","H","H",},
+							  {"S","S","S","S","S","H","H","H","U","H",},
+							  {"S","S","S","S","S","H","H","U","U","U",},
+							  {"S","S","S","S","S","S","S","S","S","S",},
+							  {"S","S","S","S","S","S","S","S","S","S",},
+							  {"S","D","D","D","D","S","S","H","H","H",},
+							  {"H","D","D","D","D","H","H","H","H","H",},
+							  {"H","H","D","D","D","H","H","H","H","H",},
+							  {"H","H","D","D","D","H","H","H","H","H",},
+							  {"H","H","H","D","D","H","H","H","H","H",},
+							  {"H","H","H","D","D","H","H","H","H","H",},
+							  {"H","H","H","H","H","H","H","H","H","H",},
+							  {"H","H","H","H","H","H","H","H","H","H",},
+							  {"S","S","S","S","S","S","S","S","S","S",},
+							  {"P","P","P","P","P","S","P","P","S","S",},
+							  {"P","P","P","P","P","P","H","H","H","H",},
+							  {"H","P","P","P","P","H","H","H","H","H",},
+							  {"D","D","D","D","D","D","D","D","D","H",},
+							  {"H","H","H","H","H","H","H","H","H","H",},
+							  {"H","H","P","P","P","P","H","H","H","H",},
+							  {"H","H","P","P","P","P","H","H","H","H",},
+						     };
+		return "H";
 	}
 }
