@@ -38,11 +38,11 @@ public class J_6 {
 		// Let's find out what we are supposed to do!
 
 		// ************ WRITE YOUR CODE HERE ******************* //
-		output = player_action(pCard1Value, pCard2Value, dCardValue);
+		output = player_action(pCard1, pCard2, dCardValue);
 
 		// OK, we're all done now we should know our move and can print it!
 
-		System.out.println("Your move: " + output);
+		System.out.println("Your move: " + strat(output));
 	}
 
 	/**
@@ -64,8 +64,21 @@ public class J_6 {
 		}
 	}
 
-	public static String player_action(int card1, int card2, int dealer) {
+	public static String strat(String abb) {
+		switch (abb) {
+			case "H": return "Hit";
+			case "D": return "Double Down";
+			case "U": return "Surrender";
+			case "S": return "Stand";
+			case "P": return "Split";
+		}
+		return "Hit";
+	}
+
+	public static String player_action(String playerCard1, String playerCard2, int dealer) {
 		int d_index = dealer - 2;
+		int card1 = ComputeCardValue(playerCard1);
+		int card2 = ComputeCardValue(playerCard2);
 	//	encode matrix
 		String[][] actions = {{"H","H","H","H","H","H","H","H","H","H",},
 							  {"H","D","D","D","D","H","H","H","H","H",},
@@ -95,7 +108,7 @@ public class J_6 {
 							  {"H","H","P","P","P","P","H","H","H","H",},
 							  {"H","H","P","P","P","P","H","H","H","H",},
 						     };
-		if (card1 == card2) {
+		if (playerCard1 == playerCard2) {
 			switch(card1) {
 				case 2: return actions[26][d_index];
 				case 3: return actions[25][d_index];
