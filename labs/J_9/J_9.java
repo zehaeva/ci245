@@ -47,6 +47,9 @@ public class J_9 {
 	 * @param length number of characters to return
 	 */
 	public static String mid(String str, int start, int length) {
+		if ((start + length) > str.length()) {
+			length = str.length() - start;
+		}
 		return str.substring(start, length + start);
 	}
 	
