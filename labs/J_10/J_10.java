@@ -10,31 +10,39 @@ public class J_10 {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		int[] arr;
-		int count = 0;
+		int count;
 		String inputs;
 		String[] process;
 		String validate = "^[0-9\\-]+$";
+		char cont = 'y';
 
-		System.out.print("Please enter numbers for the array, separated by spaces: ");
-		inputs = input.nextLine();
-		process = inputs.split(" ");
 
-		for (String var: process) {
-			if (var.matches(validate)) {
-				count++;
+		while (cont == 'y') {
+			count = 0;
+			System.out.print("Please enter numbers for the array, separated by spaces: ");
+			inputs = input.nextLine();
+			process = inputs.split(" ");
+
+			for (String var: process) {
+				if (var.matches(validate)) {
+					count++;
+				}
 			}
-		}
 
-		arr = new int[count];
-		count = 0;
-		for (String var: process) {
-			if (var.matches(validate)) {
-				arr[count] = Integer.parseInt(var);
-				count++;
+			arr = new int[count];
+			count = 0;
+			for (String var: process) {
+				if (var.matches(validate)) {
+					arr[count] = Integer.parseInt(var);
+					count++;
+				}
 			}
-		}
 
-		Print(arr);
+			Print(arr);
+
+			System.out.printf("Do you want to do that again? (y/n): ");
+			cont = input.nextLine().charAt(0);
+		}
 	}
 
 	/**
