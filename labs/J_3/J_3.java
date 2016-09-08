@@ -93,7 +93,7 @@ public class J_3 {
 	{
 		for (char c : str.toCharArray())
 		{
-			if (!Character.isDigit(c)) return false;
+			if (!Character.isDigit(c) && c != '-') return false;
 		}
 		return true;
 	}
