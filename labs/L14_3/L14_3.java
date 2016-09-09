@@ -1,6 +1,13 @@
 import java.util.Scanner;
 
+/**
+ * Accepts two strings and then lexigraphically compares them
+ */
 public class L14_3 {
+	/**
+	 * Accepts two strings and lexigraphically compares them
+	 * @param args String arguments, not used
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 
