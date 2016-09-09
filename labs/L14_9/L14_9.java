@@ -1,6 +1,13 @@
 import java.util.Scanner;
 
+/**
+ * Accepts a string and then outputs the words reversed
+ */
 public class L14_9 {
+	/**
+	 * Accepts a string and then outputs the words reversed
+	 * @param args String arguments
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 
