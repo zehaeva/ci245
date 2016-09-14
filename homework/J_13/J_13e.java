@@ -20,6 +20,7 @@ public class J_13e {
 		String name_two;
 		Scanner input = new Scanner(System.in);
 		char cont = 'y';
+		double e_distance = 0.0;
 		
 		while (cont == 'y') {
 			System.out.print("Please enter the name of two files to compare: ");
@@ -30,11 +31,13 @@ public class J_13e {
 			file_one = ReadTextFile(name_one);
 			file_two = ReadTextFile(name_two);
 
-			if (file_one.equals(file_two)) {
-				System.out.println("The files are the same!");
+			e_distance = euclideanDistance(file_one.toString(), file_two.toString());
+
+			if (e_distance == 0.0) {
+				System.out.printf("The files are the same! Euclidean Distance is %f\n", e_distance);
 			}
 			else {
-				System.out.println("The files are the different!!");
+				System.out.printf("The files are the different!! Euclidean Distance is %f\n", e_distance);
 			}
 			
 			System.out.print("Compare two more files? (y/n): ");
@@ -50,8 +53,19 @@ public class J_13e {
 	 */
 	public static double euclideanDistance(String arr_one, String arr_two) {
 		double sum = 0.0;
+		String tmp;
+		if (arr_two.length() < arr_one.length()) {
+			tmp = arr_two;
+			arr_two = arr_one;
+			arr_one = tmp;
+		}
+
 		for (int i=0;i<arr_one.length();i++) {
 			sum += Math.pow(((double)arr_one.charAt(i) - (double)arr_two.charAt(i)), 2);
+		}
+
+		for (int i=arr_one.length();i<arr_two.length();i++) {
+			sum += Math.pow((double)arr_two.charAt(i), 2);
 		}
 
 		return Math.sqrt(sum);
