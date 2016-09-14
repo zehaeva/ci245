@@ -1,6 +1,9 @@
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 
 /**
  * Class to write a file
@@ -70,10 +73,7 @@ public class J_14 {
 			}
 		}
 
-		for (String val: output) {
-			System.out.printf("%s\n", val);
-		}
-
+		WriteTextFile(output, "random_file.txt");
 	}
 
 	/**
@@ -81,13 +81,13 @@ public class J_14 {
 	 * @param n max number for the combos
 	 * @return number of combos
 	 */
-	public static int get_hate_combos(int n) {
+	public static int get_hate_combos(int n) {//{{{
 		int count = 0;
 		for (int i=1;i<n;i++) {
 			count += i;
 		}
 		return count;
-	}
+	}//}}}
 
 	/**
 	 * validates that the pair isn't already in the list
@@ -96,21 +96,21 @@ public class J_14 {
 	 * @param list the array of who hates who
 	 * @return if they're valid to be added 
 	 */
-	public static boolean check_pair(int one, int two, boolean[][] list) {
+	public static boolean check_pair(int one, int two, boolean[][] list) {//{{{
 		if (!list[one][two] && !list[two][one] && two != one) {
 			return true;
 		}
 		else {
 			return false;
 		}
-	}
+	}//}}}
 
 	/**
 	 * Code stolen from the instructor Covey
 	 * @param fileName the name of the file to read
 	 * @return arraylist of the file
 	 */
-	public static ArrayList<String> ReadTextFile(String fileName) {
+	public static ArrayList<String> ReadTextFile(String fileName) {//{{{
 		// Now we will read all of the lines back that we just wrote
 		Path path = Paths.get(fileName);
 		ArrayList<String> linesToRead = new ArrayList<String>();
@@ -124,7 +124,7 @@ public class J_14 {
 		}	
 
 		return linesToRead;
-	}
+	}//}}}
 
 	/**
 	 * Code stolen from the instructor Covey
