@@ -25,7 +25,15 @@ public class H4_12 {
 				}
 			}
 
-			System.out.print("Again? (y/n): ");
+			for (int i=0;i<26;i++) {
+				System.out.printf("%c\t", (char)(i+97));
+			}
+			System.out.println();
+			for (int i=0;i<26;i++) {
+				System.out.printf("%d\t", count[i]);
+			}
+
+			System.out.print("\n\nAgain? (y/n): ");
 			cont = input.nextLine().charAt(0);
 		}
 	}
