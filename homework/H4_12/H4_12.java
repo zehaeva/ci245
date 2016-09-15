@@ -5,6 +5,10 @@ import java.util.Arrays;
  * class counts the number of times each character appears
  */
 public class H4_12 {
+	/**
+	 * runs the whole program
+	 * @param args unused
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		String haystack;
@@ -38,6 +42,13 @@ public class H4_12 {
 		}
 	}
 
+	/**
+	 * function counts the number of times a specified character occurs
+	 * in the haystack
+	 * @param haystack string to be searched
+	 * @param needle character to look for
+	 * @return count of needles in the haystack
+	 */
 	public static int countCharacters(String haystack, char needle) {
 		int count = 0;
 		int last_index = 0;
