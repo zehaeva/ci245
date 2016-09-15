@@ -3,7 +3,9 @@ import java.util.Arrays;
 public class E1 {
 	public static void main(String[] args) {
 		int[][] sudoku = new int[9][9];
-		Arrays.fill(sudoku, 0);
+		for (int[] row: sudoku) {
+			Arrays.fill(row, 0);
+		}
 		sudoku[0][6] = 8;
 		sudoku[0][8] = 4;
 		sudoku[1][5] = 6;
@@ -33,8 +35,17 @@ public class E1 {
 		sudoku[8][3] = 3;
 		sudoku[8][0] = 2;
 
-		for (int i=0;i<8;i++) {
-			for (int j=0;j<8;j++ ) {
+		print_sudoku(sudoku);
+
+		sudoku = solve(sudoku);
+
+		print_sudoku(sudoku);
+
+	}
+
+	public static void print_sudoku(int[][] sudoku) {
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<9;j++ ) {
 				System.out.printf("%d\t", sudoku[i][j]);		
 			}
 			System.out.println();
@@ -42,15 +53,70 @@ public class E1 {
 	}
 
 	public static int[][] solve(int[][] sudoku) {
+		int try_me;
+		boolean found = false;
+		int i=0;
+		int j=0;
 
 		if (!solved(sudoku)) {
-			
+		//  find first unsolved /
+			for (i=0;i<9;i++) {
+				for (j=0;j<9;j++) {
+					if (sudoku[i][j] == 0) {
+						found = true;
+						break;
+					}
+				}
+				if (found) {
+					break;
+				}
+			}
+		//  try every number until it's correct
+			try_me = 1;
+			while (!solved(sudoku) && try_me < 10) {
+				sudoku[i][j] = try_me;
+				try_me++;
+			}
+		//  try to solve the puzzle
+			sudoku = solve(sudoku);
 		}
 
 		return sudoku;
 	}
 
 	public static boolean solved(int[][] sudoku) {
-		return false;
+		boolean correct = true;
+		boolean[] found_row = new boolean[10];
+		boolean[] found_col = new boolean[10];
+		
+		for (int i=0;i<9 ;i++ ) {
+			Arrays.fill(found_row, false);
+			Arrays.fill(found_col, false);
+		//  rows
+			for (int j=0;j<9 ;j++ ) {
+				if (!found_row[sudoku[i][j]]) {
+					found_row[sudoku[i][j]] = true;
+				}
+				else {
+					correct = false;
+					break;
+				}
+			}
+		//	columns
+			for (int j=0;j<9 ;j++ ) {
+				if (!found_col[sudoku[j][i]]) {
+					found_col[sudoku[j][i]] = true;
+				}
+				else {
+					correct = false;
+					break;
+				}
+			}
+		//  leave if it's not right
+			if (!correct) {
+				break;
+			}
+		}
+		return correct;
 	}
 }
