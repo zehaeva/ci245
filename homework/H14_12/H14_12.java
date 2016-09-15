@@ -4,7 +4,7 @@ import java.util.Arrays;
 /**
  * class counts the number of times each character appears
  */
-public class H4_12 {
+public class H14_12 {
 	/**
 	 * runs the whole program
 	 * @param args unused

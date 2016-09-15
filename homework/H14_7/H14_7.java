@@ -3,7 +3,7 @@ import java.util.Scanner;
 /**
  * Class to output senetnces in pig latin
  */
-public class H4_7 {
+public class H14_7 {
 	/** 
 	 * main function to get input and output sentences in piglatin
 	 * @param args unused
