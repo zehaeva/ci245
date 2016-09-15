@@ -39,6 +39,8 @@ public class E1 {
 
 		sudoku = solve(sudoku);
 
+		System.out.println("\n\n");
+		
 		print_sudoku(sudoku);
 
 	}
@@ -58,7 +60,7 @@ public class E1 {
 		int i=0;
 		int j=0;
 
-		if (!solved(sudoku)) {
+		if (correct(sudoku)) {
 		//  find first unsolved /
 			for (i=0;i<9;i++) {
 				for (j=0;j<9;j++) {
@@ -73,18 +75,36 @@ public class E1 {
 			}
 		//  try every number until it's correct
 			try_me = 1;
-			while (!solved(sudoku) && try_me < 10) {
+			while (!filled(sudoku) && try_me < 10) {
 				sudoku[i][j] = try_me;
+			//  try to solve the puzzle
+				sudoku = solve(sudoku);
 				try_me++;
 			}
-		//  try to solve the puzzle
-			sudoku = solve(sudoku);
 		}
 
 		return sudoku;
 	}
+	
+	public static boolean filled(int[][] sudoku) {
+		boolean finished = true;
+		
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<9;j++) {
+				if (sudoku[i][j] == 0) {
+					finished = false;
+					break;
+				}
+			}
+			if (!finished) {
+				break;
+			}
+		}
+		
+		return finished;
+	}
 
-	public static boolean solved(int[][] sudoku) {
+	public static boolean correct(int[][] sudoku) {
 		boolean correct = true;
 		boolean[] found_row = new boolean[10];
 		boolean[] found_col = new boolean[10];
@@ -94,22 +114,26 @@ public class E1 {
 			Arrays.fill(found_col, false);
 		//  rows
 			for (int j=0;j<9 ;j++ ) {
-				if (!found_row[sudoku[i][j]]) {
-					found_row[sudoku[i][j]] = true;
-				}
-				else {
-					correct = false;
-					break;
+				if (sudoku[i][j] != 0 ) {
+					if (!found_row[sudoku[i][j]]) {
+						found_row[sudoku[i][j]] = true;
+					}
+					else {
+						correct = false;
+						break;
+					}
 				}
 			}
 		//	columns
 			for (int j=0;j<9 ;j++ ) {
-				if (!found_col[sudoku[j][i]]) {
-					found_col[sudoku[j][i]] = true;
-				}
-				else {
-					correct = false;
-					break;
+				if (sudoku[j][i] != 0) {
+					if (!found_col[sudoku[j][i]]) {
+						found_col[sudoku[j][i]] = true;
+					}
+					else {
+						correct = false;
+						break;
+					}
 				}
 			}
 		//  leave if it's not right
