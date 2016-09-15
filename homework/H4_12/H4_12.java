@@ -21,6 +21,7 @@ public class H4_12 {
 			System.out.print("Enter a line of text to search: ");
 			haystack = input.nextLine().toLowerCase();
 
+		//  cycle through the alphabet and count
 			for (int i=0;i<26;i++) {
 				needle = (char)(i + 97);
 				count[i] = countCharacters(haystack, needle);
@@ -29,6 +30,7 @@ public class H4_12 {
 				}
 			}
 
+		//  tabular output header
 			for (int i=0;i<26;i++) {
 				System.out.printf("%c\t", (char)(i+97));
 			}
