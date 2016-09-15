@@ -1,6 +1,13 @@
 import java.util.Scanner;
 
+/**
+ * Class to output senetnces in pig latin
+ */
 public class H4_7 {
+	/** 
+	 * main function to get input and output sentences in piglatin
+	 * @param args unused
+	 */
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 
@@ -14,13 +21,33 @@ public class H4_7 {
 		words = value.split(" ");
 
 		for (String word: words) {
-			if (word.length() > 1) {
-				output = output + word.substring(1, word.length()) + word.charAt(0) + "ay ";
-			} else {
-				output = output + word + " ";
-			}
+			output = output + printLatinWord(word);
 		}
 
 		System.out.printf("%s\n", output);
+	}
+
+	/**
+	 * prints a word in pig latin
+	 * @param word word to be converted to pig latin
+	 * @return word in pig latin
+	 */
+	public static String printLatinWord(String word) {
+		String output = "";
+		int word_length = word.length();
+		String trailing = " ";
+
+		if (!Character.toString(word.charAt(word_length - 1)).matches("[A-Za-z0-9]")) {
+			word_length--;
+			trailing = word.charAt(word_length) + trailing;
+		}
+
+		if (word_length > 1) {
+			output = output + word.substring(1, word_length) + word.charAt(0) + "ay" + trailing;
+		} else {
+			output = output + word + trailing;
+		}
+
+		return output;
 	}
 }
