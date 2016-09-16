@@ -2,96 +2,144 @@ import java.util.Arrays;
 
 public class E1 {
 	public static void main(String[] args) {
-		int[][] sudoku = new int[9][9];
-		for (int[] row: sudoku) {
-			Arrays.fill(row, 0);
+		String[][] sudoku = new String[9][9];
+		for (String[] row: sudoku) {
+			Arrays.fill(row, "123456789");
 		}
-		sudoku[0][6] = 8;
-		sudoku[0][8] = 4;
-		sudoku[1][5] = 6;
-		sudoku[1][4] = 1;
-		sudoku[1][2] = 4;
-		sudoku[1][1] = 8;
-		sudoku[2][6] = 1;
-		sudoku[2][3] = 5;
-		sudoku[3][6] = 9;
-		sudoku[3][3] = 8;
-		sudoku[3][2] = 3;
-		sudoku[3][0] = 1;
-		sudoku[4][0] = 6;
-		sudoku[4][2] = 8;
-		sudoku[4][6] = 4;
-		sudoku[4][8] = 3;
-		sudoku[5][8] = 1;
-		sudoku[5][6] = 5;
-		sudoku[5][5] = 9;
-		sudoku[5][2] = 2;
-		sudoku[6][5] = 2;
-		sudoku[6][2] = 7;
-		sudoku[7][7] = 6;
-		sudoku[7][6] = 2;
-		sudoku[7][4] = 8;
-		sudoku[7][3] = 7;
-		sudoku[8][3] = 3;
-		sudoku[8][0] = 2;
+		sudoku[0][5] = "8";
+		sudoku[0][8] = "4";
+		sudoku[1][5] = "6";
+		sudoku[1][4] = "1";
+		sudoku[1][2] = "4";
+		sudoku[1][1] = "8";
+		sudoku[2][6] = "1";
+		sudoku[2][3] = "5";
+		sudoku[3][6] = "9";
+		sudoku[3][3] = "8";
+		sudoku[3][2] = "3";
+		sudoku[3][0] = "1";
+		sudoku[4][0] = "6";
+		sudoku[4][2] = "8";
+		sudoku[4][6] = "4";
+		sudoku[4][8] = "3";
+		sudoku[5][8] = "1";
+		sudoku[5][6] = "5";
+		sudoku[5][5] = "9";
+		sudoku[5][2] = "2";
+		sudoku[6][5] = "2";
+		sudoku[6][2] = "7";
+		sudoku[7][7] = "6";
+		sudoku[7][6] = "2";
+		sudoku[7][4] = "8";
+		sudoku[7][3] = "7";
+		sudoku[8][3] = "3";
+		sudoku[8][0] = "2";
 
 		print_sudoku(sudoku);
 
-		sudoku = solve(sudoku);
-
-		System.out.println("\n\n");
+		sudoku = solve(sudoku, 1);
 		
 		print_sudoku(sudoku);
 
 	}
 
-	public static void print_sudoku(int[][] sudoku) {
+	public static void print_sudoku(String[][] sudoku) {
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<9;j++ ) {
-				System.out.printf("%d\t", sudoku[i][j]);		
+				if (sudoku[i][j].length() == 1) {
+					System.out.printf("%10s", sudoku[i][j]);
+				}
+				else {
+					//System.out.print("_\t");
+					System.out.printf("%10s", sudoku[i][j]);
+				}
 			}
 			System.out.println();
 		}
+		System.out.println("\n");
 	}
 
-	public static int[][] solve(int[][] sudoku) {
-		int try_me;
-		boolean found = false;
-		int i=0;
-		int j=0;
-
-		if (correct(sudoku)) {
-		//  find first unsolved /
-			for (i=0;i<9;i++) {
-				for (j=0;j<9;j++) {
-					if (sudoku[i][j] == 0) {
-						found = true;
-						break;
+	public static String[][] solve(String[][] sudoku, int try_me) {
+		int tmp_i = 0;
+		int tmp_j = 0;
+		String[][] sudoku_tmp;
+		
+	//	remove all the duplicates
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<9;j++) {
+				if (sudoku[i][j].length() == 1) {
+				//	isolate the box
+					if (i < 3) {
+						tmp_i = 0;
+					}
+					else if (i < 6) {
+						tmp_i = 3;
+					}
+					else {
+						tmp_i = 6;
+					}
+					
+					if (j < 3) {
+						tmp_j = 0;
+					}
+					else if (j < 6) {
+						tmp_j = 3;
+					}
+					else {
+						tmp_j = 6;
+					}
+					for (int ii=tmp_i;ii<(3 + tmp_i);ii++) {
+						for (int jj=tmp_j;jj<(3+tmp_j);jj++) {
+							if (ii != i && jj != j) {
+								sudoku[ii][jj] = sudoku[ii][jj].replace(sudoku[i][j], "");
+							}
+						}
+					}
+					/**/
+					for (int ii=0;ii<9;ii++) {
+					//	isolate column
+						if (ii != j) {
+							sudoku[i][ii] = sudoku[i][ii].replace(sudoku[i][j], "");
+						}
+					//	isolate row
+						if (ii != i) {
+							sudoku[ii][j] = sudoku[ii][j].replace(sudoku[i][j], "");
+						}
+					}
+					/**/
+				}
+			}
+		}
+		print_sudoku(sudoku);
+		
+	//  not done? do it again!
+		if (!finished(sudoku)) {
+			sudoku = solve(sudoku, try_me);
+			
+		// find first square that has two
+			for (int i=0;i<9;i++) {
+				for (int j=0;j<9;j++) {
+					if (sudoku[i][j].length() == (try_me + 1)) {
+						sudoku[i][j] = Character.toString(sudoku[i][j].charAt(0)); 
+						sudoku_tmp = solve(sudoku, try_me + 1);
+						if (!valid(sudoku_tmp)) {
+							
+						}
 					}
 				}
-				if (found) {
-					break;
-				}
 			}
-		//  try every number until it's correct
-			try_me = 1;
-			while (!filled(sudoku) && try_me < 10) {
-				sudoku[i][j] = try_me;
-			//  try to solve the puzzle
-				sudoku = solve(sudoku);
-				try_me++;
-			}
+			
 		}
 
 		return sudoku;
 	}
 	
-	public static boolean filled(int[][] sudoku) {
+	public static boolean finished(String[][] sudoku) {
 		boolean finished = true;
 		
 		for (int i=0;i<9;i++) {
 			for (int j=0;j<9;j++) {
-				if (sudoku[i][j] == 0) {
+				if (sudoku[i][j].length() > 1) {
 					finished = false;
 					break;
 				}
@@ -103,44 +151,33 @@ public class E1 {
 		
 		return finished;
 	}
-
-	public static boolean correct(int[][] sudoku) {
-		boolean correct = true;
-		boolean[] found_row = new boolean[10];
-		boolean[] found_col = new boolean[10];
+	
+	public static boolean valid(String[][] sudoku) {
+		boolean is_valid = true;
 		
-		for (int i=0;i<9 ;i++ ) {
-			Arrays.fill(found_row, false);
-			Arrays.fill(found_col, false);
-		//  rows
-			for (int j=0;j<9 ;j++ ) {
-				if (sudoku[i][j] != 0 ) {
-					if (!found_row[sudoku[i][j]]) {
-						found_row[sudoku[i][j]] = true;
+		for (int i=0;i<9;i++) {
+			for (int j=0;j<9;j++) {
+				if (sudoku[i][j].length() > 1) {
+					for (int ii=0;ii<9;ii++) {
+					//	isolate column
+						if (ii != j && sudoku[ii][j].equals(sudoku[i][j])) {
+							is_valid = false;
+						}
+					//	isolate row
+						if (ii != i && sudoku[i][ii].equals(sudoku[i][ii])) {
+							is_valid = false;
+						}
 					}
-					else {
-						correct = false;
+					if (!is_valid) {
 						break;
 					}
 				}
 			}
-		//	columns
-			for (int j=0;j<9 ;j++ ) {
-				if (sudoku[j][i] != 0) {
-					if (!found_col[sudoku[j][i]]) {
-						found_col[sudoku[j][i]] = true;
-					}
-					else {
-						correct = false;
-						break;
-					}
-				}
-			}
-		//  leave if it's not right
-			if (!correct) {
+			if (!is_valid) {
 				break;
 			}
 		}
-		return correct;
+		
+		return is_valid;
 	}
 }
