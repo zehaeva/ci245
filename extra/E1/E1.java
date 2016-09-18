@@ -45,7 +45,16 @@ public class E1 {
 
 	public static void print_sudoku(String[][] sudoku) {
 		for (int i=0;i<9;i++) {
+			if (i%3 == 0) {
+				for (int j=0;j<9;j++ ) {
+					System.out.print("------yntax----");
+				}
+				System.out.println();
+			}
 			for (int j=0;j<9;j++ ) {
+				if (j%3 == 0) {
+					System.out.print("|");
+				}
 				if (sudoku[i][j].length() == 1) {
 					System.out.printf("%10s", sudoku[i][j]);
 				}
@@ -120,10 +129,14 @@ public class E1 {
 			for (int i=0;i<9;i++) {
 				for (int j=0;j<9;j++) {
 					if (sudoku[i][j].length() == (try_me + 1)) {
-						sudoku[i][j] = Character.toString(sudoku[i][j].charAt(0)); 
-						sudoku_tmp = solve(sudoku, try_me + 1);
+						sudoku_tmp = sudoku;
+						sudoku_tmp[i][j] = Character.toString(sudoku[i][j].charAt(0)); 
+						sudoku_tmp = solve(sudoku_tmp, try_me + 1);
 						if (!valid(sudoku_tmp)) {
-							
+							sudoku[i][j] = Character.toString(sudoku[i][j].charAt(1));
+						}
+						else {
+							sudoku = sudoku_tmp;
 						}
 					}
 				}
