@@ -3,152 +3,67 @@
 import java.util.Arrays;
 
 public class E1 {
+    /**
+     * solves a sudoku problem!
+     * @param args not used
+     */
     public static void main(String[] args) {
         String[][] sudoku;
         sudoku = new String[][]{{"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
 
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
 
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""}
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""}
         };
-/*        assign(sudoku, 0, 5, "8");
-        assign(sudoku, 0, 8, "4");
-
-        assign(sudoku, 1, 5, "6");
-        assign(sudoku, 1, 4, "1");
-        assign(sudoku, 1, 2, "4");
-        assign(sudoku, 1, 1, "8");
-
-        assign(sudoku, 2, 6, "1");
-        assign(sudoku, 2, 3, "5");
-
-        assign(sudoku, 3, 6, "9");
-        assign(sudoku, 3, 3, "8");
-        assign(sudoku, 3, 2, "3");
-        assign(sudoku, 3, 0, "1");
-
-        assign(sudoku, 4, 0, "6");
-        assign(sudoku, 4, 2, "8");
-        assign(sudoku, 4, 6, "4");
-        assign(sudoku, 4, 8, "3");
-
-        assign(sudoku, 5, 8, "1");
-        assign(sudoku, 5, 6, "5");
-        assign(sudoku, 5, 5, "9");
-        assign(sudoku, 5, 2, "2");
-
-        assign(sudoku, 6, 5, "2");
-        assign(sudoku, 6, 2, "7");
-
-        assign(sudoku, 7, 7, "6");
-        assign(sudoku, 7, 6, "2");
-        assign(sudoku, 7, 4, "8");
-        assign(sudoku, 7, 3, "7");
-
-        assign(sudoku, 8, 3, "3");
-        assign(sudoku, 8, 0, "2");
-*/
-/*  easy one i found on the net
-        assign(sudoku, 0, 0, "6");
-        assign(sudoku, 0, 2, "7");
-        assign(sudoku, 0, 3, "2");
-        assign(sudoku, 0, 4, "9");
-        assign(sudoku, 0, 7, "4");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 1, 0, "1");
-        assign(sudoku, 1, 7, "7");
-        assign(sudoku, 1, 8, "9");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 2, 0, "9");
-        assign(sudoku, 2, 2, "3");
-        assign(sudoku, 2, 3, "8");
-        assign(sudoku, 2, 8, "5");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 3, 0, "2");
-        assign(sudoku, 3, 3, "4");
-        assign(sudoku, 3, 5, "5");
-        assign(sudoku, 3, 7, "8");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 4, 0, "4");
-        assign(sudoku, 4, 1, "7");
-        assign(sudoku, 4, 3, "9");
-        assign(sudoku, 4, 5, "2");
-        assign(sudoku, 4, 8, "6");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 5, 3, "6");
-        assign(sudoku, 5, 7, "2");
-        assign(sudoku, 5, 8, "1");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 6, 0, "7");
-        assign(sudoku, 6, 2, "1");
-        assign(sudoku, 6, 3, "5");
-        assign(sudoku, 6, 6, "8");
-        assign(sudoku, 6, 7, "6");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 7, 0, "8");
-        assign(sudoku, 7, 3, "7");
-        assign(sudoku, 7, 5, "9");
-        assign(sudoku, 7, 6, "1");
-        assign(sudoku, 7, 8, "3");
-        print_sudoku(sudoku);
-
-        assign(sudoku, 8, 1, "2");
-        assign(sudoku, 8, 4, "8");
-        print_sudoku(sudoku);*/
 
         sudoku = new String[][]{{"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
 
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
 
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""},
-                                {"", "", "", "", "", "", "", "", ""}
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", "", ""}
         };
 
 //      another easy problem
         sudoku = new String[][]{{"3", "", "7", "", "9", "", "", "1", ""},
-                                {"", "9", "1", "", "", "", "", "", "8"},
-                                {"5", "6", "", "", "", "1", "7", "", "9"},
+                {"", "9", "1", "", "", "", "", "", "8"},
+                {"5", "6", "", "", "", "1", "7", "", "9"},
 
-                                {"", "", "6", "3", "4", "", "", "", "1"},
-                                {"1", "", "3", "", "", "", "9", "", "5"},
-                                {"8", "", "", "5", "1", "", "6", "", ""},
+                {"", "", "6", "3", "4", "", "", "", "1"},
+                {"1", "", "3", "", "", "", "9", "", "5"},
+                {"8", "", "", "5", "1", "", "6", "", ""},
 
-                                {"", "4", "", "1", "", "", "8", "", "7"},
-                                {"7", "", "", "", "", "", "3", "6", ""},
-                                {"6", "", "", "", "", "8", "", "5", "4"}
+                {"", "4", "", "1", "", "", "8", "", "7"},
+                {"7", "", "", "", "", "", "3", "6", ""},
+                {"6", "", "", "", "", "8", "", "5", "4"}
         };
 
+        // easy
         sudoku = new String[][]{{"", "9", "", "", "", "2", "", "", "6"},
-                                {"6", "2", "3", "", "", "", "5", "8", ""},
-                                {"", "1", "", "7", "6", "", "", "", ""},
+                {"6", "2", "3", "", "", "", "5", "8", ""},
+                {"", "1", "", "7", "6", "", "", "", ""},
 
-                                {"7", "", "", "", "", "", "", "", ""},
-                                {"", "5", "9", "", "1", "", "4", "3", ""},
-                                {"", "", "", "", "", "", "", "", "5"},
+                {"7", "", "", "", "", "", "", "", ""},
+                {"", "5", "9", "", "1", "", "4", "3", ""},
+                {"", "", "", "", "", "", "", "", "5"},
 
-                                {"", "", "", "", "3", "6", "", "7", ""},
-                                {"", "7", "6", "", "", "", "1", "5", "4"},
-                                {"1", "", "", "5", "", "", "6", "", ""}
+                {"", "", "", "", "3", "6", "", "7", ""},
+                {"", "7", "6", "", "", "", "1", "5", "4"},
+                {"1", "", "", "5", "", "", "6", "", ""}
         };
 
+        // easy
         sudoku = new String[][]{{"1", "", "", "", "", "6", "5", "", ""},
                 {"", "", "7", "", "", "", "2", "", ""},
                 {"", "6", "8", "", "", "", "", "4", "7"},
@@ -162,23 +77,66 @@ public class E1 {
                 {"", "", "6", "9", "", "", "", "", "1"}
         };
 
-        print_sudoku(sudoku);
+        // easy
+        sudoku = new String[][]{{"1", "", "", "", "", "6", "5", "", ""},
+                {"", "", "7", "", "", "", "2", "", ""},
+                {"", "6", "8", "", "", "", "", "4", "7"},
 
+                {"", "1", "5", "8", "", "4", "9", "", "3"},
+                {"6", "", "", "7", "", "5", "", "", "4"},
+                {"8", "", "4", "3", "", "9", "6", "5", ""},
+
+                {"9", "3", "", "", "", "", "4", "8", ""},
+                {"", "", "2", "", "", "", "7", "", ""},
+                {"", "", "6", "9", "", "", "", "", "1"}
+        };
+
+        // hard
+        sudoku = new String[][]{{"", "", "", "", "8", "", "", "9", ""},
+                {"", "", "", "7", "3", "", "5", "8", ""},
+                {"3", "9", "", "", "", "5", "", "", ""},
+
+                {"", "1", "", "", "", "", "", "4", "2"},
+                {"2", "", "", "", "6", "", "", "", "8"},
+                {"6", "8", "", "", "", "", "", "5", ""},
+
+                {"", "", "", "8", "", "", "", "6", "5"},
+                {"", "5", "9", "", "2", "6", "", "", ""},
+                {"", "3", "", "", "4", "", "", "", ""}
+        };
+
+        // evil
+        sudoku = new String[][]{{"", "", "", "5", "1", "", "9", "", ""},
+                {"5", "", "", "", "4", "", "6", "", "7"},
+                {"", "4", "", "", "", "7", "", "", "5"},
+
+                {"", "", "", "4", "", "", "", "", ""},
+                {"", "3", "9", "", "", "", "7", "6", ""},
+                {"", "", "", "", "", "2", "", "", ""},
+
+                {"8", "", "", "7", "", "", "", "1", ""},
+                {"6", "", "5", "", "2", "", "", "", "8"},
+                {"", "", "2", "", "8", "9", "", "", ""}
+        };
+
+    //  prime the srray
         fill_blanks(sudoku);
 
-        print_sudoku(sudoku);
-
+    //  first pass
         eliminate(sudoku);
 
-        print_sudoku(sudoku);
-
-        //sudoku =
+    //  now solve!
         solve(sudoku, 0);
 
+    //  show the fruits of our labor!
         print_sudoku(sudoku);
 
     }
 
+    /**
+     * fills the blank spaces of the sudoku array with the numbers that we're missing
+     * @param sudoku
+     */
     public static void fill_blanks(String[][] sudoku) {
         for (int i=0;i<9;i++) {
             for (int j=0;j<9;j++) {
@@ -189,6 +147,10 @@ public class E1 {
         }
     }
 
+    /**
+     * prints the sudoku board in a formatted way
+     * @param sudoku
+     */
     public static void print_sudoku(String[][] sudoku) {
         for (int i=0;i<9;i++) {
             if (i%3 == 0) {
@@ -208,21 +170,22 @@ public class E1 {
         System.out.println("\n");
     }
 
-    //public static String[][] solve(String[][] sudoku, int depth) {
+    /**
+     * Solves the sudoku board recusively
+     * @param sudoku
+     * @param depth
+     * @return true if the solution is valid, false if we've run into a contradiction
+     */
     public static boolean solve(String[][] sudoku, int depth) {
         String[][] sudoku_tmp;
         int[] least;
 
-        System.out.println(depth);
-
-        //	we've failed, return an empty array to show that
+    //	we've failed, return an empty array to show that
         if (!valid(sudoku)) {
-            //return new String[9][9];
             return false;
         }
         //	done! return the finished thing!
         else if (finished(sudoku)) {
-            //return sudoku;
             return true;
         }
         //	first we eliminate all the things we can
@@ -235,20 +198,21 @@ public class E1 {
 
             //	go through all the possibilities, if one sticks then keep using it
             for (int k=0;k<least[0];k++) {
+                System.out.println(depth);
+                print_sudoku(sudoku);
                 sudoku_tmp = copy_board(sudoku);
                 if (assign(sudoku_tmp, least[1], least[2], Character.toString(sudoku[least[1]][least[2]].charAt(k)))) {
-                    if (solve(sudoku_tmp, depth++)){//[0][0] != null) {
+                    if (solve(sudoku_tmp, depth + 1)){//[0][0] != null) {
                         update_board(sudoku_tmp, sudoku);
                         break;
                     }
                 }
+            //  we must have run into a contradiction!
                 else {
-                    print_sudoku(sudoku);
-                    //return new String[9][9];
                     return false;
                 }
             }
-            return solve(sudoku, depth++);
+            return solve(sudoku, depth + 1);
         }
     }
 
@@ -288,6 +252,11 @@ public class E1 {
         return tmp;
     }
 
+    /**
+     * copies from one board to another for backtracking, because Java is pass by value, kind of
+     * @param from
+     * @param to
+     */
     public static void update_board(String[][] from, String[][] to) {
         for(int i=0;i<9;i++) {
             for(int j=0;j<9;j++) {
@@ -296,6 +265,15 @@ public class E1 {
         }
     }
 
+    /**
+     * assigns a number to the specified sudoku board at the specified place
+     * then eliminates the value from all the places where it can't be now
+     * @param sudoku
+     * @param row
+     * @param col
+     * @param value
+     * @return true if valid, false if contradiction occurred
+     */
     public static boolean assign(String[][] sudoku, int row, int col, String value) {
         sudoku[row][col] = value;
 
@@ -317,7 +295,9 @@ public class E1 {
     }
 
     /**
+     * goes through the array and gets rid of the values that we know can't be there
      * @param sudoku
+     * @return true if valid, false if contradiction occurred
      */
     public static boolean eliminate(String[][] sudoku) {
         int tmp_i;
@@ -340,9 +320,6 @@ public class E1 {
                                     again = true;
                                 }
                                 sudoku[ii][jj] = sudoku[ii][jj].replace(sudoku[i][j], "");
-                                //if (sudoku[ii][jj].length() == 1) {
-                                //	assign(sudoku, ii, jj, sudoku[ii][jj].replace(sudoku[i][j], ""));
-                                //}
                             }
                         }
                     }
@@ -354,9 +331,6 @@ public class E1 {
                                 again = true;
                             }
                             sudoku[i][ii] = sudoku[i][ii].replace(sudoku[i][j], "");
-                            //if (sudoku[i][ii].length() == 1) {
-                            //	assign(sudoku, i, ii, sudoku[i][ii].replace(sudoku[i][j], ""));
-                            //}
                         }
                         //	isolate row
                         if (ii != i) {
@@ -364,9 +338,6 @@ public class E1 {
                                 again = true;
                             }
                             sudoku[ii][j] =sudoku[ii][j].replace(sudoku[i][j], "");
-                            //if (sudoku[ii][j].length() == 1) {
-                            //	assign(sudoku, ii, j, sudoku[ii][j].replace(sudoku[i][j], ""));
-                            //}
                         }
                     }
 					/**/
@@ -379,6 +350,8 @@ public class E1 {
         }
 
         if (valid(sudoku)) {
+            find_last(sudoku);
+
             return true;
         }
         else {
@@ -386,6 +359,64 @@ public class E1 {
         }
     }
 
+    /**
+     * this works in conjunction with the eliminate function
+     * it goes through the array and finds rows and columns where that value is the last place where it can occur
+     * in that row or column
+     *
+     * only updates if valid
+     * @param sudoku
+     */
+    public static void find_last(String[][] sudoku) {
+        int found_row_count;
+        int found_row_index;
+        int found_col_count;
+        int found_col_index;
+
+        String value;
+        String[][] temp = copy_board(sudoku);
+        for (int k=1;k<10;k++) {
+            value = String.valueOf(k);
+            found_row_index = 10;
+            found_col_index = 10;
+        //  for each row, find any hidden singles
+            for (int i = 0; i < 9; i++) {
+                found_row_count = 0;
+                found_col_count = 0;
+                for (int j = 0; j < 9; j++) {
+                //  search rows
+                    if (temp[i][j].length() > 1) {
+                        if (sudoku[i][j].indexOf(value) >= 0) {
+                            found_row_count++;
+                            found_row_index = j;
+                        }
+                    }
+                //  search cols
+                    if (temp[j][i].length() > 1) {
+                        if (temp[j][i].indexOf(value) >= 0) {
+                            found_col_count++;
+                            found_col_index = j;
+                        }
+                    }
+                }
+                if (found_row_count == 1) {
+                    assign(temp, i, found_row_index, value);
+                }
+                if (found_col_count == 1) {
+                    assign(temp, found_col_index, i, value);
+                }
+            }
+        }
+        if (valid(temp)) {
+            update_board(temp, sudoku);
+        }
+    }
+
+    /**
+     * gets the starting index of a square based on the index given
+     * @param i
+     * @return starting value of the box
+     */
     private static int getSection(int i) {
         int tmp_i;
         if (i < 3) {
