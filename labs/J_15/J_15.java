@@ -42,18 +42,30 @@ public class J_15 {
 	}
 
 	/**
-	 * Computes the factorial of n. Try not to be jealous of glorious
-	 * for loop.
-	 * 
-	 * @param n the number whose factorial to compute
-	 * @return n!
-	 */
-	private static int fact(int n) {
-		int prod = 1;
-		for (int i = 1; i <= n; prod *= i++)
-			;
-		return prod;
-	}
+     * Computes the factorial of n. Try not to be jealous of glorious
+     * for loop.
+     *
+     * @param n the number whose factorial to compute
+     * @param start where to start counting the factorial
+     * @return n!
+     */
+    private static int fact(int n, int start) {
+        int prod = 1;
+        for (int i = start; i <= n; prod *= i++)
+            ;
+        return prod;
+    }
+
+    /**
+     * Computes the factorial of n. Try not to be jealous of glorious
+     * for loop.
+     *
+     * @param n the number whose factorial to compute
+     * @return n!
+     */
+    private static int fact(int n) {
+        return fact(n, 1);
+    }
 	
 	/**
 	 * Computes the number of ways to take n things k at a time
