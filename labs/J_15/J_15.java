@@ -92,6 +92,14 @@ public class J_15 {
 	 * @return the number of ways to take n things k at a time
 	 */
 	public static int combinationRecursive(int n, int k) {
-		return 0;
+	        int value;
+	
+	        if (k == 1) {
+	            value = n;
+	        }
+	        else {
+	            value = (n * combinationRecursive(n - 1, k - 1)) / k;
+	        }
+	        return value;
 	}
 }
