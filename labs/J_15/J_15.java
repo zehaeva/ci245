@@ -75,7 +75,13 @@ public class J_15 {
 	 * @return the number of ways to take n things k at a time
 	 */
 	private static int combinationFactorial(int n, int k) {
-		return 0;
+	        int fn;
+	        int fk;
+	
+	        fn = fact(n, (n - k +1));
+	        fk = fact(k);
+	
+	        return fn / fk;
 	}
 
 	/**
