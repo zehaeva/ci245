@@ -13,15 +13,20 @@ public class J_18 {
         Scanner input = new Scanner(System.in);
         int factor_me;
         ArrayList<Integer> factors = new ArrayList<Integer>();
+        char cont = 'y';
 
-        System.out.print("Enter a number to be factored: ");
-        factor_me = input.nextInt();
+        while (cont == 'y') {
+            System.out.print("Enter a number to be factored: ");
+            factor_me = input.nextInt();
 
-        factors = prime_factors(factor_me, 2);
+            factors = prime_factors(factor_me, 2);
 
-        for (Integer i :
-                factors) {
-            System.out.printf("%d ", i);
+            for (Integer i :
+                    factors) {
+                System.out.printf("%d ", i);
+            }
+            System.out.print("\nDo you wish to factor another number? (y/n): ");
+            cont = input.nextLine().charAt(0);
         }
     }
 
