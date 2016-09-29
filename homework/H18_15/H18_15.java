@@ -41,17 +41,19 @@ public class H18_15 {
         }
         else {
             while (row < 8 && col < 8) {
-                // System.out.printf("Count: %d, row: %d, col: %d\n", queen_count(board), row, col);
-                if (row == 7) {
+                //System.out.printf("Count: %d, row: %d, col: %d\n", queen_count(board), row, col);
+                if (row == 7 && col < 7) {
                     row = 0;
                     col++;
-                } else {
+                } else if (row < 7 && col < 8){
                     row++;
+                } else {
+                    return new boolean[1][1];
                 }
 
                 temp = copy_board(board);
 
-                temp = place_queen(temp, row, col); //copy_board(board);
+                temp = place_queen(temp, row, col);
 
                 //  place a queen there
                 if (valid(temp)) {
@@ -76,6 +78,8 @@ public class H18_15 {
 
     private static boolean valid(boolean[][] board) {
         boolean am_i_valid = true;
+        int left;
+        int right;
 
         if (board.length == 8) {
 
@@ -84,16 +88,43 @@ public class H18_15 {
                     if (board[i][j]) {
                         for (int k = 0; k < 8; k++) {
                             //  check row
-                            if (i != k && board[i][k]) {
+                            if (j != k && board[i][k]) {
                                 am_i_valid = false;
                             }
                             //  check col
-                            if (j != k && board[k][j]) {
+                            if (i != k && board[k][j]) {
                                 am_i_valid = false;
                             }
 
                             if (!am_i_valid) {
                                 break;
+                            }
+                        }
+
+                    //  diagonals
+                        for (int k = 1; k < 8; k++) {
+                            left = k * -1;
+                            right = k;
+
+                            if ((i+right) < 8 && (j+right) < 8) {
+                                if (board[i+right][j+right]) {
+                                    am_i_valid = false;
+                                }
+                            }
+                            if ((i+left) >= 0 && (j+left) >= 0) {
+                                if (board[i+left][j+left]) {
+                                    am_i_valid = false;
+                                }
+                            }
+                            if ((i+left) >= 0 && (j+right) < 8) {
+                                if (board[i+left][j+right]) {
+                                    am_i_valid = false;
+                                }
+                            }
+                            if ((i+right) < 8 && (j+left) >= 0) {
+                                if (board[i+right][j+left]) {
+                                    am_i_valid = false;
+                                }
                             }
                         }
                     }
