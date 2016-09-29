@@ -1,4 +1,13 @@
+import java.util.Arrays;
+
+/**
+ * Solves the Eight Queens problem
+ */
 public class H18_15 {
+    /**
+     * Runs the Eight Queens solution
+     * @param args unused
+     */
   public static void main(String[] args) {
 	// write your code here
         boolean[][] board = new boolean[8][8];
@@ -13,11 +22,15 @@ public class H18_15 {
         print_board(board);
     }
 
+    /**
+     * Prints the game board
+     * @param board 8x8 board boolean array
+     */
     private static void print_board(boolean[][] board) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board[i][j]) {
-                    System.out.printf("* ");
+                    System.out.printf("Q ");
                 }
                 else {
                     System.out.printf("_ ");
@@ -28,6 +41,13 @@ public class H18_15 {
         System.out.println();
     }
 
+    /**
+     * places a queen on the board and then tries to place a queen in the next spot
+     * @param board 2d 8x8 boolean array holding the game board
+     * @param row row to put the queen in
+     * @param col column to put the queen in
+     * @return finished board
+     */
     public static boolean[][] place_queen(boolean[][] board, int row, int col) {
         boolean[][] temp;
 
@@ -64,6 +84,11 @@ public class H18_15 {
         }
     }
 
+    /**
+     * copyies an 8x8 2d boolean array into another one
+     * @param board 2d 8x8 boolean array
+     * @return copy of in the input board
+     */
     private static boolean[][] copy_board(boolean[][] board) {
         boolean[][] temp = new boolean[8][8];
 
@@ -76,6 +101,11 @@ public class H18_15 {
         return temp;
     }
 
+    /**
+     * checks that a Queen isn't murdered by another queen
+     * @param board 2d 8x8 boolean array
+     * @return true if the queen hasn't died
+     */
     private static boolean valid(boolean[][] board) {
         boolean am_i_valid = true;
         int left;
@@ -143,6 +173,11 @@ public class H18_15 {
         return am_i_valid;
     }
 
+    /**
+     * Counts the number of queens on the board
+     * @param board 2d 8x8 boolean array
+     * @return number of queens on the board
+     */
     public static int queen_count(boolean[][] board) {
         int count = 0;
 
@@ -156,6 +191,11 @@ public class H18_15 {
         return count;
     }
 
+    /**
+     * checks if there are 8 queens on the board
+     * @param board 2d 8x8 boolean array
+     * @return true if there are exactly 8 queens on the board
+     */
     public static boolean finished(boolean[][] board) {
         if (queen_count(board) == 8) {
             return true;
