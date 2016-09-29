@@ -26,8 +26,10 @@ public class H14_27 {
 	public static double score_spam(String[] spam_list, String email) {
 		int count = 0;
 		int last_index;
+		String[] words;
 
 		email = email.toLowerCase();
+        words = email.split(" ");
 
 		for (String spam: spam_list) {
 			last_index = 0;
