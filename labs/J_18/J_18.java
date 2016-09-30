@@ -26,7 +26,7 @@ public class J_18 {
                 System.out.printf("%d ", i);
             }
             System.out.print("\nDo you wish to factor another number? (y/n): ");
-            cont = input.nextLine().charAt(0);
+            cont = input.next().charAt(0);
         }
     }
 
