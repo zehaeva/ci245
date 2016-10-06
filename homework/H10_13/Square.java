@@ -27,4 +27,9 @@ public class Square implements TwoDimensionalShape {
     public double getArea() {
         return this._length * this._width;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Square{Length=%f, Width=%f}", this._length, this._width);
+    }
 }

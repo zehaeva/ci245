@@ -45,4 +45,13 @@ public class Cube implements ThreeDimensionalShape {
     public double getSurfaceArea() {
         return 2 * (this._length * this._width + this._width * this._height + this._height * this._length);
     }
+
+    @Override
+    public String toString() {
+        return "Cube{" +
+                "Width=" + _width +
+                ", Length=" + _length +
+                ", Height=" + _height +
+                '}';
+    }
 }
