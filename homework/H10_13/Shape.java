@@ -1,6 +1,6 @@
 /**
  * Shape class
  **/
-public class Shape {
+public interface Shape {
 
 }

@@ -1,9 +1,7 @@
 /**
  *
  **/
-public class ThreeDimensionalShape {
-  private int _height;
-  private int _width;
-  private int _length;
-  
+public interface ThreeDimensionalShape extends Shape {
+    double getVolume();
+    double getSurfaceArea();
 }
