@@ -22,7 +22,7 @@ public class CalcHypotenuse extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!sideOne.getText().isEmpty() && !sideTwo.getText().isEmpty()) {
-                    hypotenuse.setText("SOMETHING!");
+                    hypotenuse.setText(String.format("%f", Math.sqrt(Math.pow(Double.parseDouble(sideOne.getText()), 2.0) + Math.pow(Double.parseDouble(sideTwo.getText()), 2.0))));
                 }
             }
         });
