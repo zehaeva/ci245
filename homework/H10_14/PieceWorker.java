@@ -38,9 +38,8 @@ public class PieceWorker extends Employee {
 
     @Override
     public String toString() {
-        return "PieceWorker{" +
-                "Wage=" + this._wage +
-                ", Pieces=" + this._pieces +
-                '}';
+        return String.format("piece employee: %s%n%s: $%,.2f; %s: %d",
+         super.toString(), "per piece wage", getWage(),
+         "pieces made", getPieces());
     }
 }
