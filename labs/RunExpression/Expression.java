@@ -1,4 +1,4 @@
 public interface Expression {
-    int evaluate();
+    double evaluate();
     String toString();
 }

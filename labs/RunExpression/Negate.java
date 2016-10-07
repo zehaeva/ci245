@@ -7,7 +7,7 @@ public class Negate implements Expression {
         this._e = e;
     }
 
-    public int evaluate() {
+    public double evaluate() {
         return this._e.evaluate() * -1;
     }
 

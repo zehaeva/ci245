@@ -10,7 +10,7 @@ public class Multiplication implements Expression {
         this._e2 = e2;
     }
 
-    public int evaluate() {
+    public double evaluate() {
         return this._e1.evaluate() * this._e2.evaluate();
     }
 

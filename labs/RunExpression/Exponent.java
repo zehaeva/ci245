@@ -3,16 +3,16 @@
  */
 public class Exponent implements Expression {
     private Expression _e;
-    private int _exp;
+    private double _exp;
 
-    public Exponent(Expression e, int exp) {
+    public Exponent(Expression e, double exp) {
         this._e = e;
         this._exp = exp;
     }
 
-    public int evaluate() {
-        int val = 1;
-        for (int i = 0; i < this._exp; i++) {
+    public double evaluate() {
+        double val = 1;
+        for (double i = 0; i < this._exp; i++) {
             val *= this._e.evaluate();
         }
         return val;
@@ -20,6 +20,6 @@ public class Exponent implements Expression {
 
     @Override
     public String toString() {
-        return String.format("%s ^ %d", this._e.toString(), this._exp);
+        return String.format("%s ^ %f", this._e.toString(), this._exp);
     }
 }

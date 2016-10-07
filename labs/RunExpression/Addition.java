@@ -10,7 +10,7 @@ public class Addition implements Expression {
     }
 
     @Override
-    public int evaluate() {
+    public double evaluate() {
         return this.left.evaluate() + this.right.evaluate();
     }
 

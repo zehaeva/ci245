@@ -1,20 +1,20 @@
 
 public class Constant implements Expression {
 
-    private final int value;
+    private final double value;
 
-    public Constant(int value) {
+    public Constant(double value) {
         this.value = value;
     }
 
     @Override
-    public int evaluate() {
+    public double evaluate() {
         return this.value;
     }
 
     @Override
     public String toString() {
-        return String.format(" %d ", this.value);
+        return String.format(" %f ", this.value);
     }
 
 }
