@@ -3,12 +3,43 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/2_15" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_10" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_11" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_12" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_15" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_16" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_17" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_18" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/J_23" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_4" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_5" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/J_9" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L10_17" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L11_17" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L11_20" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L11_21" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L12_12" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/L12_8" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L14_10" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L14_3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L14_9" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L16_14" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L2_14" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L2_17" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L2_28" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L3_12" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L3_13" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L4_22" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L4_24" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L4_29" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L7_19" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L7_27" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L7_29" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RunExpression" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
