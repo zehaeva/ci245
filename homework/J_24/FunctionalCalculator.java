@@ -19,6 +19,8 @@ public class FunctionalCalculator extends Calculator {
 
 
     public FunctionalCalculator() throws HeadlessException {
+        setLocationRelativeTo(null);
+
         this.setOutputText("0");
 
         super._one.addActionListener(new ActionListener() {
@@ -92,6 +94,7 @@ public class FunctionalCalculator extends Calculator {
         super._add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                calc();
                 _last_operation = Operations.ADD;
                 next();
             }
@@ -99,6 +102,7 @@ public class FunctionalCalculator extends Calculator {
         super._subtract.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                calc();
                 _last_operation = Operations.SUBTRACT;
                 next();
             }
@@ -106,6 +110,7 @@ public class FunctionalCalculator extends Calculator {
         super._multiply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                calc();
                 _last_operation = Operations.MULTIPLY;
                 next();
             }
@@ -113,6 +118,7 @@ public class FunctionalCalculator extends Calculator {
         super._divide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                calc();
                 _last_operation = Operations.DIVIDE;
                 next();
             }
@@ -156,7 +162,7 @@ public class FunctionalCalculator extends Calculator {
                 break;
         }
         this._last_operation = Operations.NOTHING;
-        this._last_value = Double.NaN;
+        this._last_value = Double.parseDouble(super.getOutputText());
     }
 
     public void add() {

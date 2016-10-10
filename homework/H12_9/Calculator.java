@@ -49,7 +49,8 @@ public class Calculator extends JFrame {
 
         //  setup the buttons!
         this._input_panel = new JPanel();
-        this._input_panel.setLayout(new GridLayout(4, 4));
+        this._input_panel.setLayout(new GridLayout(4, 4, 4, 4));
+
 
         this._one = new JButton();
         this._two = new JButton();
@@ -105,6 +106,13 @@ public class Calculator extends JFrame {
         this._input_panel.add(this._dot);
         this._input_panel.add(this._equals);
         this._input_panel.add(this._add);
+
+        /*for (Component button :
+                this._input_panel.getComponents()) {
+            if (button instanceof JButton) {
+                ((JButton) button).set(new Insets(10, 10, 10, 10));
+            }
+        }*/
 
         GridBagConstraints c2 = new GridBagConstraints();
         c2.gridx = 0;
