@@ -19,7 +19,7 @@ public class J_19 {
     }
 
     private static List<Integer> merge_sort(List<Integer> list) {
-        List<Integer> output = new ArrayList<>();
+        List<Integer> output = new ArrayList<Integer>();
 
     //  is there only one thing left?
         if (list.size() == 1) {
@@ -73,7 +73,7 @@ public class J_19 {
 
     private static List<Integer> generate_random_int_list() {
         Random rand = new Random();
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         int n;
         int i = 0;
 

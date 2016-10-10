@@ -9,27 +9,34 @@ public class Calculator extends JFrame {
     private JPanel _output_panel;
     private JPanel _input_panel;
     
-    private JButton _one;
-    private JButton _two;
-    private JButton _three;
-    private JButton _four;
-    private JButton _five;
-    private JButton _six;
-    private JButton _seven;
-    private JButton _eight;
-    private JButton _nine;
-    private JButton _zero;
-    private JButton _dot;
-    private JButton _equals;
-    private JButton _divide;
-    private JButton _multiply;
-    private JButton _subtract;
-    private JButton _add;
+    protected JButton _one;
+    protected JButton _two;
+    protected JButton _three;
+    protected JButton _four;
+    protected JButton _five;
+    protected JButton _six;
+    protected JButton _seven;
+    protected JButton _eight;
+    protected JButton _nine;
+    protected JButton _zero;
+    protected JButton _dot;
+    protected JButton _equals;
+    protected JButton _divide;
+    protected JButton _multiply;
+    protected JButton _subtract;
+    protected JButton _add;
 
     public Calculator() throws HeadlessException {
+        this.setup();
+
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void setup() {
         this.setLayout(new GridBagLayout());
 
-    //  set up the output text box
+        //  set up the output text box
         this._output_panel = new JPanel();
         this._output_text = new JTextField();
         this._output_panel.add(this._output_text);
@@ -40,7 +47,7 @@ public class Calculator extends JFrame {
         c.gridy = 0;
         this.add(this._output_text, c);
 
-    //  setup the buttons!
+        //  setup the buttons!
         this._input_panel = new JPanel();
         this._input_panel.setLayout(new GridLayout(4, 4));
 
@@ -78,22 +85,22 @@ public class Calculator extends JFrame {
         this._subtract.setText("-");
         this._add.setText("+");
 
-    //  row one
+        //  row one
         this._input_panel.add(this._seven);
         this._input_panel.add(this._eight);
         this._input_panel.add(this._nine);
         this._input_panel.add(this._divide);
-    //  row two
+        //  row two
         this._input_panel.add(this._four);
         this._input_panel.add(this._five);
         this._input_panel.add(this._six);
         this._input_panel.add(this._multiply);
-    //  row three
+        //  row three
         this._input_panel.add(this._one);
         this._input_panel.add(this._two);
         this._input_panel.add(this._three);
         this._input_panel.add(this._subtract);
-    //  row four
+        //  row four
         this._input_panel.add(this._zero);
         this._input_panel.add(this._dot);
         this._input_panel.add(this._equals);
@@ -103,8 +110,13 @@ public class Calculator extends JFrame {
         c2.gridx = 0;
         c2.gridy = 1;
         this.add(this._input_panel, c2);
+    }
 
-        pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public String getOutputText() {
+        return _output_text.getText();
+    }
+
+    public void setOutputText(String outputText) {
+        this._output_text.setText(outputText);
     }
 }
