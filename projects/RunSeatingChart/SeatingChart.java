@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class determines the seating chart of a wedding such that no two people
@@ -21,6 +22,10 @@ import java.util.ArrayList;
  * 
  */
 public class SeatingChart {
+    private int _num_guests;
+    private int _table_size;
+    private boolean[][] _hate_list;
+    private int[] _hate_radix;
 
 	/**
 	 * This method should return an array with just your name or your name and
@@ -105,7 +110,7 @@ public class SeatingChart {
 	 */
 	private ArrayList<String> ReadTextFile(String fileName) throws IOException {
 		// Now we will read all of the lines back that we just wrote
-		Path path = Paths.get(fileName);
+		Path path = Paths.get("/home/zehaeva/IdeaProjects/ci245/projects/RunSeatingChart/" + fileName);
 		ArrayList<String> linesToRead = new ArrayList<String>();
 
 		try {
@@ -131,6 +136,56 @@ public class SeatingChart {
 	 *         who hate each other are sitting at the same table.
 	 */
 	public GuestTable[] GetSeatingChart(String filename) {
-		return new GuestTable[] { };
+        ArrayList<String> file = new ArrayList<>();
+
+        try {
+            file = ReadTextFile(filename);
+        }
+        catch (IOException e) {
+            System.out.println("Something went wrong reading the file!");
+        }
+
+        this._num_guests = Integer.parseInt(file.get(0));
+        this._table_size = Integer.parseInt(file.get(1));
+
+        fill_hate_list(file);
+
+        return new GuestTable[] { };
 	}
+
+    /**
+     * fills the list full of hatred for one's kin
+     * @param file
+     */
+    private void fill_hate_list(ArrayList<String> file) {
+        String[] edge;
+        int hate_one;
+        int hate_two;
+
+        this._hate_list = new boolean[this._num_guests + 1][this._num_guests + 1];
+        this._hate_radix = new int[this._num_guests + 1];
+
+    //  let's assume that no one hates each other
+        for (boolean[] temp :
+                this._hate_list) {
+            Arrays.fill(temp, false);
+        }
+        Arrays.fill(this._hate_radix, 0);
+
+        for (int i = 2; i < file.size() - 1; i++) {
+            edge = file.get(i).split(" ");
+            hate_one = Integer.parseInt(edge[0]);
+            hate_two = Integer.parseInt(edge[1]);
+            this._hate_list[hate_one][hate_two] = true;
+            this._hate_list[hate_two][hate_one] = true;
+            this._hate_radix[hate_one]++;
+            this._hate_radix[hate_two]++;
+        }
+    }
+
+    private void print_hate_counts() {
+        for (int i = 1; i < this._num_guests; i++) {
+            System.out.printf("%d: %d\n", (i), this._hate_radix[i]);
+        }
+    }
 }
