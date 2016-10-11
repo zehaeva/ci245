@@ -47,6 +47,7 @@ public class SeatingChart {
 	 */
 	public int ValidateInputFile(String filename) {
 		int code = 0;
+		int max_guests = 200;
 		String[] temp;
 
 		try {
@@ -65,6 +66,8 @@ public class SeatingChart {
 					 !file_to_verify.get(1).equals("100000")) {
 				code = 2;
 			} else {
+				max_guests = Integer.parseInt(file_to_verify.get(0));
+
 				for (int i = 2; i < file_to_verify.size() - 1; i++) {
 					if (!file_to_verify.get(i).matches("^[0-9]+ [0-9]+$")) {
 						code = 3;
@@ -72,9 +75,14 @@ public class SeatingChart {
 					}
 					else {
 						temp = file_to_verify.get(i).split(" ");
-						if ((Integer.parseInt(temp[0]) < 1 || Integer.parseInt(temp[0]) > 200) ||
-								(Integer.parseInt(temp[1]) < 1 || Integer.parseInt(temp[1]) > 200) ) {
+						if (temp.length != 2) {
 							code = 3;
+                            break;
+						}
+						else if ((Integer.parseInt(temp[0]) < 1 || Integer.parseInt(temp[0]) > max_guests) ||
+								(Integer.parseInt(temp[1]) < 1 || Integer.parseInt(temp[1]) > max_guests) ) {
+							code = 3;
+                            System.out.println(i);
 							break;
 						}
 					}
@@ -83,6 +91,7 @@ public class SeatingChart {
 
 		}
 		catch (IOException e) {
+            System.out.println(e.toString());
 			code = 4;
 		}
 
@@ -104,6 +113,7 @@ public class SeatingChart {
 			linesToRead = (ArrayList<String>) Files.readAllLines(path, StandardCharsets.UTF_8);
 
 		} catch (IOException e) {
+            System.out.println(path.toString());
 			throw e;
 		}
 
