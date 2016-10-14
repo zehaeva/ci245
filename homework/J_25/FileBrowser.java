@@ -6,5 +6,15 @@ import java.awt.*;
  */
 public class FileBrowser extends JFrame {
     public FileBrowser() throws HeadlessException {
+
+        this.setPreferredSize(new Dimension(500, 500));
+
+        this.setLayout(new BorderLayout());
+
+        pack();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+
 }
