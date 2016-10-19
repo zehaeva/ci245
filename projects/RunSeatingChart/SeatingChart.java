@@ -26,6 +26,8 @@ public class SeatingChart {
     private int _table_size;
     private boolean[][] _hate_list;
     private int[] _hate_radix;
+    private int[] _hate_sort;
+	private int[] _tables;
 
 	/**
 	 * This method should return an array with just your name or your name and
@@ -147,11 +149,40 @@ public class SeatingChart {
 
         this._num_guests = Integer.parseInt(file.get(0));
         this._table_size = Integer.parseInt(file.get(1));
+		this._hate_sort = new int[this._num_guests];
 
         fill_hate_list(file);
 
+		sort_guests();
+
+		//seat_guest(this._hate_sort);
+
+        for (int i = 0; i < this._num_guests; i++) {
+            System.out.println(this._hate_sort[i]);
+        }
+
         return new GuestTable[] { };
 	}
+
+    private void sort_guests() {
+        int temp;
+    //  seed the sort
+        for (int i = 0; i < this._num_guests; i++) {
+            this._hate_sort[i] = i + 1;
+        }
+    //  now we iterate over the sort
+    //  and find if this person hates less than someone else
+    //  then we swap
+        for (int i = 0; i < this._num_guests; i++) {
+            for (int j = 0; j < this._num_guests; j++) {
+                if (this._hate_radix[this._hate_sort[i]] < this._hate_radix[j]) {
+                    temp = this._hate_sort[i];
+                    this._hate_sort[i] = j;
+                    this._hate_sort[j] = temp;
+                }
+            }
+        }
+    }
 
     /**
      * fills the list full of hatred for one's kin
@@ -180,6 +211,12 @@ public class SeatingChart {
             this._hate_list[hate_two][hate_one] = true;
             this._hate_radix[hate_one]++;
             this._hate_radix[hate_two]++;
+        }
+    }
+
+    private void sort_hate() {
+        for (int i = 0; i < this._num_guests; i++) {
+
         }
     }
 
