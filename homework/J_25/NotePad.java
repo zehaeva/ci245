@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -91,8 +92,20 @@ public class NotePad extends JFrame {
         edit_menu.setMnemonic('E');
 
         new_item = new JMenuItem("Find");
+        new_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                findText();
+            }
+        });
         edit_menu.add(new_item);
         new_item = new JMenuItem("Replace");
+        new_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                replaceText();
+            }
+        });
         edit_menu.add(new_item);
         new_item = new JMenuItem("Select All");
         new_item.addActionListener(new ActionListener() {
@@ -103,6 +116,12 @@ public class NotePad extends JFrame {
         });
         edit_menu.add(new_item);
         new_item = new JMenuItem("Time/Date");
+        new_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timeDate();
+            }
+        });
         edit_menu.add(new_item);
 
         JMenu format_menu = new JMenu("Format");
@@ -112,6 +131,14 @@ public class NotePad extends JFrame {
         view_menu.setMnemonic('V');
 
         JMenu help_menu = new JMenu("Help");
+        new_item = new JMenuItem("About");
+        new_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                help();
+            }
+        });
+        help_menu.add(new_item);
         help_menu.setMnemonic('H');
 
         JMenuBar bar = new JMenuBar();
@@ -143,15 +170,19 @@ public class NotePad extends JFrame {
             this._file_path = file.getPath();
             Path path = Paths.get(this._file_path);
 
+            String temp = this._text.getText();
             try {
+                this._text.setText("");
+
                 // Need to cast the return result to an ArrayList
                 linesToRead = (ArrayList<String>) Files.readAllLines(path, StandardCharsets.UTF_8);
-                for (String line:
-                        linesToRead) {
-                    this._text.setText(this._text.getText() + "\n" + line);
+                this._text.setText(linesToRead.get(0));
+                for (int i = 1; i < linesToRead.size(); i++) {
+                    this._text.setText(this._text.getText() + "\n" + linesToRead.get(i));
                 }
 
             } catch (IOException e) {
+                this._text.setText(temp);
                 System.out.println(path.toString());
             }
 
@@ -215,13 +246,47 @@ public class NotePad extends JFrame {
      * prompts the user for text and then highlights it in the program
      */
     private void findText() {
+        String needle = (String)JOptionPane.showInputDialog(this, "Enter Text to find:", "Find");
+        String haystack = this._text.getText();
+        int needle_start;
 
+        needle_start = haystack.indexOf(needle);
+
+        if (needle_start >= 0) {
+            this._text.select(needle_start, needle_start + needle.length());
+        }
     }
 
     /**
      * promts the user for text and then replace it with the provided text
      */
     private void replaceText() {
+        JPanel form = new JPanel();
+        JTextField needle = new JTextField(8);
+        JTextField nails = new JTextField(8);
+
+        form.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
+        form.add(new JLabel("Find:"), gbc);
+        gbc.gridx = 1;
+        form.add(needle, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        form.add(new JLabel("Replace:"), gbc);
+        gbc.gridx = 1;
+        form.add(nails, gbc);
+
+        int result = JOptionPane.showConfirmDialog(this, form, "Find/Replace", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            String temp = this._text.getText();
+            temp = temp.replace(needle.getText(), nails.getText());
+            this._text.setText(temp);
+        }
 
     }
 
@@ -236,7 +301,11 @@ public class NotePad extends JFrame {
      * I have no idea what this should do
      */
     private void timeDate() {
+        this._text.insert(LocalDateTime.now().toString(), this._text.getCaretPosition());
+    }
 
+    private void help() {
+        JOptionPane.showMessageDialog(this, "Note Pad: Designed by Howard");
     }
 
     /**
