@@ -125,6 +125,14 @@ public class NotePad extends JFrame {
         edit_menu.add(new_item);
 
         JMenu format_menu = new JMenu("Format");
+        new_item = new JMenuItem("Word Wrap");
+        new_item .addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toggleWordWrap();
+            }
+        });
+        format_menu.add(new_item);
         format_menu.setMnemonic('o');
 
         JMenu view_menu = new JMenu("View");
