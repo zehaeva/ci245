@@ -207,7 +207,6 @@ public class SeatingChart {
 				new_chart[next_guest] = table;
 				new_chart = seat_guest(new_chart);
 				if (no_conflicts(new_chart)) {
-					//print_array(new_chart, "no conflict!");
 					update_seats(assigned_seats, new_chart);
 				}
 				else {
@@ -232,9 +231,7 @@ public class SeatingChart {
 				}
 				//	set guest at this table
 				this._tables[next_guest] = table;
-				if (this._table_head_count.size() <= table) {
-					this._table_head_count.add(table, 1);
-				}
+
 				this._table_head_count.set(table, this._table_head_count.get(table) + 1);
 				//seat the next guest!
 				if (!seat_guest(get_next_guest(this._tables))) {
@@ -243,13 +240,9 @@ public class SeatingChart {
 					table++;
 					this._tables[next_guest] = 0;
 				}
-			} while (no_conflicts(this._tables) && !everyone_seated(this._tables));
+			} while (!everyone_seated(this._tables));
 
-			if (no_conflicts(this._tables) && everyone_seated(this._tables)) {
-				return true;
-			} else {
-				return false;
-			}
+			return true;
 		}
 	}
 
@@ -307,8 +300,10 @@ public class SeatingChart {
 
 	private boolean everyone_seated(int[] assigned_seats) {
 		boolean done = true;
-		for (int i = assigned_seats.length - 1; i >= 0; i--) {
-			if (assigned_seats[i] == 0) {
+
+		for (int value :
+				assigned_seats) {
+			if (value == 0) {
 				done = false;
 				break;
 			}
@@ -319,21 +314,13 @@ public class SeatingChart {
 
 	private boolean table_full(int[] assigned_seats, int table_num) {
 		int count = 0;
-	//	count the people at table
-		/*
-		for (int val :
-				assigned_seats) {
-			if (val == table_num) {
-				count++;
-				if (count == this._table_size) {
-					break;
-				}
-			}
-		}*/
+
 		if (this._table_head_count.size() <= table_num) {
 			this._table_head_count.add(table_num, 0);
 		}
+
 		count = this._table_head_count.get(table_num);
+
 		if (count >= this._table_size) {
 			return true;
 		} else {
@@ -348,7 +335,6 @@ public class SeatingChart {
         for (int i = 0; i < this._num_guests; i++) {
             this._hate_sort[i] = i;
         }
-		//print_sort();
 
     //  now we iterate over the sort
     //  and find if this person hates less than someone else
@@ -364,7 +350,6 @@ public class SeatingChart {
 					}
 				}
             }
-			//print_sort();
         }
     }
 
@@ -379,12 +364,6 @@ public class SeatingChart {
 		return temp_i;
 	}
 
-	private void print_sort() {
-		print_array(this._hate_sort, "Hate Sort");
-	}
-	private void print_hate() {
-		print_array(this._hate_radix, "Hate Radix");
-	}
 	private void print_array(int[] array, String header) {
 		System.out.println(header);
 		for (int i = 0; i < array.length; i++) {
@@ -420,6 +399,5 @@ public class SeatingChart {
             this._hate_radix[hate_one]++;
             this._hate_radix[hate_two]++;
         }
-		//print_hate();
     }
 }
