@@ -76,8 +76,20 @@ public class NotePad extends JFrame {
             }
         });
         new_item = new JMenuItem("Save");
+        new_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveFile();
+            }
+        });
         file_menu.add(new_item);
         new_item = new JMenuItem("Save As");
+        new_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveFileAs();
+            }
+        });
         file_menu.add(new_item);
         new_item = new JMenuItem("Exit");
         new_item.addActionListener(new ActionListener() {
@@ -240,7 +252,15 @@ public class NotePad extends JFrame {
      * saves the file after prompting for the name and file path
      */
     private void saveFileAs() {
+        JFileChooser chooser = new JFileChooser();
 
+        int action = chooser.showSaveDialog(this);
+
+        if (action == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            this._file_path = file.getPath();
+            this.saveFile();
+        }
     }
 
     /**
