@@ -26,7 +26,7 @@ public class J_14 {
 		ArrayList<String> output = new ArrayList<String>();
 
 	//  get number of guests
-		int n = rng.nextInt(10) + 11;
+		int n = rng.nextInt(190) + 11;
 
 		int hate_combos = get_hate_combos(n);
 		int hate_count = rng.nextInt(hate_combos) + 1;
