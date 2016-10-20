@@ -28,6 +28,7 @@ public class SeatingChart {
     private int[] _hate_radix;
     private int[] _hate_sort;
 	private int[] _tables;
+	private ArrayList<Integer> _table_head_count;
 
 	/**
 	 * This method should return an array with just your name or your name and
@@ -154,6 +155,9 @@ public class SeatingChart {
 		this._hate_sort = new int[this._num_guests];
 		this._tables = new int[this._num_guests];
 
+		this._table_head_count = new ArrayList<>();
+		this._table_head_count.add(0);
+
 		Arrays.fill(this._tables, 0);
 
 	//	this fills the list full of hate
@@ -164,7 +168,8 @@ public class SeatingChart {
 		sort_guests();
 
 	//	seat the guests at a table!
-		this._tables = seat_guest(this._tables);
+		//this._tables = seat_guest(this._tables);
+		seat_guest(get_next_guest(this._tables));
 
 	//	how many tables did we use?
 		int max_table = 0;
@@ -175,6 +180,7 @@ public class SeatingChart {
 		}
 
 	//	setup for returning
+
 		GuestTable[] gt = new GuestTable[max_table];
 		for (int i = 0; i < max_table; i++) {
 			gt[i] = new GuestTable();
@@ -209,6 +215,41 @@ public class SeatingChart {
 				}
 			}
 			return assigned_seats;
+		}
+	}
+
+	private boolean seat_guest(int next_guest) {
+		if (!no_conflicts(this._tables)) {
+			return false;
+		} else if (everyone_seated(this._tables)) {
+			return true;
+		} else {
+			int table = 1;
+			do {
+			//	make sure the table isn't full already
+				while (table_full(this._tables, table)) {
+					table++;
+				}
+				//	set guest at this table
+				this._tables[next_guest] = table;
+				if (this._table_head_count.size() <= table) {
+					this._table_head_count.add(table, 1);
+				}
+				this._table_head_count.set(table, this._table_head_count.get(table) + 1);
+				//seat the next guest!
+				if (!seat_guest(get_next_guest(this._tables))) {
+				//	oh no! this guest can't go here, let's put him at the next table
+					this._table_head_count.set(table, this._table_head_count.get(table) - 1);
+					table++;
+					this._tables[next_guest] = 0;
+				}
+			} while (no_conflicts(this._tables) && !everyone_seated(this._tables));
+
+			if (no_conflicts(this._tables) && everyone_seated(this._tables)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -266,9 +307,8 @@ public class SeatingChart {
 
 	private boolean everyone_seated(int[] assigned_seats) {
 		boolean done = true;
-		for (int val :
-				assigned_seats) {
-			if (val == 0) {
+		for (int i = assigned_seats.length - 1; i >= 0; i--) {
+			if (assigned_seats[i] == 0) {
 				done = false;
 				break;
 			}
@@ -280,6 +320,7 @@ public class SeatingChart {
 	private boolean table_full(int[] assigned_seats, int table_num) {
 		int count = 0;
 	//	count the people at table
+		/*
 		for (int val :
 				assigned_seats) {
 			if (val == table_num) {
@@ -288,7 +329,11 @@ public class SeatingChart {
 					break;
 				}
 			}
+		}*/
+		if (this._table_head_count.size() <= table_num) {
+			this._table_head_count.add(table_num, 0);
 		}
+		count = this._table_head_count.get(table_num);
 		if (count >= this._table_size) {
 			return true;
 		} else {
