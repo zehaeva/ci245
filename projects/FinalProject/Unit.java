@@ -18,4 +18,12 @@ public class Unit {
     public void setPosition(Point Position) {
         this._position = Position;
     }
+
+    public String getName() {
+        return _name;
+    }
+
+    public void setName(String Name) {
+        this._name = Name;
+    }
 }
