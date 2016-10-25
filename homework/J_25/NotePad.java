@@ -19,6 +19,7 @@ public class NotePad extends JFrame {
     private JTextArea _text;
     private String _file_name;
     private String _file_path;
+    private JLabel _status_bar;
 
     /**
      * starts up the notepad!
@@ -40,6 +41,13 @@ public class NotePad extends JFrame {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         this.add(scroll);
+
+        this._status_bar = new JLabel();
+        this._status_bar.setText("Status Bar!");
+        this._status_bar.setHorizontalAlignment(SwingConstants.RIGHT);
+        this._status_bar.setHorizontalTextPosition(SwingConstants.RIGHT);
+        this._status_bar.setVisible(false);
+        this.add(this._status_bar, BorderLayout.SOUTH);
 
         pack();
         setLocationRelativeTo(null);
@@ -69,12 +77,6 @@ public class NotePad extends JFrame {
             }
         });
         file_menu.add(new_item);
-        new_item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveFile();
-            }
-        });
         new_item = new JMenuItem("Save");
         new_item.addActionListener(new ActionListener() {
             @Override
@@ -137,7 +139,7 @@ public class NotePad extends JFrame {
         edit_menu.add(new_item);
 
         JMenu format_menu = new JMenu("Format");
-        new_item = new JMenuItem("Word Wrap");
+        new_item = new JCheckBoxMenuItem("Word Wrap");
         new_item .addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,6 +150,14 @@ public class NotePad extends JFrame {
         format_menu.setMnemonic('o');
 
         JMenu view_menu = new JMenu("View");
+        new_item = new JCheckBoxMenuItem("Status Bar");
+        new_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               statusBar();
+            }
+        });
+        view_menu.add(new_item);
         view_menu.setMnemonic('V');
 
         JMenu help_menu = new JMenu("Help");
@@ -168,6 +178,10 @@ public class NotePad extends JFrame {
         bar.add(format_menu);
         bar.add(view_menu);
         bar.add(help_menu);
+    }
+
+    private void statusBar() {
+        this._status_bar.setVisible(!this._status_bar.isVisible());
     }
 
     /**
@@ -192,8 +206,6 @@ public class NotePad extends JFrame {
 
             String temp = this._text.getText();
             try {
-                this._text.setText("");
-
                 // Need to cast the return result to an ArrayList
                 linesToRead = (ArrayList<String>) Files.readAllLines(path, StandardCharsets.UTF_8);
                 this._text.setText(linesToRead.get(0));
@@ -236,9 +248,9 @@ public class NotePad extends JFrame {
         if (this._file_path != null) {
             ArrayList<String> text = new ArrayList<>();
 
-            for (String line :
-                    this._text.getText().split("\n")) {
-                text.add(line);
+            String[] lines = this._text.getText().split("\n");
+            for (int i = 0; i < lines.length; i++) {
+                text.add(lines[i]);
             }
 
             this.WriteTextFile(text, this._file_path);
@@ -289,33 +301,13 @@ public class NotePad extends JFrame {
      * promts the user for text and then replace it with the provided text
      */
     private void replaceText() {
-        JPanel form = new JPanel();
-        JTextField needle = new JTextField(8);
-        JTextField nails = new JTextField(8);
+        FindReplace fr = new FindReplace();
+        JDialog dialog = new JDialog(this, "Find/Replace", true);
+        dialog.setContentPane(fr);
 
-        form.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 1;
-        gbc.gridy = 1;
-        form.add(new JLabel("Find:"), gbc);
-        gbc.gridx = 1;
-        form.add(needle, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        form.add(new JLabel("Replace:"), gbc);
-        gbc.gridx = 1;
-        form.add(nails, gbc);
-
-        int result = JOptionPane.showConfirmDialog(this, form, "Find/Replace", JOptionPane.OK_CANCEL_OPTION);
-
-        if (result == JOptionPane.OK_OPTION) {
-            String temp = this._text.getText();
-            temp = temp.replace(needle.getText(), nails.getText());
-            this._text.setText(temp);
-        }
-
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     /**
