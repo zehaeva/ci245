@@ -23,10 +23,28 @@ public class Map {
         this._units = Units;
     }
 
+    public int getWidth() {
+        return _width;
+    }
+
+    public void setWidth(int width) {
+        this._width = width;
+    }
+
+    public int getHeight() {
+        return _height;
+    }
+
+    public void setHeight(int height) {
+        this._height = height;
+    }
+
     public void drawUnits(Graphics g) {
         for (Unit x :
                 this._units) {
-            g.drawOval((int) x.getPosition().getX(), (int) x.getPosition().getY(), 5, 5);
+            if (this._width >= x.getPosition().getX() && this._height >= x.getPosition().getY()) {
+                x.draw(g);
+            }
         }
     }
 }

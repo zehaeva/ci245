@@ -5,10 +5,25 @@ import java.awt.*;
  */
 public class Unit {
     private Point _position;
+    private int _size;
     private String _name;
 
-    public Unit(Point _position) {
-        this._position = _position;
+    public Unit(Point position) {
+        this._position = position;
+    }
+
+    public Unit(Point position, int size) {
+        this._position = position;
+        this._size = size;
+    }
+
+    public Unit(int x, int y) {
+        this._position = new Point(x, y);
+    }
+
+    public Unit(int x, int y, int size) {
+        this._position = new Point(x, y);
+        this._size = size;
     }
 
     public Point getPosition() {
@@ -25,5 +40,17 @@ public class Unit {
 
     public void setName(String Name) {
         this._name = Name;
+    }
+
+    public int getSize() {
+        return _size;
+    }
+
+    public void setSize(int size) {
+        this._size = size;
+    }
+
+    public void draw(Graphics g) {
+        g.drawOval(this._position.x, this._position.y, this._size, this._size);
     }
 }
