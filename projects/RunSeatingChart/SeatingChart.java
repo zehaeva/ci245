@@ -113,8 +113,7 @@ public class SeatingChart {
 	 */
 	private ArrayList<String> ReadTextFile(String fileName) throws IOException {
 		// Now we will read all of the lines back that we just wrote
-		//Path path = Paths.get("/home/zehaeva/IdeaProjects/ci245/projects/RunSeatingChart/" + fileName);
-		Path path = Paths.get("C:\\Users\\hcanaway.CFS\\IdeaProjects\\ci245\\" + fileName);
+		Path path = Paths.get(fileName);
 		ArrayList<String> linesToRead = new ArrayList<String>();
 
 		try {
@@ -193,6 +192,12 @@ public class SeatingChart {
         return gt;
 	}
 
+	/**
+	 * Seats a guest at the table using an array passed back and forth
+	 * DEPRECIATED
+	 * @param assigned_seats
+	 * @return filled array of seats
+	 */
 	private int[] seat_guest(int[] assigned_seats) {
 		if (everyone_seated(assigned_seats)) {
 			return assigned_seats;
@@ -217,11 +222,19 @@ public class SeatingChart {
 		}
 	}
 
+	/**
+	 * Seats the numbered guest at a table
+	 * @param next_guest Guest to be sat
+	 * @return True if we're finished, false if we're not
+	 */
 	private boolean seat_guest(int next_guest) {
+	//	is there a conflict?
 		if (!no_conflicts(this._tables)) {
 			return false;
+	//	are we done?
 		} else if (everyone_seated(this._tables)) {
 			return true;
+	//	find a seat for this guest
 		} else {
 			int table = 1;
 			do {
@@ -246,12 +259,22 @@ public class SeatingChart {
 		}
 	}
 
+	/**
+	 * updates new seating chart with another seating chart
+	 * @param assigned_seats
+	 * @param new_chart
+	 */
 	private void update_seats(int[] assigned_seats, int[] new_chart) {
 		for (int i = 0; i < new_chart.length; i++) {
 			assigned_seats[i] = new_chart[i];
 		}
 	}
 
+	/**
+	 * copies given seating chart into a new array
+	 * @param assigned_seats
+	 * @return
+	 */
 	private int[] copy_seating_chart(int[] assigned_seats) {
 		int[] temp = new int[assigned_seats.length];
 		for (int i = 0; i < assigned_seats.length; i++) {
@@ -260,7 +283,11 @@ public class SeatingChart {
 		return temp;
 	}
 
-
+	/**
+	 * checks to see that people at the same tables don't hate eachother
+	 * @param assigned_seats
+	 * @return
+	 */
 	private boolean no_conflicts(int[] assigned_seats) {
 		boolean valid = true;
 		for (int i = 0; i < assigned_seats.length; i++) {
@@ -288,6 +315,11 @@ public class SeatingChart {
 		return valid;
 	}
 
+	/**
+	 * finds the next guest who hasn't been sat
+	 * @param assigned_seats
+	 * @return
+	 */
 	private int get_next_guest(int[] assigned_seats) {
 		int temp = 0;
 		for (int i = 0; i < assigned_seats.length; i++) {
@@ -298,6 +330,11 @@ public class SeatingChart {
 		return temp;
 	}
 
+	/**
+	 * checks to see if everyone has been sat
+	 * @param assigned_seats
+	 * @return
+	 */
 	private boolean everyone_seated(int[] assigned_seats) {
 		boolean done = true;
 
@@ -312,6 +349,12 @@ public class SeatingChart {
 		return done;
 	}
 
+	/**
+	 * checks the seating chart to see if the provided table is full
+	 * @param assigned_seats
+	 * @param table_num
+	 * @return
+	 */
 	private boolean table_full(int[] assigned_seats, int table_num) {
 		int count = 0;
 
@@ -328,6 +371,9 @@ public class SeatingChart {
 		}
 	}
 
+	/**
+	 * sorts the guests into a list of who hate the most to who hates the least
+	 */
     private void sort_guests() {
         int temp_i;
 		int temp_j;
@@ -353,6 +399,11 @@ public class SeatingChart {
         }
     }
 
+	/**
+	 * get the guest at the ith sort place
+	 * @param i guest number
+	 * @return
+	 */
 	private int getSortGuest(int i) {
 		int temp_i = 0;
 		for (int k = 0; k < this._num_guests; k++) {
@@ -364,6 +415,11 @@ public class SeatingChart {
 		return temp_i;
 	}
 
+	/**
+	 * print an integer array
+	 * @param array
+	 * @param header
+	 */
 	private void print_array(int[] array, String header) {
 		System.out.println(header);
 		for (int i = 0; i < array.length; i++) {
@@ -380,6 +436,7 @@ public class SeatingChart {
         int hate_one;
         int hate_two;
 
+	//	array initialization
         this._hate_list = new boolean[this._num_guests + 1][this._num_guests + 1];
         this._hate_radix = new int[this._num_guests + 1];
 
@@ -390,6 +447,8 @@ public class SeatingChart {
         }
         Arrays.fill(this._hate_radix, 0);
 
+	//	go through the file, and build up the hate_list lookup table
+	//	and build up the radix which counts how many people each guest hates
         for (int i = 2; i < file.size() - 1; i++) {
             edge = file.get(i).split(" ");
             hate_one = Integer.parseInt(edge[0]);
