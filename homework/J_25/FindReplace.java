@@ -64,4 +64,28 @@ public class FindReplace extends JDialog {
 
         this.setModal(true);
     }
+
+    public JTextField getNeedle() {
+        return _needle;
+    }
+
+    public void setNeedle(JTextField needle) {
+        this._needle = needle;
+    }
+
+    public JTextField getNail() {
+        return _nail;
+    }
+
+    public void setNail(JTextField nail) {
+        this._nail = nail;
+    }
+
+    public JCheckBox getMatchCase() {
+        return _match_case;
+    }
+
+    public void setMatchCase(JCheckBox matchCase) {
+        this._match_case = matchCase;
+    }
 }
