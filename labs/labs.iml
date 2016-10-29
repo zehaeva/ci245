@@ -38,6 +38,13 @@
       <sourceFolder url="file://$MODULE_DIR$/L7_27" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/L7_29" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RunExpression" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L22_10" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L13_6" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L13_10" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L13_11" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L13_16" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L13_17" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/L13_27" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
