@@ -17,6 +17,16 @@ public class DrawPanel extends JPanel {
     private boolean _filled_shape;
     private JLabel _status_bar;
 
+    public DrawPanel(JLabel statusBar) {
+        this._status_bar = statusBar;
+        this._shape_type = 0;
+        this._current_shape = null;
+        this._current_color = Color.black;
+        this.setBackground(Color.white);
+
+        this.addMouseListener(new MouseHandler());
+    }
+
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
@@ -85,11 +95,30 @@ public class DrawPanel extends JPanel {
         @Override
         public void mouseReleased(MouseEvent e) {
             super.mouseReleased(e);
-            _current_shape.setX2(e.getX());
-            _current_shape.setY2(e.getY());
             _myshapes.add(_current_shape);
             _shape_count = _myshapes.size();
             _current_shape = null;
+
+            repaint();
+        }
+
+        public void updateStatus(MouseEvent e) {
+            _status_bar.setText(String.format("X: %d, Y: %d", e.getX(), e.getY()));
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            super.mouseMoved(e);
+            updateStatus(e);
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            super.mouseDragged(e);
+            _current_shape.setX2(e.getX());
+            _current_shape.setY2(e.getY());
+
+            updateStatus(e);
 
             repaint();
         }
