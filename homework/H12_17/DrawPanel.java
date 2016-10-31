@@ -1,11 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 /**
  * Created by zehaeva on 10/30/16.
  */
 public class DrawPanel extends JPanel {
-    private MyShape[] _myshapes;
+    private ArrayList<MyShape> _myshapes;
     private int _shape_count;
     private int _shape_type;
     private MyShape _current_shape;
@@ -18,7 +22,7 @@ public class DrawPanel extends JPanel {
         super.paintComponents(g);
 
         for (int i = 0; i < this._shape_count; i++) {
-            this._myshapes[i].draw(g);
+            this._myshapes.get(i).draw(g);
         }
 
         if (this._current_shape != null) {
@@ -41,9 +45,11 @@ public class DrawPanel extends JPanel {
 
     public void clearLastShape() {
         if (this._shape_count > 0) {
-            this._myshapes[this._shape_count - 1] = null;
+            this._myshapes.remove(this._shape_count - 1);
             this._shape_count--;
         }
+
+        this.repaint();
     }
 
     public void clearDrawing() {
@@ -52,5 +58,40 @@ public class DrawPanel extends JPanel {
             val = null;
         }
         this._shape_count = 0;
+
+        this.repaint();
+    }
+
+    private class MouseHandler extends MouseAdapter implements MouseMotionListener {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            super.mousePressed(e);
+            switch(_shape_type) {
+                case 0:
+                    _current_shape = new MyLine(e.getX(), e.getY(), e.getX(), e.getY(), _current_color);
+                    break;
+                case 1:
+                    _current_shape = new MyOval(e.getX(), e.getY(), e.getX(), e.getY(), _current_color, _filled_shape);
+                    break;
+                case 2:
+                    _current_shape = new MyRectangle(e.getX(), e.getY(), e.getX(), e.getY(), _current_color, _filled_shape);
+                    break;
+                default:
+                    _current_shape = new MyLine(e.getX(), e.getY(), e.getX(), e.getY(), _current_color);
+                    break;
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            super.mouseReleased(e);
+            _current_shape.setX2(e.getX());
+            _current_shape.setY2(e.getY());
+            _myshapes.add(_current_shape);
+            _shape_count = _myshapes.size();
+            _current_shape = null;
+
+            repaint();
+        }
     }
 }
