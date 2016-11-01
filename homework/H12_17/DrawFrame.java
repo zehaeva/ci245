@@ -10,13 +10,17 @@ public class DrawFrame extends JFrame {
         JLabel status = new JLabel();
         status.setText("X: 0, Y:0");
         DrawPanel dp = new DrawPanel(status);
+
+        TopPanel tp = new TopPanel();
+
         this.add(dp, BorderLayout.CENTER);
         this.add(status, BorderLayout.SOUTH);
+        this.add(tp, BorderLayout.NORTH);
 
         this.pack();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBackground(Color.white);
         this.setLocationRelativeTo(null);
-        this.setSize(300, 300);
+        this.setSize(600, 450);
     }
 }
