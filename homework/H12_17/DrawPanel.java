@@ -18,18 +18,22 @@ public class DrawPanel extends JPanel {
     private JLabel _status_bar;
 
     public DrawPanel(JLabel statusBar) {
+        this._myshapes = new ArrayList<>();
         this._status_bar = statusBar;
         this._shape_type = 0;
         this._current_shape = null;
         this._current_color = Color.black;
         this.setBackground(Color.white);
 
-        this.addMouseListener(new MouseHandler());
+        MouseHandler mh = new MouseHandler();
+
+        this.addMouseListener(mh);
+        this.addMouseMotionListener(mh);
     }
 
     @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
         for (int i = 0; i < this._shape_count; i++) {
             this._myshapes.get(i).draw(g);
@@ -40,6 +44,8 @@ public class DrawPanel extends JPanel {
             this._current_shape.draw(g);
         }
     }
+
+
 
     public void setShapeType(int shapeType) {
         this._shape_type = shapeType;
@@ -95,10 +101,11 @@ public class DrawPanel extends JPanel {
         @Override
         public void mouseReleased(MouseEvent e) {
             super.mouseReleased(e);
-            _myshapes.add(_current_shape);
-            _shape_count = _myshapes.size();
-            _current_shape = null;
-
+            if (_current_shape != null) {
+                _myshapes.add(_current_shape);
+                _shape_count = _myshapes.size();
+                _current_shape = null;
+            }
             repaint();
         }
 

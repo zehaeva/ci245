@@ -8,6 +8,7 @@ public class DrawFrame extends JFrame {
     public DrawFrame() throws HeadlessException {
         this.setLayout(new BorderLayout());
         JLabel status = new JLabel();
+        status.setText("X: 0, Y:0");
         DrawPanel dp = new DrawPanel(status);
         this.add(dp, BorderLayout.CENTER);
         this.add(status, BorderLayout.SOUTH);
