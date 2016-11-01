@@ -30,6 +30,9 @@ public class SeatingChart {
 	private int[] _tables;
 	private ArrayList<Integer> _table_head_count;
 
+	private ArrayList<String> _file_to_verify;
+	private String _file_name_to_verify;
+
 	/**
 	 * This method should return an array with just your name or your name and
 	 * your partner's name.
@@ -57,40 +60,54 @@ public class SeatingChart {
 		int code = 0;
 		int max_guests = 200;
 		String[] temp;
+		int guest_one;
+		int guest_two;
+		//long starttime = System.currentTimeMillis();
 
 		try {
-			ArrayList<String> file_to_verify = ReadTextFile(filename);
+			_file_name_to_verify = filename;
+			_file_to_verify = ReadTextFile(filename);
 
-			if (!file_to_verify.get(0).matches("^[0-9]+$")) {
+			this._num_guests = Integer.parseInt(_file_to_verify.get(0));
+			this._hate_list = new boolean[this._num_guests + 1][this._num_guests + 1];
+		//  let's assume that no one hates each other
+			for (boolean[] btemp :
+					this._hate_list) {
+				Arrays.fill(btemp, false);
+			}
+
+			if (this._num_guests < 10 && this._num_guests > 200) {
 				code = 1;
 			}
-			else if (Integer.parseInt(file_to_verify.get(0)) < 10 || Integer.parseInt(file_to_verify.get(0)) > 200) {
-				code = 1;
-			}
-			else if (!file_to_verify.get(1).equals("5") &&
-					 !file_to_verify.get(1).equals("6") &&
-					 !file_to_verify.get(1).equals("7") &&
-					 !file_to_verify.get(1).equals("8") &&
-					 !file_to_verify.get(1).equals("100000")) {
+			else if (!_file_to_verify.get(1).equals("5") &&
+					 !_file_to_verify.get(1).equals("6") &&
+					 !_file_to_verify.get(1).equals("7") &&
+					 !_file_to_verify.get(1).equals("8") &&
+					 !_file_to_verify.get(1).equals("100000")) {
 				code = 2;
 			} else {
-				max_guests = Integer.parseInt(file_to_verify.get(0));
+				max_guests = Integer.parseInt(_file_to_verify.get(0));
 
-				for (int i = 2; i < file_to_verify.size() - 1; i++) {
-					if (!file_to_verify.get(i).matches("^[0-9]+ [0-9]+$")) {
+				for (int i = 2; i < _file_to_verify.size() - 1; i++) {
+					temp = _file_to_verify.get(i).split(" ");
+					if (temp.length != 2) {
 						code = 3;
 						break;
-					}
-					else {
-						temp = file_to_verify.get(i).split(" ");
-						if (temp.length != 2) {
-							code = 3;
-                            break;
+					} else {
+						try {
+							guest_one = Integer.parseInt(temp[0]);
+							guest_two = Integer.parseInt(temp[1]);
+							if ((guest_one < 0 || guest_one > max_guests) || (guest_two < 0 || guest_two > max_guests)) {
+								code = 3;
+								System.out.println(i);
+								break;
+							}
+							//	memoize!
+							this._hate_list[guest_one][guest_two] = true;
+							this._hate_list[guest_two][guest_one] = true;
 						}
-						else if ((Integer.parseInt(temp[0]) < 0 || Integer.parseInt(temp[0]) > max_guests) ||
-								(Integer.parseInt(temp[1]) < 0 || Integer.parseInt(temp[1]) > max_guests) ) {
+						catch (NumberFormatException e) {
 							code = 3;
-                            System.out.println(i);
 							break;
 						}
 					}
@@ -98,10 +115,14 @@ public class SeatingChart {
 			}
 
 		}
+		catch (NumberFormatException e) {
+			code = 1;
+		}
 		catch (IOException e) {
-            System.out.println(e.toString());
 			code = 4;
 		}
+		//long endtime = System.currentTimeMillis();
+		//System.out.printf("The File Validated in %d milliseconds.\n", endtime - starttime);
 
 		return code;
 	}// end ValidateInputFile
@@ -139,87 +160,59 @@ public class SeatingChart {
 	 *         who hate each other are sitting at the same table.
 	 */
 	public GuestTable[] GetSeatingChart(String filename) {
-        ArrayList<String> file = new ArrayList<>();
+        ArrayList<String> file;
+		GuestTable[] gt;
 
-        try {
-            file = ReadTextFile(filename);
-        }
-        catch (IOException e) {
-            System.out.println("Something went wrong reading the file!");
-        }
+		//long starttime = System.currentTimeMillis();
 
-	//	initialize the arrays!
-        this._num_guests = Integer.parseInt(file.get(0));
-        this._table_size = Integer.parseInt(file.get(1));
-		this._hate_sort = new int[this._num_guests];
-		this._tables = new int[this._num_guests];
+		try {
+			if (filename.equals(_file_name_to_verify)) {
+				file = _file_to_verify;
+			} else {
+				file = ReadTextFile(filename);
+			}
 
-		this._table_head_count = new ArrayList<>();
-		this._table_head_count.add(0);
+		//	initialize the arrays!
+			this._num_guests = Integer.parseInt(file.get(0));
+			this._table_size = Integer.parseInt(file.get(1));
+			this._hate_sort = new int[this._num_guests];
+			this._tables = new int[this._num_guests];
 
-		Arrays.fill(this._tables, 0);
+			this._table_head_count = new ArrayList<>();
+			this._table_head_count.add(0);
 
-	//	this fills the list full of hate
-        fill_hate_list(file);
+			Arrays.fill(this._tables, 0);
 
-	//	this sorts the guests into a descending list
-	//	of who hates the most to the least
-		sort_guests();
+		//	seat the guests at a table!
+			seat_guest(get_next_guest(this._tables));
+		}
+		catch (IOException e) {
+			System.out.println("Something went wrong reading the file!");
+		}
+		finally {
+		//	setup for returning C:\Users\hcanaway.CFS\IdeaProjects\ci245\projects\RunSeatingChart\random_file.txt
+		//	how many tables did we use?
+			int max_table = 0;
+			for (int i = 0; i < this._tables.length; i++) {
+				if (max_table < this._tables[i]) {
+					max_table = this._tables[i];
+				}
+			}
 
-	//	seat the guests at a table!
-		//this._tables = seat_guest(this._tables);
-		seat_guest(get_next_guest(this._tables));
+			gt = new GuestTable[max_table];
+			for (int i = 0; i < max_table; i++) {
+				gt[i] = new GuestTable();
+			}
 
-	//	how many tables did we use?
-		int max_table = 0;
-		for (int i = 0; i < this._tables.length; i++) {
-			if (max_table < this._tables[i]) {
-				max_table = this._tables[i];
+			for (int i = 0; i < this._tables.length; i++) {
+				gt[this._tables[i] - 1].AddGuestToTable(i);
 			}
 		}
 
-	//	setup for returning
-
-		GuestTable[] gt = new GuestTable[max_table];
-		for (int i = 0; i < max_table; i++) {
-			gt[i] = new GuestTable();
-		}
-
-		for (int i = 0; i < this._tables.length; i++) {
-			gt[this._tables[i] - 1].AddGuestToTable(i);
-		}
+		//long endtime = System.currentTimeMillis();
+		//System.out.printf("The program ran in %d milliseconds.\n", endtime - starttime);
 
         return gt;
-	}
-
-	/**
-	 * Seats a guest at the table using an array passed back and forth
-	 * DEPRECIATED
-	 * @param assigned_seats
-	 * @return filled array of seats
-	 */
-	private int[] seat_guest(int[] assigned_seats) {
-		if (everyone_seated(assigned_seats)) {
-			return assigned_seats;
-		} else {
-			int next_guest = get_next_guest(assigned_seats);
-			int table = 1;
-			while (no_conflicts(assigned_seats) && !everyone_seated(assigned_seats)) {
-				while (table_full(assigned_seats, table)) {
-					table++;
-				}
-				int[] new_chart = copy_seating_chart(assigned_seats);
-				new_chart[next_guest] = table;
-				new_chart = seat_guest(new_chart);
-				if (no_conflicts(new_chart)) {
-					update_seats(assigned_seats, new_chart);
-				}
-				else {
-					table++;
-				}
-			}
-			return assigned_seats;
-		}
 	}
 
 	/**
@@ -257,30 +250,6 @@ public class SeatingChart {
 
 			return true;
 		}
-	}
-
-	/**
-	 * updates new seating chart with another seating chart
-	 * @param assigned_seats
-	 * @param new_chart
-	 */
-	private void update_seats(int[] assigned_seats, int[] new_chart) {
-		for (int i = 0; i < new_chart.length; i++) {
-			assigned_seats[i] = new_chart[i];
-		}
-	}
-
-	/**
-	 * copies given seating chart into a new array
-	 * @param assigned_seats
-	 * @return
-	 */
-	private int[] copy_seating_chart(int[] assigned_seats) {
-		int[] temp = new int[assigned_seats.length];
-		for (int i = 0; i < assigned_seats.length; i++) {
-			temp[i] = assigned_seats[i];
-		}
-		return temp;
 	}
 
 	/**
@@ -438,14 +407,14 @@ public class SeatingChart {
 
 	//	array initialization
         this._hate_list = new boolean[this._num_guests + 1][this._num_guests + 1];
-        this._hate_radix = new int[this._num_guests + 1];
+        //this._hate_radix = new int[this._num_guests + 1];
 
     //  let's assume that no one hates each other
         for (boolean[] temp :
                 this._hate_list) {
             Arrays.fill(temp, false);
         }
-        Arrays.fill(this._hate_radix, 0);
+        //Arrays.fill(this._hate_radix, 0);
 
 	//	go through the file, and build up the hate_list lookup table
 	//	and build up the radix which counts how many people each guest hates
@@ -455,8 +424,8 @@ public class SeatingChart {
             hate_two = Integer.parseInt(edge[1]);
             this._hate_list[hate_one][hate_two] = true;
             this._hate_list[hate_two][hate_one] = true;
-            this._hate_radix[hate_one]++;
-            this._hate_radix[hate_two]++;
+            //this._hate_radix[hate_one]++;
+            //this._hate_radix[hate_two]++;
         }
     }
 }
