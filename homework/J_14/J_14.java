@@ -68,12 +68,12 @@ public class J_14 {
 		//  if this pair doesn't exist then store it
 			if (check_pair(hate_one, hate_two, hate_list)) {
 				hate_list[hate_one][hate_two] = true;
-				output.add(hate_one + " " + hate_two);
+				output.add((hate_one + 1) + " " + (hate_two + 1));
 				i++;
 			}
 		}
 
-		WriteTextFile(output, "random_file.txt");
+		WriteTextFile(output, "/home/zehaeva/IdeaProjects/ci245/projects/RunSeatingChart/random_file.txt");
 	}
 
 	/**

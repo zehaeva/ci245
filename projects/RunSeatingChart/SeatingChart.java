@@ -62,7 +62,7 @@ public class SeatingChart {
 		String[] temp;
 		int guest_one;
 		int guest_two;
-		//long starttime = System.currentTimeMillis();
+		long starttime = System.currentTimeMillis();
 
 		try {
 			_file_name_to_verify = filename;
@@ -121,8 +121,8 @@ public class SeatingChart {
 		catch (IOException e) {
 			code = 4;
 		}
-		//long endtime = System.currentTimeMillis();
-		//System.out.printf("The File Validated in %d milliseconds.\n", endtime - starttime);
+		long endtime = System.currentTimeMillis();
+		System.out.printf("The File Validated in %d milliseconds.\n", endtime - starttime);
 
 		return code;
 	}// end ValidateInputFile
@@ -139,7 +139,7 @@ public class SeatingChart {
 
 		try {
 			// Need to cast the return result to an ArrayList
-			linesToRead = (ArrayList<String>) Files.readAllLines(path, StandardCharsets.UTF_8);
+			linesToRead = (ArrayList<String>) Files.readAllLines(path);
 
 		} catch (IOException e) {
             System.out.println(path.toString());
@@ -163,7 +163,7 @@ public class SeatingChart {
         ArrayList<String> file;
 		GuestTable[] gt;
 
-		//long starttime = System.currentTimeMillis();
+		long starttime = System.currentTimeMillis();
 
 		try {
 			if (filename.equals(_file_name_to_verify)) {
@@ -191,6 +191,7 @@ public class SeatingChart {
 		}
 		finally {
 		//	setup for returning C:\Users\hcanaway.CFS\IdeaProjects\ci245\projects\RunSeatingChart\random_file.txt
+		//	/home/zehaeva/IdeaProjects/ci245/projects/RunSeatingChart/rf.txt
 		//	how many tables did we use?
 			int max_table = 0;
 			for (int i = 0; i < this._tables.length; i++) {
@@ -209,8 +210,8 @@ public class SeatingChart {
 			}
 		}
 
-		//long endtime = System.currentTimeMillis();
-		//System.out.printf("The program ran in %d milliseconds.\n", endtime - starttime);
+		long endtime = System.currentTimeMillis();
+		System.out.printf("The program ran in %d milliseconds.\n", endtime - starttime);
 
         return gt;
 	}
