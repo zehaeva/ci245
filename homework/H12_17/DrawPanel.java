@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
@@ -53,10 +54,17 @@ public class DrawPanel extends JPanel {
 
     public void setCurrentColor(Color currentColor) {
         this._current_color = currentColor;
+        if (this._current_shape != null) {
+            this._current_shape.setColor(this._current_color);
+        }
     }
 
     public void setFilledShape(boolean filledShape) {
         this._filled_shape = filledShape;
+
+        if (_current_shape!= null && _current_shape instanceof MyBoundedShape) {
+            ((MyBoundedShape) _current_shape).setFilled(_filled_shape);
+        }
     }
 
     public void clearLastShape() {
@@ -69,10 +77,7 @@ public class DrawPanel extends JPanel {
     }
 
     public void clearDrawing() {
-        for (MyShape val :
-                this._myshapes) {
-            val = null;
-        }
+        this._myshapes.clear();
         this._shape_count = 0;
 
         this.repaint();
@@ -124,6 +129,11 @@ public class DrawPanel extends JPanel {
             super.mouseDragged(e);
             _current_shape.setX2(e.getX());
             _current_shape.setY2(e.getY());
+            _current_shape.setColor(_current_color);
+
+            if (_current_shape instanceof MyBoundedShape) {
+                ((MyBoundedShape) _current_shape).setFilled(_filled_shape);
+            }
 
             updateStatus(e);
 

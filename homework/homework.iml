@@ -27,8 +27,11 @@
       <sourceFolder url="file://$MODULE_DIR$/H12_14" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/J_24" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/J_25" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/H11_18" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/H12_17" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/H13_26" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

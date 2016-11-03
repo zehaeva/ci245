@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by hcanaway on 10/31/2016.
@@ -11,7 +13,7 @@ public class DrawFrame extends JFrame {
         status.setText("X: 0, Y:0");
         DrawPanel dp = new DrawPanel(status);
 
-        TopPanel tp = new TopPanel();
+        TopPanel tp = new TopPanel(dp);
 
         this.add(dp, BorderLayout.CENTER);
         this.add(status, BorderLayout.SOUTH);

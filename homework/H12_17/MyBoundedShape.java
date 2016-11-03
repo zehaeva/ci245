@@ -16,6 +16,42 @@ public abstract class MyBoundedShape extends MyShape {
         this._filled = filled;
     }
 
+    @Override
+    public int getX1() {
+        if (super.getX2() < super.getX1()) {
+            return super.getX2();
+        } else {
+            return super.getX1();
+        }
+    }
+
+    @Override
+    public int getY1() {
+        if (super.getY2() < super.getY1()) {
+            return super.getY2();
+        } else {
+            return super.getY1();
+        }
+    }
+
+    @Override
+    public int getX2() {
+        if (super.getX2() > super.getX1()) {
+            return super.getX2();
+        } else {
+            return super.getX1();
+        }
+    }
+
+    @Override
+    public int getY2() {
+        if (super.getY2() > super.getY1()) {
+            return super.getY2();
+        } else {
+            return super.getY1();
+        }
+    }
+
     public boolean isFilled() {
         return _filled;
     }
