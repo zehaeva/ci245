@@ -45,9 +45,9 @@ public class Woolie34 extends Thread {
      * </ul>
      */
     public Woolie34(String n, int c, String d, Bridge34 b ) {
-	super( n );
-	crossingTime = c;
-	destination = d;
+        super( n );
+        crossingTime = c;
+        destination = d;
         theBridge = b;
         bridgeGuard = theBridge.getTroll();
     }
@@ -83,7 +83,7 @@ public class Woolie34 extends Thread {
 
         // The Woolie34 has started to cross the bridge
 
-	// System.out.println( getName() + " has arrived at the bridge.");
+	    System.out.println( getName() + " has arrived at the bridge.");
 
         // Get permission to cross from the troll
 
@@ -91,21 +91,21 @@ public class Woolie34 extends Thread {
 
         // Simulate the time on the bridge
 
-	for ( int time = 0; time < crossingTime; time++ ) {
+	    for ( int time = 0; time < crossingTime; time++ ) {
             // Take care of output
 
-	    if( time == 0 )
-		System.out.println( getName() + " is starting to cross." );
-	    else
-		System.out.println( "\t" + getName() + ' ' + time + " seconds." );
+	        if( time == 0 )
+		        System.out.println( getName() + " is starting to cross." );
+	        else
+	    	    System.out.println( "\t" + getName() + ' ' + time + " seconds." );
 
             // Let time pass
 
-	    try {
-		sleep(1000);
-	    }
-	    catch( InterruptedException e ) {}
-	}
+    	    try {
+	    	    sleep(1000);
+	        }
+            catch( InterruptedException e ) {}
+        }
 
         // Tell the bridge we have crossed
 
@@ -113,7 +113,7 @@ public class Woolie34 extends Thread {
 
         // Finished crossing
 
-	System.out.println( getName() + " leaves at " + destination + "." );
+    	System.out.println( getName() + " leaves at " + destination + "." );
     }
 
     /**

@@ -10,6 +10,8 @@
  *
  */
 
+import static java.lang.Thread.sleep;
+
 /*
  * A troll to guard a bridge. The troll simply passes requests from
  * woolies to his bridge. It is a placeholder for a later exercise.
@@ -43,6 +45,11 @@ public class Troll34 {
 	 * </ul>
 	 */
 	public void enterBridgePlease() {
+        while (this.myBridge.isFull()) {
+            try {
+                sleep(1000);
+            } catch (InterruptedException ex) {}
+        }
 		myBridge.enter();
 	}
 
@@ -59,5 +66,10 @@ public class Troll34 {
 	 * creates the troll object.
 	 */
 	private Bridge34 myBridge;
+
+	/**
+	 * Queue that the Troll uses to keep track of who should get onto the bridge next
+	 */
+	private WoolieQueue myQueue;
 
 }
