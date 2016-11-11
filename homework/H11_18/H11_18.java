@@ -9,8 +9,8 @@ public class H11_18 {
         catch (ExceptionA e) {
             System.out.println("Super Class exception!");
         }
-        /*catch (ExceptionB e) {
-            System.out.println("We'll never get here so the compiler hates us!");
-        }*/
+        //catch (ExceptionB e) {
+        //    System.out.println("We'll never get here so the compiler hates us!");
+        //}
     }
 }
