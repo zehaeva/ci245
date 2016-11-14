@@ -27,7 +27,7 @@ public class AirlineReservationModel {
 			while (seat_type == 0) {
 				try {
 					System.out.print("Please type 1 for First Class or type 2 for Economy: ");
-					seat_type = 1;//input.nextInt();
+					seat_type = input.nextInt();
 				}
 				catch (Exception ex) {
 					input.nextLine();
@@ -93,7 +93,8 @@ public class AirlineReservationModel {
 			}
 			else {
 				System.out.print("Do you want to reserve another seat? (y/n): ");
-				another = 'n';//input.next().charAt(0);
+//				another = 'n';
+				input.next().charAt(0);
 			}
 		}
 	}

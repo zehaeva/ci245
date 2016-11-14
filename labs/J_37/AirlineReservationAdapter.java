@@ -1,38 +1,93 @@
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.util.NoSuchElementException;
 
 /**
  * Created by zehaeva on 11/10/16.
  */
-public class AirlineReservationAdapter {
+public class AirlineReservationAdapter implements Runnable {
     private AirlineReservationModel _old_system;
+    private Thread _p;
+    private ByteArrayInputStream bais;
+    private PrintStream old;
+    private PrintStream ps;
+    private ByteArrayOutputStream baos;
+
+    private boolean _first_run;
 
     public AirlineReservationAdapter() {
+        this._first_run = true;
 
     //  set up baos and it's printstream
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(baos);
+        baos = new ByteArrayOutputStream();
+        ps = new PrintStream(baos);
+
     //  save old system.out
-        PrintStream old = System.out;
+        old = System.out;
+
     //  set system out to the bytestream
         System.setOut(ps);
 
-    //  set up bais and it's inputstream
-        //ByteArrayInputStream bais = new ByteArrayInputStream("1\n".getBytes());
-        //System.setIn(bais);
+        this.bais = new ByteArrayInputStream("0\n".getBytes());
+        System.setIn(bais);
 
-        this._old_system = new AirlineReservationModel();
-        this._old_system.startEngine(new String[] {});
+        this._p = new Thread(this);
 
-        System.out.flush();
-        System.setOut(old);
-
-        System.out.println("This is what I got\n" + baos.toString());
+        this._p.start();
     }
 
     public String getEconomy() {
-        return "";
+        try {
+            continueInput();
+
+            baos.reset();
+            //this.bais.reset();
+            //bais.read("\n1".getBytes());
+            this.bais = new ByteArrayInputStream("1".getBytes());
+            Thread.sleep(50);
+        } catch (InterruptedException ex) {
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "This is what I got\n" + baos.toString();
+    }
+
+    private void continueInput() throws InterruptedException, IOException {
+        if (this._first_run) {
+            this._first_run = false;
+        }
+        else {
+            bais.read("y\n".getBytes());
+            Thread.sleep(50);
+            System.out.flush();
+        }
+    }
+
+    public String getFirstClass() {
+        try {
+            continueInput();
+            bais.read("2\n".getBytes());
+            Thread.sleep(50);
+            System.out.flush();
+        } catch (InterruptedException ex) {
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "This is what I got\n" + baos.toString();
+    }
+
+    @Override
+    public void run() {
+        this._old_system.startEngine(new String[]{});
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

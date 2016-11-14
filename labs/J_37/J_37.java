@@ -3,8 +3,9 @@
  */
 public class J_37 {
     public static void main(String args[]) {
+        AirlineReservationView form = new AirlineReservationView();
 
-        AirlineReservationAdapter a = new AirlineReservationAdapter();
+        form.setVisible(true);
 
     }
 }
