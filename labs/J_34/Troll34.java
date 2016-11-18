@@ -10,6 +10,8 @@
  *
  */
 
+import java.util.concurrent.Semaphore;
+
 import static java.lang.Thread.sleep;
 
 /*
@@ -25,15 +27,17 @@ import static java.lang.Thread.sleep;
  *     must be a daemon thread.</li>
  * <ul>
  */
-public class Troll34 {
+public class Troll34 extends Semaphore {
 
 	/**
 	 * Create a troll. (Called by its Bridge34 object.)
 	 *
 	 * @param b the Bridge34 object associated with this Troll34 object
 	 */
-	public Troll34(Bridge34 b ) {
+	public Troll34(Bridge34 b, int permits) {
+		super(permits);
 		myBridge = b;
+		this.myQueue = new WoolieQueue();
 	}
 
 	/**
@@ -45,12 +49,19 @@ public class Troll34 {
 	 * </ul>
 	 */
 	public void enterBridgePlease() {
-        while (this.myBridge.isFull()) {
+		this.myQueue.insert((Woolie34)Thread.currentThread());
+
+        while (this.myBridge.isFull() || this.myQueue.peek() != Thread.currentThread()) {
             try {
                 sleep(1000);
             } catch (InterruptedException ex) {}
         }
-		myBridge.enter();
+
+		try {
+			this.acquire();
+			myBridge.removeWoolie();
+			myBridge.addWoolie();
+		} catch (InterruptedException e) {}
 	}
 
 	/**
@@ -58,7 +69,8 @@ public class Troll34 {
 	 * off the bridge.
 	 */
 	public void leave() {
-		myBridge.leave();
+		this.myQueue.remove();
+		this.release();
 	}
 
 	/**

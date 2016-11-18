@@ -3,29 +3,23 @@ import java.util.concurrent.Semaphore;
 /**
  * Created by zehaeva on 11/3/16.
  */
-public class Bridge34 extends Semaphore {
+public class Bridge34 {
     private Troll34 _my_troll;
     private int _count;
     private static int MAX_ON_BRIDGE;
 
     public Bridge34(int permits) {
-        super(permits);
+
         this.MAX_ON_BRIDGE = permits;
-        this._my_troll = new Troll34(this);
+        this._my_troll = new Troll34(this, permits);
     }
 
-    public void leave() {
-        this.release();
+    public void removeWoolie() {
         this._count--;
     }
 
-    public void enter() {
-        try {
-            this.acquire();
-            this._count++;
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+    public void addWoolie() {
+        this._count++;
     }
 
     public Troll34 getTroll() {
