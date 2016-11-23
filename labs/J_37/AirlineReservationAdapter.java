@@ -7,10 +7,11 @@ import java.util.NoSuchElementException;
 public class AirlineReservationAdapter implements Runnable {
     private AirlineReservationModel _old_system;
     private Thread _p;
-    private ByteArrayInputStream bais;
+    private PipedInputStream pis;
     private PrintStream old;
     private PrintStream ps;
     private ByteArrayOutputStream baos;
+    private PipedOutputStream pos;
 
     private boolean _first_run;
 
@@ -18,17 +19,23 @@ public class AirlineReservationAdapter implements Runnable {
         this._first_run = true;
 
     //  set up baos and it's printstream
-        baos = new ByteArrayOutputStream();
-        ps = new PrintStream(baos);
+        this.baos = new ByteArrayOutputStream();
+        this.pos = new PipedOutputStream();
+        this.ps = new PrintStream(this.baos);
 
     //  save old system.out
-        old = System.out;
+        this.old = System.out;
 
-    //  set system out to the bytestream
-        System.setOut(ps);
+    //  set system out to the printstream
+        System.setOut(this.ps);
 
-        this.bais = new ByteArrayInputStream("0\n".getBytes());
-        System.setIn(bais);
+        this.pis = new PipedInputStream();
+        try {
+            this.pis.connect(this.pos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.setIn(this.pis);
 
         this._p = new Thread(this);
 
@@ -37,46 +44,34 @@ public class AirlineReservationAdapter implements Runnable {
 
     public String getEconomy() {
         try {
-            continueInput();
-
-            baos.reset();
-            //this.bais.reset();
-            //bais.read("\n1".getBytes());
-            this.bais = new ByteArrayInputStream("1".getBytes());
-            Thread.sleep(50);
-        } catch (InterruptedException ex) {
-
+            this.pos.write("2\n".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "This is what I got\n" + baos.toString();
+        return "This is what I got\n" + this.baos.toString();
     }
-
-    private void continueInput() throws InterruptedException, IOException {
-        if (this._first_run) {
-            this._first_run = false;
-        }
-        else {
-            bais.read("y\n".getBytes());
-            Thread.sleep(50);
-            System.out.flush();
-        }
-    }
+//
+//    private void continueInput() throws InterruptedException, IOException {
+//        if (this._first_run) {
+//            this._first_run = false;
+//        }
+//        else {
+//            bais.read("y\n".getBytes());
+//            Thread.sleep(50);
+//            System.out.flush();
+//        }
+//    }
 
     public String getFirstClass() {
         try {
-            continueInput();
-            bais.read("2\n".getBytes());
-            Thread.sleep(50);
-            System.out.flush();
-        } catch (InterruptedException ex) {
-
+            this.ps.flush();
+            this.pos.write("1\n".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "This is what I got\n" + baos.toString();
+        return "This is what I got\n" + this.baos.toString();
     }
 
     @Override

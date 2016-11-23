@@ -26,7 +26,7 @@ public class AirlineReservationModel {
 
 			while (seat_type == 0) {
 				try {
-					System.out.print("Please type 1 for First Class or type 2 for Economy: ");
+					System.out.print("\nPlease type 1 for First Class or type 2 for Economy: ");
 					seat_type = input.nextInt();
 				}
 				catch (Exception ex) {
@@ -50,7 +50,7 @@ public class AirlineReservationModel {
 
 					if (found_seat < 0) {
 						seat_class = "Economy";
-						System.out.printf("Sorry we didn't find an available seat, is %s acceptable? (y/n): ", seat_class);
+						System.out.printf("\nSorry we didn't find an available seat, is %s acceptable? (y/n): ", seat_class);
 						change = input.next().charAt(0);
 						if (change == 'y') {
 							seat_type = 2;
@@ -74,7 +74,7 @@ public class AirlineReservationModel {
 
 					if (found_seat < 0) {
 						seat_class = "First Class";
-						System.out.printf("Sorry we didn't find an available seat, is %s acceptable? (y/n): ", seat_class);
+						System.out.printf("\nSorry we didn't find an available seat, is %s acceptable? (y/n): ", seat_class);
 						change = input.next().charAt(0);
 						if (change == 'y') {
 							seat_type = 1;
@@ -92,8 +92,7 @@ public class AirlineReservationModel {
 				another = 'n';
 			}
 			else {
-				System.out.print("Do you want to reserve another seat? (y/n): ");
-//				another = 'n';
+				System.out.print("\nDo you want to reserve another seat? (y/n): ");
 				input.next().charAt(0);
 			}
 		}
@@ -132,7 +131,7 @@ public class AirlineReservationModel {
 		}
 
 		if (found_seat < 0) {
-			System.out.printf("Sorry we didn't find an available seat, is %s acceptable? (y/n): ", seat_class(2));
+			System.out.printf("\nSorry we didn't find an available seat, is %s acceptable? (y/n): ", seat_class(2));
 			change = input.next().charAt(0);
 			if (change == 'y') {
 				seat_type = 1;
@@ -144,7 +143,7 @@ public class AirlineReservationModel {
 	}
 
 	public static void print_pass(int seat_number, int class_id) {
-		System.out.printf("Your seat has been reserved! Your seat number is %d\n", seat_number);
+		System.out.printf("\nYour seat has been reserved! Your seat number is %d\n", seat_number);
 
 		System.out.printf("****************************************************\n");
 		System.out.printf("** Boarding Pass                                  **\n");
