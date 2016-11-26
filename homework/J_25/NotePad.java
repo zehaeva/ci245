@@ -184,7 +184,7 @@ public class NotePad extends JFrame {
         this._status_bar.setVisible(!this._status_bar.isVisible());
     }
 
-    public JTextArea textArea() {
+    public JTextArea getTextArea() {
         return this._text;
     }
 

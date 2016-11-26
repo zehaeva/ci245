@@ -41,7 +41,12 @@ public class FindReplace extends JDialog implements ActionListener {
         this._find.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int searchIndex;
+                searchIndex = _owner.getTextArea().getText().indexOf(_needle.getText());
 
+                if (searchIndex >= 0) {
+                    _owner.getTextArea().select(searchIndex, searchIndex + _needle.getText().length());
+                }
             }
         });
         this._panel.add(this._find, c);
@@ -59,6 +64,12 @@ public class FindReplace extends JDialog implements ActionListener {
         c.fill = GridBagConstraints.HORIZONTAL;
         this._replace = new JButton();
         this._replace.setText("Replace");
+        this._replace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                replace();
+            }
+        });
         this._panel.add(this._replace, c);
 
         c.gridy = 3;
@@ -89,6 +100,15 @@ public class FindReplace extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         dispose();
+    }
+
+    public void replace() {
+        int index = _owner.getTextArea().getText().indexOf(this._needle.getText());
+
+        if (index >= 0) {
+            _owner.getTextArea().setText(_owner.getTextArea().getText().replaceFirst(this._needle.getText(),
+                    this._nail.getText()));
+        }
     }
 
     public JTextField getNeedle() {
