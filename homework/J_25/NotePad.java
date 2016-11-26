@@ -184,6 +184,10 @@ public class NotePad extends JFrame {
         this._status_bar.setVisible(!this._status_bar.isVisible());
     }
 
+    public JTextArea textArea() {
+        return this._text;
+    }
+
     /**
      * clears the text box and allows the user to start writing!
      */
@@ -301,13 +305,8 @@ public class NotePad extends JFrame {
      * promts the user for text and then replace it with the provided text
      */
     private void replaceText() {
-        FindReplace fr = new FindReplace();
-        JDialog dialog = new JDialog(this, "Find/Replace", true);
-        dialog.setContentPane(fr);
-
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        FindReplace fr = new FindReplace(this);
+        fr.setVisible(true);
     }
 
     /**
