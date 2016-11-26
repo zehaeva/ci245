@@ -49,19 +49,25 @@ public class Troll34 extends Semaphore {
 	 * </ul>
 	 */
 	public void enterBridgePlease() {
-		this.myQueue.insert((Woolie34)Thread.currentThread());
+		this.myQueue.insert((Woolie34) Thread.currentThread());
 
-        while (this.myBridge.isFull() || this.myQueue.peek() != Thread.currentThread()) {
-            try {
-                sleep(1000);
-            } catch (InterruptedException ex) {}
-        }
-
-		try {
-			this.acquire();
-			myBridge.removeWoolie();
-			myBridge.addWoolie();
-		} catch (InterruptedException e) {}
+		while (true) {
+			if (this.myBridge.isFull() || this.myQueue.peek() != Thread.currentThread()) {
+				try {
+					sleep(1000);
+				}
+				catch (InterruptedException ex) {}
+			}
+			else if (this.myQueue.peek() == Thread.currentThread()) {
+				try {
+					this.myQueue.remove();
+					this.acquire();
+					myBridge.addWoolie();
+					return;
+				}
+				catch (InterruptedException e) {}
+			}
+		}
 	}
 
 	/**
@@ -69,7 +75,7 @@ public class Troll34 extends Semaphore {
 	 * off the bridge.
 	 */
 	public void leave() {
-		this.myQueue.remove();
+		myBridge.removeWoolie();
 		this.release();
 	}
 
