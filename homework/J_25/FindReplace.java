@@ -41,12 +41,7 @@ public class FindReplace extends JDialog implements ActionListener {
         this._find.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int searchIndex;
-                searchIndex = _owner.getTextArea().getText().indexOf(_needle.getText());
-
-                if (searchIndex >= 0) {
-                    _owner.getTextArea().select(searchIndex, searchIndex + _needle.getText().length());
-                }
+                find();
             }
         });
         this._panel.add(this._find, c);
@@ -103,7 +98,8 @@ public class FindReplace extends JDialog implements ActionListener {
     }
 
     public void replace() {
-        int index = _owner.getTextArea().getText().indexOf(this._needle.getText());
+        String haystack = this._owner.getTextArea().getText();
+        int index = 0;
 
         if (index >= 0) {
             _owner.getTextArea().setText(_owner.getTextArea().getText().replaceFirst(this._needle.getText(),
@@ -111,20 +107,33 @@ public class FindReplace extends JDialog implements ActionListener {
         }
     }
 
-    public JTextField getNeedle() {
-        return _needle;
+    public void replace_all() {
+        this._owner.getTextArea().setText(this._owner.getTextArea().getText().replaceAll(this.getNeedle(),
+                this.getNail()));
     }
 
-    public void setNeedle(JTextField needle) {
-        this._needle = needle;
+    public void find() {
+        int searchIndex;
+        searchIndex = _owner.getTextArea().getText().indexOf(_needle.getText());
+
+        if (searchIndex >= 0) {
+            _owner.getTextArea().select(searchIndex, searchIndex + _needle.getText().length());
+        }
     }
 
-    public JTextField getNail() {
-        return _nail;
+
+    public String getNeedle() { return _needle.getText(); }
+
+    public void setNeedle(String needle) {
+        this._needle.setText(needle);
     }
 
-    public void setNail(JTextField nail) {
-        this._nail = nail;
+    public String getNail() {
+        return _nail.getText();
+    }
+
+    public void setNail(String nail) {
+        this._nail.setText(nail);
     }
 
     public JCheckBox getMatchCase() {
