@@ -7,13 +7,14 @@ import java.util.Timer;
 /**
  * Created by zehaeva on 10/24/2016.
  */
-public class Game extends JFrame {
+public class Game extends JFrame implements MouseListener {
     private Map _map;
     private boolean _isRunning;
     private Timer _timer;
     private JPanel _panel;
     private Player[] _players;
     private Dimension _grid_size;
+    private GameLoop _gl;
 
     public Game() throws HeadlessException {
         this._players = new Player[2];
@@ -35,11 +36,15 @@ public class Game extends JFrame {
             }
         }
 
+        this._gl = new GameLoop();
+
         this._panel = new JPanel() {
             public void paintComponent(Graphics g) {
                 _map.drawUnits(g);
             }
         };
+
+        this._panel.addMouseListener(this);
 
         this._panel.setPreferredSize(new Dimension(this._map.getWidth(), this._map.getHeight()));
 
@@ -50,9 +55,44 @@ public class Game extends JFrame {
     }
 
     public void start() {
-
         _timer = new Timer();
-        _timer.schedule(new GameLoop(), 0, 1000 / 60); //new timer at 60 fps, the timing mechanism
+        _timer.schedule(this._gl, 0, 1000 / 60); //new timer at 60 fps, the timing mechanism
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // are we clicking on a unit?
+
+        for (Unit x :
+                this._players[this._gl.currentPlayer()].getUnits()) {
+            if (x.getShape().contains(e.getX(), e.getY())) {
+                if (!x.isSelected()) {
+                    x.select();
+                } else {
+                    x.unSelect();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 
     private class GameLoop extends java.util.TimerTask
@@ -83,6 +123,10 @@ public class Game extends JFrame {
             else {
 
             }
+        }
+
+        public int currentPlayer() {
+            return this._current_player;
         }
     }
 }

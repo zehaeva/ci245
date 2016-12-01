@@ -13,6 +13,8 @@ public class Unit extends JComponent implements MouseListener {
     private String _name;
     private Point _velocity;
     private Color _color;
+    private Color _color_base;
+    private Color _color_selected;
     private Shape _shape;
     private boolean _selected;
 
@@ -34,6 +36,7 @@ public class Unit extends JComponent implements MouseListener {
         this._size = size;
         this._velocity = new Point(0, 0);
         this._color = color;
+        this._color_base = color;
     }
 
     public Unit(int x, int y, int size, int speedX, int speedY, Color color) {
@@ -41,6 +44,8 @@ public class Unit extends JComponent implements MouseListener {
         this._size = size;
         this._velocity = new Point(speedX, speedY);
         this._color = color;
+        this._color_base = color;
+        this._color_selected = Color.cyan;
         this._shape = new Ellipse2D.Double(x, y, size, size);
         this._selected = false;
     }
@@ -110,11 +115,22 @@ public class Unit extends JComponent implements MouseListener {
     }
 
     public void setSelected(boolean selected) {
-        this._selected = selected;
+        if (selected) {
+            this.select();
+        }
+        else {
+            this.unSelect();
+        }
     }
 
     public void select() {
         this._selected = true;
+        this._color = this._color_selected;
+    }
+
+    public void unSelect() {
+        this._selected = false;
+        this._color = this._color_base;
     }
 
     @Override
