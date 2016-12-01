@@ -58,9 +58,27 @@ public class Unit {
         this._size = size;
     }
 
+    public int width() {
+        return this._size;
+    }
+    public int height() {
+        return this._size;
+    }
+
+    public int x() {
+        return this._position.x;
+    }
+
+    public int y() {
+        return this._position.y;
+    }
+
+    public void move(int x, int y) {
+        this._position.x += x;
+        this._position.y += y;
+    }
+
     public void draw(Graphics g) {
-        this._position.x += this._velocity.x;
-        this._position.y += this._velocity.y;
         g.drawOval(this._position.x, this._position.y, this._size, this._size);
     }
 }

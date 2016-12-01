@@ -11,9 +11,14 @@ public class Game extends JFrame {
     private boolean _isRunning;
     private Timer _timer;
     private JPanel _panel;
+    private Player[] _players;
 
     public Game() throws HeadlessException {
-        this._map = new Map(200, 200);
+        this._players = new Player[2];
+        this._players[0] = new Player("Human");
+        this._players[1] = new Player("Computer");
+
+        this._map = new Map(640, 480);
 
         this._units = new Unit[10];
 

@@ -43,7 +43,7 @@ public class Map {
         for (Unit x :
                 this._units) {
             if (this._width >= x.getPosition().getX() && this._height >= x.getPosition().getY()) {
-                x.draw(g);
+                g.drawOval(x.x(), x.y(), x.width(), x.width());
             }
         }
     }
