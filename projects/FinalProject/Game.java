@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Timer;
 
 /**
@@ -15,8 +17,8 @@ public class Game extends JFrame {
 
     public Game() throws HeadlessException {
         this._players = new Player[2];
-        this._players[0] = new Player("Human", new Color(64,128,64));
-        this._players[1] = new Player("Computer", Color.RED);
+        this._players[0] = new Player("Human", true, new Color(64,128,64));
+        this._players[1] = new Player("Computer", false, Color.RED);
 
         this._grid_size = new Dimension(24, 24);
 
@@ -55,6 +57,8 @@ public class Game extends JFrame {
 
     private class GameLoop extends java.util.TimerTask
     {
+        private int _current_player = 0;
+
         public void run() //this becomes the loop
         {
             doGameUpdates();
@@ -70,7 +74,15 @@ public class Game extends JFrame {
         }
 
         private void doGameUpdates() {
+        //  are we a human?
+            if (_players[this._current_player].isHuman()) {
+                if(_players[this._current_player].executeCommands()) {
+                    this._current_player++;
+                }
+            }
+            else {
 
+            }
         }
     }
 }
