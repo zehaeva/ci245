@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Timer;
 
 /**
@@ -7,21 +9,31 @@ import java.util.Timer;
  */
 public class Game extends JFrame {
     private Map _map;
-    private Unit[] _units;
     private boolean _isRunning;
     private Timer _timer;
     private JPanel _panel;
+    private Player[] _players;
+    private Dimension _grid_size;
 
     public Game() throws HeadlessException {
-        this._map = new Map(200, 200);
+        this._players = new Player[2];
+        this._players[0] = new Player("Human", true, new Color(64,128,64));
+        this._players[1] = new Player("Computer", false, Color.RED);
 
-        this._units = new Unit[10];
+        this._grid_size = new Dimension(24, 24);
 
-        this._map.getUnits().add(new Unit(5, 5, 5));
-        this._map.getUnits().add(new Unit(25, 25, 10));
-        this._map.getUnits().add(new Unit(25, 0, 7, 5, 5));
-        this._map.getUnits().add(new Unit(5, 25, 20));
-        this._map.getUnits().add(new Unit(55, 55, 15));
+        this._map = new Map(480, 480, this._grid_size);
+
+        this._players[0].generateUnits(2, 5, this._grid_size);
+        this._players[1].generateUnits(18, 5, this._grid_size);
+
+        for (Player p:
+                this._players) {
+            for (Unit u :
+                    p.getUnits()) {
+                this._map.getUnits().add(u);
+            }
+        }
 
         this._panel = new JPanel() {
             public void paintComponent(Graphics g) {
@@ -29,7 +41,7 @@ public class Game extends JFrame {
             }
         };
 
-        this.setPreferredSize(new Dimension(this._map.getWidth(), this._map.getWidth()));
+        this._panel.setPreferredSize(new Dimension(this._map.getWidth(), this._map.getHeight()));
 
         this.add(this._panel);
         this.pack();
@@ -45,6 +57,8 @@ public class Game extends JFrame {
 
     private class GameLoop extends java.util.TimerTask
     {
+        private int _current_player = 0;
+
         public void run() //this becomes the loop
         {
             doGameUpdates();
@@ -60,7 +74,15 @@ public class Game extends JFrame {
         }
 
         private void doGameUpdates() {
+        //  are we a human?
+            if (_players[this._current_player].isHuman()) {
+                if(_players[this._current_player].executeCommands()) {
+                    this._current_player++;
+                }
+            }
+            else {
 
+            }
         }
     }
 }
