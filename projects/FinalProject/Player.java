@@ -42,8 +42,10 @@ public class Player {
     }
 
     public void generateUnits(int starting_side, int count, Dimension gridSize) {
-        for (int i = 0; i < count; i++) {
-            this._units.add(new Unit(i * gridSize.height, starting_side * gridSize.width, gridSize.height, 0, 0, this._color));
+        this._units.add(new Unit(0, starting_side * gridSize.width, gridSize.height, 0, 0, this._color));
+        for (int i = 1; i < count - 1; i++) {
+            this._units.add(new Knight(i * gridSize.height, starting_side * gridSize.width, gridSize.height, 0, 0, this._color));
         }
+        this._units.add(new Unit((count - 1) * gridSize.height, starting_side * gridSize.width, gridSize.height, 0, 0, this._color));
     }
 }
