@@ -8,6 +8,7 @@ public class Unit {
     private int _size;
     private String _name;
     private Point _velocity;
+    private Color _color;
 
     public Unit(Point position) {
         this._position = position;
@@ -22,16 +23,18 @@ public class Unit {
         this._position = new Point(x, y);
     }
 
-    public Unit(int x, int y, int size) {
+    public Unit(int x, int y, int size, Color color) {
         this._position = new Point(x, y);
         this._size = size;
         this._velocity = new Point(0, 0);
+        this._color = color;
     }
 
-    public Unit(int x, int y, int size, int speedX, int speedY) {
+    public Unit(int x, int y, int size, int speedX, int speedY, Color color) {
         this._position = new Point(x, y);
         this._size = size;
         this._velocity = new Point(speedX, speedY);
+        this._color = color;
     }
 
     public Point getPosition() {
@@ -58,6 +61,14 @@ public class Unit {
         this._size = size;
     }
 
+    public Color getColor() {
+        return _color;
+    }
+
+    public void setColor(Color color) {
+        this._color = color;
+    }
+
     public int width() {
         return this._size;
     }
@@ -78,7 +89,4 @@ public class Unit {
         this._position.y += y;
     }
 
-    public void draw(Graphics g) {
-        g.drawOval(this._position.x, this._position.y, this._size, this._size);
-    }
 }
