@@ -55,16 +55,15 @@ public class Game extends JFrame implements MouseListener {
     }
 
     public void start() {
-        _timer = new Timer();
-        _timer.schedule(this._gl, 0, 1000 / 60); //new timer at 60 fps, the timing mechanism
+        this._isRunning = true;
+        this._timer = new Timer();
+        this._timer.schedule(this._gl, 0, 1000 / 60); //new timer at 60 fps, the timing mechanism
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         // are we clicking on a unit?
-
-        for (Unit x :
-                this._players[this._gl.currentPlayer()].getUnits()) {
+        for (Unit x : this._players[this._gl.currentPlayer()].getUnits()) {
             if (x.getShape().contains(e.getX(), e.getY())) {
                 if (!x.isSelected()) {
                     x.select();
@@ -95,21 +94,22 @@ public class Game extends JFrame implements MouseListener {
 
     }
 
+
     private class GameLoop extends java.util.TimerTask
     {
         private int _current_player = 0;
 
         public void run() //this becomes the loop
         {
-            doGameUpdates();
-            render();
+            this.doGameUpdates();
+            this.renderGame();
 
             if (!_isRunning) {
                 _timer.cancel();
             }
         }
 
-        private void render() {
+        private void renderGame() {
             _panel.repaint();
         }
 
