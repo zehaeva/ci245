@@ -61,8 +61,6 @@ public class AirlineReservationView extends JFrame {
         this._first_class.setBounds(400 + i.left, 60 + i.top, 150, 20);
         this._window.add(this._first_class);
 
-        this.addWindowListener(_ara);
-
         this.pack();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBackground(Color.white);
