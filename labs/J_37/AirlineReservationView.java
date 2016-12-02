@@ -10,6 +10,8 @@ public class AirlineReservationView extends JFrame {
     private JPanel _window;
     private JTextArea _label;
     private AirlineReservationAdapter _ara;
+    private JButton _first_class;
+    private JButton _economy;
 
     public AirlineReservationView() throws HeadlessException {
         this.setPreferredSize(new Dimension(500, 150));
@@ -31,43 +33,40 @@ public class AirlineReservationView extends JFrame {
         this._label.setBounds(0 + i.left, 0 + i.top, 400, 480);
         scrollPane.setBounds(0 + i.left, 0 + i.top, 400, 400);
 
-        JButton temp = new JButton();
-//        temp.setText("Start");
-//        temp.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                 _label.setText(_ara.startARA());
-//            }
-//        });
-//        temp.setBounds(400 + i.left, i.top, 150, 20);
-//        this._window.add(temp);
-
-//        temp = new JButton();
-        temp.setText("Economy");
-        temp.addActionListener(new ActionListener() {
+        this._economy = new JButton();
+        this._economy.setText("Economy");
+        this._economy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                  _label.setText(_ara.getEconomy());
+                 if(_ara.isEconomyFull()) {
+                     _economy.setEnabled(false);
+                 }
             }
         });
-        temp.setBounds(400 + i.left, 30 + i.top, 150, 20);
-        this._window.add(temp);
+        this._economy.setBounds(400 + i.left, 30 + i.top, 150, 20);
+        this._window.add(this._economy);
 
-        temp = new JButton();
-        temp.setText("First Class");
-        temp.addActionListener(new ActionListener() {
+        this._first_class = new JButton();
+        this._first_class.setText("First Class");
+        this._first_class.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _label.setText(_ara.getFirstClass());
+                if (_ara.isFirstClassFull()) {
+                    _first_class.setEnabled(false);
+                }
             }
         });
-        this._window.add(temp);
-        temp.setBounds(400 + i.left, 60 + i.top, 150, 20);
+        this._first_class.setBounds(400 + i.left, 60 + i.top, 150, 20);
+        this._window.add(this._first_class);
+
+        this.addWindowListener(_ara);
 
         this.pack();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBackground(Color.white);
         this.setLocationRelativeTo(null);
-        this.setSize(640, 480);
+        this.setSize(800, 600);
     }
 }
