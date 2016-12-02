@@ -44,34 +44,30 @@ public class AirlineReservationAdapter implements Runnable {
 
     public String getEconomy() {
         try {
+            if (!this._first_run) {
+                this.pos.write("y\n".getBytes());
+            }
+            this._first_run = false;
             this.pos.write("2\n".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "This is what I got\n" + this.baos.toString();
+        return this.baos.toString();
     }
-//
-//    private void continueInput() throws InterruptedException, IOException {
-//        if (this._first_run) {
-//            this._first_run = false;
-//        }
-//        else {
-//            bais.read("y\n".getBytes());
-//            Thread.sleep(50);
-//            System.out.flush();
-//        }
-//    }
 
     public String getFirstClass() {
         try {
-            this.ps.flush();
+            if (!this._first_run) {
+                this.pos.write("y\n".getBytes());
+            }
+            this._first_run = false;
             this.pos.write("1\n".getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "This is what I got\n" + this.baos.toString();
+        return this.baos.toString();
     }
 
     @Override
