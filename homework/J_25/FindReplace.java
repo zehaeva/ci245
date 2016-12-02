@@ -98,13 +98,17 @@ public class FindReplace extends JDialog implements ActionListener {
     }
 
     public void replace() {
-        String haystack = this._owner.getTextArea().getText();
-        int index = 0;
+        int index;
 
+    //  if there is something selected
         if(_owner.getTextArea().getSelectedText() != null) {
-            if (_owner.getTextArea().getSelectedText().equals(this._needle.getText())) {
-                _owner.getTextArea().setText(_owner.getTextArea().getText().replaceFirst(this._needle.getText(),
-                        this._nail.getText()));
+        //  double check
+            index  = this.searchIndex();
+            if (index > -1) {
+            //  then replace it!
+                _owner.getTextArea().setText(_owner.getTextArea().getText().replaceFirst(
+                        _owner.getTextArea().getSelectedText(), this._nail.getText()));
+
             }
         }
 
@@ -117,12 +121,24 @@ public class FindReplace extends JDialog implements ActionListener {
     }
 
     public void find() {
-        int searchIndex;
-        searchIndex = _owner.getTextArea().getText().indexOf(_needle.getText());
-
-        if (searchIndex >= 0) {
-            _owner.getTextArea().select(searchIndex, searchIndex + _needle.getText().length());
+        int index = searchIndex();
+        if (index >= 0) {
+            _owner.getTextArea().select(index, index + _needle.getText().length());
         }
+    }
+
+    private int searchIndex() {
+        int searchIndex;
+        //  find should match case!
+        if (this._match_case.isSelected()) {
+            searchIndex = _owner.getTextArea().getText().indexOf(_needle.getText());
+        }
+        else {
+            //  or not
+            searchIndex = _owner.getTextArea().getText().toLowerCase().indexOf(_needle.getText().toLowerCase());
+        }
+
+        return searchIndex;
     }
 
 
