@@ -21,7 +21,9 @@ public class MineSweeperSquare extends JButton {
 
     public void setMine(boolean mine) {
         this._mine = mine;
-        this.setText("B");
+        if (mine) {
+            this.setText("*");
+        }
     }
 
     public int getMineNeighbors() {
@@ -31,5 +33,12 @@ public class MineSweeperSquare extends JButton {
     public void setMineNeighbors(int mineNeighbors) {
         this._mine_neighbors = mineNeighbors;
         this.setText(String.valueOf(this._mine_neighbors));
+    }
+
+    public void addMineNeighbor() {
+        this._mine_neighbors++;
+        if (!this._mine) {
+            this.setText(String.valueOf(this._mine_neighbors));
+        }
     }
 }
