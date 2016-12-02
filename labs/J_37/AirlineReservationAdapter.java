@@ -49,7 +49,10 @@ public class AirlineReservationAdapter implements Runnable {
             }
             this._first_run = false;
             this.pos.write("2\n".getBytes());
+            Thread.sleep(700);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -63,16 +66,24 @@ public class AirlineReservationAdapter implements Runnable {
             }
             this._first_run = false;
             this.pos.write("1\n".getBytes());
+            Thread.sleep(700);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         return this.baos.toString();
     }
 
+    public String readOutput() {
+        return this.baos.toString();
+    }
+
     @Override
     public void run() {
         this._old_system.startEngine(new String[]{});
+        this.baos.toString();
         while (true) {
             try {
                 Thread.sleep(1000);

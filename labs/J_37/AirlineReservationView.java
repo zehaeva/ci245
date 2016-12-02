@@ -25,11 +25,24 @@ public class AirlineReservationView extends JFrame {
         Insets i = this._window.getInsets();
 
         this._label = new JTextArea();
-        this._window.add(this._label);
+        JScrollPane scrollPane = new JScrollPane(this._label, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this._window.add(scrollPane);
         this._label.setBounds(0 + i.left, 0 + i.top, 400, 480);
-
+        scrollPane.setBounds(0 + i.left, 0 + i.top, 400, 400);
 
         JButton temp = new JButton();
+//        temp.setText("Start");
+//        temp.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                 _label.setText(_ara.startARA());
+//            }
+//        });
+//        temp.setBounds(400 + i.left, i.top, 150, 20);
+//        this._window.add(temp);
+
+//        temp = new JButton();
         temp.setText("Economy");
         temp.addActionListener(new ActionListener() {
             @Override
@@ -37,7 +50,7 @@ public class AirlineReservationView extends JFrame {
                  _label.setText(_ara.getEconomy());
             }
         });
-        temp.setBounds(400 + i.left, i.top, 150, 20);
+        temp.setBounds(400 + i.left, 30 + i.top, 150, 20);
         this._window.add(temp);
 
         temp = new JButton();
@@ -49,7 +62,7 @@ public class AirlineReservationView extends JFrame {
             }
         });
         this._window.add(temp);
-        temp.setBounds(400 + i.left, 30 + i.top, 150, 20);
+        temp.setBounds(400 + i.left, 60 + i.top, 150, 20);
 
         this.pack();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
