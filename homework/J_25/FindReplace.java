@@ -70,6 +70,12 @@ public class FindReplace extends JDialog implements ActionListener {
         c.gridy = 3;
         this._replace_all = new JButton();
         this._replace_all.setText("Replace All");
+        this._replace_all.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                replace_all();
+            }
+        });
         this._panel.add(this._replace_all, c);
 
         c.fill = GridBagConstraints.NONE;
