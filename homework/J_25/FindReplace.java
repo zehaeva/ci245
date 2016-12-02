@@ -101,10 +101,14 @@ public class FindReplace extends JDialog implements ActionListener {
         String haystack = this._owner.getTextArea().getText();
         int index = 0;
 
-        if (index >= 0) {
-            _owner.getTextArea().setText(_owner.getTextArea().getText().replaceFirst(this._needle.getText(),
-                    this._nail.getText()));
+        if(_owner.getTextArea().getSelectedText() != null) {
+            if (_owner.getTextArea().getSelectedText().equals(this._needle.getText())) {
+                _owner.getTextArea().setText(_owner.getTextArea().getText().replaceFirst(this._needle.getText(),
+                        this._nail.getText()));
+            }
         }
+
+        this.find();
     }
 
     public void replace_all() {
