@@ -17,45 +17,63 @@ public class EncryptionView extends JFrame {
     public EncryptionView() throws HeadlessException {
         this._crypt_lib = new AESCrypt();
 
-        this.setPreferredSize(new Dimension(500, 500));
+        this.setPreferredSize(new Dimension(500, 200));
         this.setLayout(new BorderLayout());
 
         JPanel p = new JPanel();
-        p.setLayout(new BorderLayout());
-
+        p.setLayout(new GridBagLayout());
         this.add(p);
 
-        Dimension d = new Dimension(100, 24);
+        GridBagConstraints c = new GridBagConstraints();
+
+        Dimension text_dimension = new Dimension(300, 24);
 
         JLabel l = new JLabel();
+        l.setHorizontalAlignment(SwingConstants.RIGHT);
         l.setText("To Encrypt");
-        l.setPreferredSize(d);
-        p.add(l, "North");
+        c.gridx = 0;
+        c.gridy = 0;
+        p.add(l, c);
+
+        l = new JLabel();
+        l.setHorizontalAlignment(SwingConstants.RIGHT);
         l.setText("Encrypted");
-        p.add(l, BorderLayout.CENTER);
+        c.gridx = 0;
+        c.gridy = 1;
+        p.add(l, c);
+
+        l = new JLabel();
+        l.setHorizontalAlignment(SwingConstants.RIGHT);
         l.setText("Decrypted");
-        p.add(l, BorderLayout.EAST);
+        c.gridx = 0;
+        c.gridy = 2;
+        p.add(l, c);
 
         this._encrypt = new JTextField();
-        this._encrypt.setPreferredSize(d);
-        p.add(this._encrypt, BorderLayout.WEST);
-
-        this._decrypt = new JTextField();
-        this._decrypt.setPreferredSize(d);
-        p.add(this._decrypt, BorderLayout.EAST);
+        this._encrypt.setPreferredSize(text_dimension);
+        c.gridx = 1;
+        c.gridy = 0;
+        p.add(this._encrypt, c);
 
         this._encrypted = new JTextField();
-        this._encrypted.setPreferredSize(d);
-        p.add(this._encrypted, BorderLayout.CENTER);
+        this._encrypted.setPreferredSize(text_dimension);
+        c.gridx = 1;
+        c.gridy = 1;
+        p.add(this._encrypted, c);
+
+        this._decrypt = new JTextField();
+        this._decrypt.setPreferredSize(text_dimension);
+        c.gridx = 1;
+        c.gridy = 2;
+        p.add(this._decrypt, c);
 
         this._encrypt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _encrypted.setText(_crypt_lib.encrypt(_encrypt.getText()).toString());
-                _decrypt.setText(_crypt_lib.decrypt(_crypt_lib.encrypt(_encrypt.getText())));
+                _decrypt.setText(_crypt_lib.decrypt(_encrypted.getText()));
             }
         });
-
 
         this.pack();
         this.setLocationRelativeTo(null);
