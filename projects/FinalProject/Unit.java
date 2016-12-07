@@ -7,7 +7,7 @@ import java.awt.geom.Ellipse2D;
 /**
  * Created by zehaeva on 10/23/2016.
  */
-public class Unit extends JComponent implements MouseListener {
+public class Unit extends JComponent {
     private Point _position;
     private int _size;
     private String _name;
@@ -132,31 +132,5 @@ public class Unit extends JComponent implements MouseListener {
         this._selected = false;
         this._color = this._color_base;
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
 
 }
