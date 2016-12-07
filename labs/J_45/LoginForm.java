@@ -43,7 +43,8 @@ public class LoginForm extends JFrame {
         c.gridy = 0;
         c.gridheight = 10;
         this._output = new JLabel();
-        this._output.setPreferredSize(new Dimension(200, 200));
+        this._output.setPreferredSize(new Dimension(400, 200));
+        this._output.setVerticalAlignment(SwingConstants.TOP);
         p.add(this._output, c);
         c.gridheight = 1;
 
@@ -68,14 +69,10 @@ public class LoginForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (! _username.getText().isEmpty() && ! _password.getText().isEmpty()) {
-                    _current_user = UserFactory.logIn(_username.getText(), _password.getText());
-                    if (_current_user == null) {
-                        _output.setText("Login Failed, User Name/Password Incorrect");
-                    }
-                    else {
-                        _output.setText("User logged in");
-                    }
-
+                    login();
+                }
+                else {
+                    _output.setText("Not all fields are filled in!");
                 }
             }
         });
@@ -85,6 +82,24 @@ public class LoginForm extends JFrame {
         c.gridx = 1;
         c.gridy = 3;
         b = new JButton("Register");
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (! _username.getText().isEmpty() && ! _password.getText().isEmpty()) {
+                    UserFactory.registerUser(_username.getText(), _password.getText());
+                    login();
+                    if (_current_user == null) {
+                        _output.setText("User Registration Failure!");
+                    }
+                    else {
+                        _output.setText("User Registered");
+                    }
+                }
+                else {
+                    _output.setText("Not all fields are filled in!");
+                }
+            }
+        });
         b.setPreferredSize(d);
         p.add(b, c);
 
@@ -93,5 +108,15 @@ public class LoginForm extends JFrame {
         this.setBackground(Color.white);
         this.setLocationRelativeTo(null);
         this.setSize(640, 480);
+    }
+
+    private void login() {
+        this._current_user = UserFactory.logIn(this._username.getText(), this._password.getText());
+        if (this._current_user == null) {
+            this._output.setText("Login Failed, User Name/Password Incorrect");
+        }
+        else {
+            this._output.setText("User logged in");
+        }
     }
 }
