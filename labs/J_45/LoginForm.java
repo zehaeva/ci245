@@ -10,8 +10,10 @@ public class LoginForm extends JFrame {
     private JLabel _output;
     private JTextField _username;
     private JTextField _password;
+    private User _current_user;
 
     public LoginForm() throws HeadlessException {
+        this._current_user = null;
         JPanel p = new JPanel();
         this.add(p);
 
@@ -66,6 +68,13 @@ public class LoginForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (! _username.getText().isEmpty() && ! _password.getText().isEmpty()) {
+                    _current_user = UserFactory.logIn(_username.getText(), _password.getText());
+                    if (_current_user == null) {
+                        _output.setText("Login Failed, User Name/Password Incorrect");
+                    }
+                    else {
+                        _output.setText("User logged in");
+                    }
 
                 }
             }
