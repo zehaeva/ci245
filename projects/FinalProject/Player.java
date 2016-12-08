@@ -9,12 +9,16 @@ public class Player {
     private String _name;
     private Color _color;
     private boolean _human;
+    private int _max_actions;
+    private int _actions_left;
 
     public Player(String name, boolean human, Color color) {
         this._name = name;
         this._human = human;
         this._units = new ArrayList<>();
         this._color = color;
+        this._max_actions = 3;
+        this._actions_left = 3;
     }
 
     public ArrayList<Unit> getUnits() {
@@ -35,6 +39,14 @@ public class Player {
 
     public void setHuman(boolean human) {
         this._human = human;
+    }
+
+    public int getActionsLeft() {
+        return this._actions_left;
+    }
+
+    public int getMaxActions() {
+        return this._max_actions;
     }
 
     public boolean executeCommands() {

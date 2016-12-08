@@ -14,7 +14,7 @@ public class Map extends JComponent {
     private int _grid_width;
     private int _grid_height;
     private ArrayList<Unit> _units;
-    private ArrayList<Point> _highlight_space;
+    private ArrayList<GridSpace> _highlight_space;
 
     public Map(int width, int height, int gridWidth, int gridHeight) {
         this.initialize(width, height, gridWidth, gridHeight);
@@ -73,17 +73,15 @@ public class Map extends JComponent {
         this._grid_height = gridHeight;
     }
 
-    public void highlightSpaces(ArrayList<Point> list) {
-        for (Point p :
-                list) {
+    public void highlightSpaces(ArrayList<GridSpace> list) {
+        for (GridSpace p :list) {
             if (! this._highlight_space.contains(p)) {
                 this._highlight_space.add(p);
             }
         }
     }
-    public void deHighlightSpaces(ArrayList<Point> list) {
-        for (Point p :
-                list) {
+    public void deHighlightSpaces(ArrayList<GridSpace> list) {
+        for (GridSpace p : list) {
             if (this._highlight_space.contains(p)) {
                 this._highlight_space.remove(p);
             }
@@ -111,10 +109,10 @@ public class Map extends JComponent {
             }
         }
 
-        for (Point p :
-                this._highlight_space) {
-            g.setColor(Color.cyan);
-            g.drawRect(p.x, p.y, this._grid_width, this._grid_height);
+    //  if there is anything to highlight, highlight it!
+        for (GridSpace p : this._highlight_space) {
+            g.setColor(p.getBorderColor());
+            g.drawRect(p.getPosition().x, p.getPosition().y, p.getSize().width, p.getSize().height);
         }
     }
 }

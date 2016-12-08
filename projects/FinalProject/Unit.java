@@ -16,17 +16,14 @@ public abstract class Unit extends JComponent {
     protected Color _color_selected;
     protected Shape _shape;
     protected boolean _selected;
-    protected ArrayList<Point> _possible_moves;
+    protected ArrayList<GridSpace> _possible_moves;
+
+    protected int _damage_dice_sides;
+    protected int _damage_dice_count;
+    protected int _damage_modifier;
 
     public Unit(int x, int y, int size, Color color) {
-        this._size = size;
-        this._velocity = new Point(0, 0);
-        this._color = color;
-        this._color_base = color;
-        this._color_selected = Color.cyan;
-        this._selected = false;
-        this._possible_moves = new ArrayList<>();
-        this.setPosition(new Point(x, y));
+        this(x, y, size, 0, 0, color);
     }
 
     public Unit(int x, int y, int size, int speedX, int speedY, Color color) {
@@ -36,6 +33,9 @@ public abstract class Unit extends JComponent {
         this._color_base = color;
         this._color_selected = Color.cyan;
         this._selected = false;
+        this._damage_dice_sides = 4;
+        this._damage_dice_count = 1;
+        this._damage_modifier = 0;
         this._possible_moves = new ArrayList<>();
         this.setPosition(new Point(x, y));
     }
@@ -133,5 +133,5 @@ public abstract class Unit extends JComponent {
         this._color = this._color_base;
     }
 
-    public abstract ArrayList<Point> getPossibleMoves();
+    public abstract ArrayList<GridSpace> getPossibleMoves();
 }

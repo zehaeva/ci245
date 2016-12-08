@@ -7,12 +7,11 @@ import java.util.ArrayList;
  */
 public class Pawn extends Unit {
     public Pawn(int x, int y, int size, Color color) {
-        super(x, y, size, color);
+        this(x, y, size, 0, 0, color);
     }
 
     public Pawn(int x, int y, int size, int speedX, int speedY, Color color) {
         super(x, y, size, speedX, speedY, color);
-        this.drawShape();
     }
 
     @Override
@@ -21,12 +20,14 @@ public class Pawn extends Unit {
     }
 
     @Override
-    public ArrayList<Point> getPossibleMoves() {
+    public ArrayList<GridSpace> getPossibleMoves() {
+        Color c = Color.cyan;
+        Dimension d = new Dimension(this._size, this._size);
         this._possible_moves.clear();
-        this._possible_moves.add(new Point(this._position.x + this._size, this._position.y));
-        this._possible_moves.add(new Point(this._position.x - this._size, this._position.y));
-        this._possible_moves.add(new Point(this._position.x, this._position.y + this._size));
-        this._possible_moves.add(new Point(this._position.x, this._position.y - this._size));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x + this._size, this._position.y), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x - this._size, this._position.y), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y - this._size), d));
         return this._possible_moves;
     }
 }
