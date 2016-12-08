@@ -41,4 +41,14 @@ public class Knight extends Unit {
 
         return this._possible_moves;
     }
+
+    @Override
+    public ArrayList<GridSpace> getPossibleAttacks() {
+        Color c = Color.red;
+        Dimension d = new Dimension(this._size, this._size);
+        ArrayList<GridSpace> s = new ArrayList<>();
+        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size), d));
+        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size), d));
+        return s;
+    }
 }

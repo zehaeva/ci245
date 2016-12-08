@@ -134,4 +134,6 @@ public abstract class Unit extends JComponent {
     }
 
     public abstract ArrayList<GridSpace> getPossibleMoves();
+
+    public abstract ArrayList<GridSpace> getPossibleAttacks();
 }
