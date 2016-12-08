@@ -104,7 +104,7 @@ public class Game extends JFrame implements MouseListener {
                         x.setPosition(new Point(e.getX(), e.getY()));
                     }
                 }
-            //  we didn't click on a valid move, maybe we attacked?
+            //  we didn't click on a valid move,  maybe we attacked?
                 if (!moved) {
                     for (Unit unit:
                             this._players[opponent].getUnits()) {
