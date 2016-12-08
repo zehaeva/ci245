@@ -6,18 +6,6 @@ import java.util.ArrayList;
  * Created by zehaeva on 12/7/2016.
  */
 public class Pawn extends Unit {
-    public Pawn(Point position) {
-        super(position);
-    }
-
-    public Pawn(Point position, int size) {
-        super(position, size);
-    }
-
-    public Pawn(int x, int y) {
-        super(x, y);
-    }
-
     public Pawn(int x, int y, int size, Color color) {
         super(x, y, size, color);
     }
@@ -33,14 +21,10 @@ public class Pawn extends Unit {
     }
 
     @Override
-    public ArrayList<Point> getPossibleMoves() {
-        ArrayList<Point> list = new ArrayList<>();
-
-        list.add(new Point(this._position.x + this._size, this._position.y));
-        list.add(new Point(this._position.x - this._size, this._position.y));
-        list.add(new Point(this._position.x, this._position.y + this._size));
-        list.add(new Point(this._position.x, this._position.y - this._size));
-
-        return list;
+    protected void buildPossibleMoves() {
+        this._possible_moves.add(new Point(this._position.x + this._size, this._position.y));
+        this._possible_moves.add(new Point(this._position.x - this._size, this._position.y));
+        this._possible_moves.add(new Point(this._position.x, this._position.y + this._size));
+        this._possible_moves.add(new Point(this._position.x, this._position.y - this._size));
     }
 }

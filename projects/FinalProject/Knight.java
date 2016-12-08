@@ -25,15 +25,11 @@ public class Knight extends Unit {
     }
 
     @Override
-    public ArrayList<Point> getPossibleMoves() {
-        ArrayList<Point> list = new ArrayList<>();
-
-        list.add(new Point(this._position.x + this._size, this._position.y));
-        list.add(new Point(this._position.x - this._size, this._position.y));
-        list.add(new Point(this._position.x, this._position.y + this._size));
-        list.add(new Point(this._position.x, this._position.y + this._size * 2));
-        list.add(new Point(this._position.x, this._position.y - this._size));
-
-        return list;
+    protected void buildPossibleMoves() {
+        this._possible_moves.add(new Point(this._position.x + this._size, this._position.y));
+        this._possible_moves.add(new Point(this._position.x - this._size, this._position.y));
+        this._possible_moves.add(new Point(this._position.x, this._position.y + this._size));
+        this._possible_moves.add(new Point(this._position.x, this._position.y + this._size * 2));
+        this._possible_moves.add(new Point(this._position.x, this._position.y - this._size));
     }
 }

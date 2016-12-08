@@ -16,19 +16,7 @@ public abstract class Unit extends JComponent {
     protected Color _color_selected;
     protected Shape _shape;
     protected boolean _selected;
-
-    public Unit(Point position) {
-        this._position = position;
-    }
-
-    public Unit(Point position, int size) {
-        this._position = position;
-        this._size = size;
-    }
-
-    public Unit(int x, int y) {
-        this._position = new Point(x, y);
-    }
+    protected ArrayList<Point> _possible_moves;
 
     public Unit(int x, int y, int size, Color color) {
         this._position = new Point(x, y);
@@ -36,6 +24,7 @@ public abstract class Unit extends JComponent {
         this._velocity = new Point(0, 0);
         this._color = color;
         this._color_base = color;
+        buildPossibleMoves();
     }
 
     public Unit(int x, int y, int size, int speedX, int speedY, Color color) {
@@ -46,7 +35,7 @@ public abstract class Unit extends JComponent {
         this._color_selected = Color.cyan;
         this.setPosition(new Point(x, y));
         this._selected = false;
-
+        buildPossibleMoves();
     }
 
     public Point getPosition() {
@@ -103,7 +92,6 @@ public abstract class Unit extends JComponent {
     public int x() {
         return this._position.x;
     }
-
     public int y() {
         return this._position.y;
     }
@@ -116,7 +104,6 @@ public abstract class Unit extends JComponent {
     public Shape getShape() {
         return this._shape;
     }
-
     public void setShape(Shape shape) {
         this._shape = shape;
     }
@@ -144,5 +131,7 @@ public abstract class Unit extends JComponent {
         this._color = this._color_base;
     }
 
-    public abstract ArrayList<Point> getPossibleMoves();
+    public ArrayList<Point> getPossibleMoves() { return this._possible_moves; }
+
+    protected abstract void buildPossibleMoves();
 }
