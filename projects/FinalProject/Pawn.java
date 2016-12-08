@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 /**
  * Created by zehaeva on 12/7/2016.
@@ -29,5 +30,17 @@ public class Pawn extends Unit {
     @Override
     public void drawShape() {
         this._shape = new Ellipse2D.Double(this._position.x, this._position.y, this._size, this._size);
+    }
+
+    @Override
+    public ArrayList<Point> getPossibleMoves() {
+        ArrayList<Point> list = new ArrayList<>();
+
+        list.add(new Point(this._position.x + this._size, this._position.y));
+        list.add(new Point(this._position.x - this._size, this._position.y));
+        list.add(new Point(this._position.x, this._position.y + this._size));
+        list.add(new Point(this._position.x, this._position.y - this._size));
+
+        return list;
     }
 }

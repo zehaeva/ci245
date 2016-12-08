@@ -144,14 +144,5 @@ public abstract class Unit extends JComponent {
         this._color = this._color_base;
     }
 
-    public ArrayList<Point> getPossibleMoves() {
-        ArrayList<Point> list = new ArrayList<>();
-
-        list.add(new Point(this._position.x + this._size, this._position.y));
-        list.add(new Point(this._position.x - this._size, this._position.y));
-        list.add(new Point(this._position.x, this._position.y + this._size));
-        list.add(new Point(this._position.x, this._position.y - this._size));
-
-        return list;
-    }
+    public abstract ArrayList<Point> getPossibleMoves();
 }
