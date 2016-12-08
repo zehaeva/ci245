@@ -23,6 +23,8 @@ public class Game extends JFrame implements MouseListener {
 
         this._grid_size = new Dimension(24, 24);
 
+        UnitFactory.setGridSize(this._grid_size);
+
         this._map = new Map(480, 480, this._grid_size);
 
         this._players[0].generateUnits(2, 5, this._grid_size);
