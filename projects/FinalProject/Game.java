@@ -16,6 +16,10 @@ public class Game extends JFrame implements MouseListener {
     private Dimension _grid_size;
     private GameLoop _gl;
 
+    /**
+     * initalization of the main Game loop
+     * @throws HeadlessException
+     */
     public Game() throws HeadlessException {
         this._players = new Player[2];
         this._players[0] = new Player("Human", true, new Color(64,128,64));
@@ -65,27 +69,65 @@ public class Game extends JFrame implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         // are we clicking on a unit?
+        int opponent;
+        if (this._gl.currentPlayer() == 0) {
+            opponent = 1;
+        }
+        else {
+            opponent = 0;
+        }
+
+    //  find the unit that was clicked on!
         for (Unit x : this._players[this._gl.currentPlayer()].getUnits()) {
+        //  if this unit was clicked on
             if (x.getShape().contains(e.getX(), e.getY())) {
+            //  if he's not selected then we must have meant to select him!
                 if (!x.isSelected()) {
                     x.select();
+                //  highlight where he can move too
                     this._map.highlightSpaces(x.getPossibleMoves());
                 } else {
+                //  I guess we're unselecting him,
                     x.unSelect();
                     this._map.deHighlightSpaces(x.getPossibleMoves());
                 }
             }
         //  did we click on an area that we can move to?
             else if(x.isSelected()) {
+                boolean moved = false;
+            //  let's see if we're moving him to where we clicked
                 for (GridSpace p : x.getPossibleMoves()) {
                     if (p.contains(e.getX(), e.getY())) {
+                        moved = true;
                         x.unSelect();
                         this._map.deHighlightSpaces(x.getPossibleMoves());
                         x.setPosition(new Point(e.getX(), e.getY()));
                     }
                 }
+            //  we didn't click on a valid move, maybe we attacked?
+                if (!moved) {
+                    for (Unit unit:
+                            this._players[opponent].getUnits()) {
+                        for (GridSpace space:
+                                x.getPossibleAttacks()) {
+                            if (space.contains(unit.getPosition())) {
+                            //  resolve that attack
+                                this.resolveAttack(x, unit);
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
+
+    /**
+     * resolves the attacks between two units
+     * @param attacker
+     * @param defender
+     */
+    private void resolveAttack(Unit attacker, Unit defender) {
+
     }
 
     @Override
@@ -127,6 +169,9 @@ public class Game extends JFrame implements MouseListener {
             _panel.repaint();
         }
 
+        /**
+         * runs the main gameUpdates, keeps track of who's turn it is
+         */
         private void doGameUpdates() {
         //  are we a human?
             if (_players[this._current_player].isHuman()) {
