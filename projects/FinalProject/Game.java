@@ -67,8 +67,24 @@ public class Game extends JFrame implements MouseListener {
             if (x.getShape().contains(e.getX(), e.getY())) {
                 if (!x.isSelected()) {
                     x.select();
+                    this._map.highlightSpaces(x.getPossibleMoves());
                 } else {
                     x.unSelect();
+                    this._map.deHighlightSpaces(x.getPossibleMoves());
+                }
+            }
+        //  did we click on an area that we can move to?
+            else if(x.isSelected()) {
+                for (Point p : x.getPossibleMoves()) {
+                    if ((e.getX() > p.x) && (e.getY() > p.y)) {
+                        int w = x.getUnitSize();
+                        int h = x.getUnitSize();
+                        if (e.getX() < (p.x + w) && e.getY() < (p.y + h)) {
+                            x.unSelect();
+                            this._map.deHighlightSpaces(x.getPossibleMoves());
+                            x.setPosition(new Point(e.getX(), e.getY()));
+                        }
+                    }
                 }
             }
         }

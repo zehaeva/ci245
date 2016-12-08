@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,7 @@ public class Map extends JComponent {
     private int _grid_width;
     private int _grid_height;
     private ArrayList<Unit> _units;
+    private ArrayList<Point> _highlight_space;
 
     public Map(int width, int height, int gridWidth, int gridHeight) {
         this.initialize(width, height, gridWidth, gridHeight);
@@ -28,6 +30,7 @@ public class Map extends JComponent {
         this._grid_width = gridWidth;
         this._grid_height = gridHeight;
         this._units = new ArrayList<>();
+        this._highlight_space = new ArrayList<>();
     }
 
     public ArrayList<Unit> getUnits() {
@@ -70,7 +73,25 @@ public class Map extends JComponent {
         this._grid_height = gridHeight;
     }
 
+    public void highlightSpaces(ArrayList<Point> list) {
+        for (Point p :
+                list) {
+            if (! this._highlight_space.contains(p)) {
+                this._highlight_space.add(p);
+            }
+        }
+    }
+    public void deHighlightSpaces(ArrayList<Point> list) {
+        for (Point p :
+                list) {
+            if (this._highlight_space.contains(p)) {
+                this._highlight_space.remove(p);
+            }
+        }
+    }
+
     public void drawUnits(Graphics g) {
+        g.clearRect(0,0, this._width, this._height);
     //  Grid!
         for (int i = 0; i < this._width; i += this._grid_width) {
             g.drawLine(0, i, this._width, i);
@@ -88,6 +109,12 @@ public class Map extends JComponent {
                 g2d.setColor(x.getColor());
                 g2d.fill(x.getShape());
             }
+        }
+
+        for (Point p :
+                this._highlight_space) {
+            g.setColor(Color.cyan);
+            g.drawRect(p.x, p.y, this._grid_width, this._grid_height);
         }
     }
 }

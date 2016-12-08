@@ -1,22 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 
 /**
  * Created by zehaeva on 10/23/2016.
  */
-public class Unit extends JComponent {
-    private Point _position;
-    private int _size;
-    private String _name;
-    private Point _velocity;
-    private Color _color;
-    private Color _color_base;
-    private Color _color_selected;
-    private Shape _shape;
-    private boolean _selected;
+public abstract class Unit extends JComponent {
+    protected Point _position;
+    protected int _size;
+    protected String _name;
+    protected Point _velocity;
+    protected Color _color;
+    protected Color _color_base;
+    protected Color _color_selected;
+    protected Shape _shape;
+    protected boolean _selected;
 
     public Unit(Point position) {
         this._position = position;
@@ -40,22 +39,30 @@ public class Unit extends JComponent {
     }
 
     public Unit(int x, int y, int size, int speedX, int speedY, Color color) {
-        this._position = new Point(x, y);
         this._size = size;
         this._velocity = new Point(speedX, speedY);
         this._color = color;
         this._color_base = color;
         this._color_selected = Color.cyan;
-        this._shape = new Ellipse2D.Double(x, y, size, size);
+        this.setPosition(new Point(x, y));
         this._selected = false;
+
     }
 
     public Point getPosition() {
         return _position;
     }
 
-    public void setPosition(Point Position) {
-        this._position = Position;
+    public void setPosition(Point position) {
+    //  thx position should always be a multiple of the size
+        if (position.x % this._size != 0) {
+            position.x = (int)(position.x / this._size) * this._size;
+        }
+        if (position.y % this._size != 0) {
+            position.y = (int)(position.y / this._size) * this._size;
+        }
+        this._position = position;
+        this.drawShape();
     }
 
     public String getName() {
@@ -68,6 +75,10 @@ public class Unit extends JComponent {
 
     public int getUnitSize() {
         return _size;
+    }
+
+    public void drawShape() {
+        this._shape = new Ellipse2D.Double(this._position.x, this._position.y, this._size, this._size);
     }
 
     public void setUnitSize(int size) {
@@ -133,4 +144,14 @@ public class Unit extends JComponent {
         this._color = this._color_base;
     }
 
+    public ArrayList<Point> getPossibleMoves() {
+        ArrayList<Point> list = new ArrayList<>();
+
+        list.add(new Point(this._position.x + this._size, this._position.y));
+        list.add(new Point(this._position.x - this._size, this._position.y));
+        list.add(new Point(this._position.x, this._position.y + this._size));
+        list.add(new Point(this._position.x, this._position.y - this._size));
+
+        return list;
+    }
 }
