@@ -21,10 +21,12 @@ public class Pawn extends Unit {
     }
 
     @Override
-    protected void buildPossibleMoves() {
+    public ArrayList<Point> getPossibleMoves() {
+        this._possible_moves.clear();
         this._possible_moves.add(new Point(this._position.x + this._size, this._position.y));
         this._possible_moves.add(new Point(this._position.x - this._size, this._position.y));
         this._possible_moves.add(new Point(this._position.x, this._position.y + this._size));
         this._possible_moves.add(new Point(this._position.x, this._position.y - this._size));
+        return this._possible_moves;
     }
 }
