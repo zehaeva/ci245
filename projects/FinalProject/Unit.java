@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by zehaeva on 10/23/2016.
@@ -22,6 +23,10 @@ public abstract class Unit extends JComponent {
     protected int _damage_dice_count;
     protected int _damage_modifier;
 
+    protected int _defense;
+    private int _hit_points;
+    private boolean _moving;
+
     public Unit(int x, int y, int size, Color color) {
         this(x, y, size, 0, 0, color);
     }
@@ -36,6 +41,7 @@ public abstract class Unit extends JComponent {
         this._damage_dice_sides = 4;
         this._damage_dice_count = 1;
         this._damage_modifier = 0;
+        this._defense = 0;
         this._possible_moves = new ArrayList<>();
         this.setPosition(new Point(x, y));
     }
@@ -123,17 +129,71 @@ public abstract class Unit extends JComponent {
         }
     }
 
+    /**
+     * sets the selected values for this unit
+     */
     public void select() {
         this._selected = true;
         this._color = this._color_selected;
     }
 
+    /**
+     * unselects this unit
+     */
     public void unSelect() {
         this._selected = false;
         this._color = this._color_base;
     }
 
+    /**
+     * gets the damage that this unit dishes out!
+     * @return amount of damage done
+     */
+    public int attack() {
+        Random rand = new Random();
+        int dice_sum = 0;
+        for (int i = 0; i < this._damage_dice_count; i++) {
+            dice_sum += rand.nextInt(this._damage_dice_sides) + 1;
+        }
+
+        return dice_sum + this._damage_modifier;
+    }
+
+    /**
+     * the damage reduction of this unit
+     * @return amount of damage reduction
+     */
+    public int defend() {
+        return 0;
+    }
+
+    /**
+     * subtracts the damage done from this units hp, returns current hp
+     * @param damage amount of damage done to this unit
+     * @return hp left
+     */
+    public int takeDamage(int damage) {
+        this._hit_points -= damage;
+        return this._hit_points;
+    }
+
+    /**
+     * returns current hit points
+     * @return current hitpoints
+     */
+    public int getHitPoints() {
+        return this._hit_points;
+    }
+
     public abstract ArrayList<GridSpace> getPossibleMoves();
 
     public abstract ArrayList<GridSpace> getPossibleAttacks();
+
+    public void setMoving(boolean moving) {
+        this._moving = moving;
+    }
+
+    public boolean isMoving() {
+        return this._moving;
+    }
 }

@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Timer;
@@ -7,7 +9,7 @@ import java.util.Timer;
 /**
  * Created by zehaeva on 10/24/2016.
  */
-public class Game extends JFrame implements MouseListener {
+public class Game extends JFrame implements MouseListener, ActionListener {
     private Map _map;
     private boolean _isRunning;
     private Timer _timer;
@@ -15,6 +17,7 @@ public class Game extends JFrame implements MouseListener {
     private Player[] _players;
     private Dimension _grid_size;
     private GameLoop _gl;
+    private String _action;
 
     /**
      * initalization of the main Game loop
@@ -84,8 +87,9 @@ public class Game extends JFrame implements MouseListener {
             //  if he's not selected then we must have meant to select him!
                 if (!x.isSelected()) {
                     x.select();
+                    UnitMenu menu = new UnitMenu(this, x);
+                    menu.setVisible(true);
                 //  highlight where he can move too
-                    this._map.highlightSpaces(x.getPossibleMoves());
                 } else {
                 //  I guess we're unselecting him,
                     x.unSelect();
@@ -93,13 +97,14 @@ public class Game extends JFrame implements MouseListener {
                 }
             }
         //  did we click on an area that we can move to?
-            else if(x.isSelected()) {
+            else if(x.isSelected() && x.isMoving()) {
                 boolean moved = false;
             //  let's see if we're moving him to where we clicked
                 for (GridSpace p : x.getPossibleMoves()) {
                     if (p.contains(e.getX(), e.getY())) {
                         moved = true;
                         x.unSelect();
+                        x.setMoving(false);
                         this._map.deHighlightSpaces(x.getPossibleMoves());
                         x.setPosition(new Point(e.getX(), e.getY()));
                     }
@@ -127,7 +132,7 @@ public class Game extends JFrame implements MouseListener {
      * @param defender
      */
     private void resolveAttack(Unit attacker, Unit defender) {
-
+        defender.takeDamage(defender.defend() - attacker.attack());
     }
 
     @Override
@@ -148,6 +153,22 @@ public class Game extends JFrame implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+    public void actionPerformed(Unit unit, String action) {
+        switch(action) {
+            case "move":
+                unit.setMoving(true);
+                this._map.highlightSpaces(unit.getPossibleMoves());
+                break;
+            case "attack":
+                this._map.highlightSpaces(unit.getPossibleAttacks());
+                break;
+        }
     }
 
 

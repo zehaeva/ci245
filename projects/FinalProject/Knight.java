@@ -30,7 +30,7 @@ public class Knight extends Unit {
 
     @Override
     public ArrayList<GridSpace> getPossibleMoves() {
-        Color c = Color.cyan;
+        Color c = Color.green;
         Dimension d = new Dimension(this._size, this._size);
         this._possible_moves.clear();
         this._possible_moves.add(new GridSpace(c, new Point(this._position.x + this._size, this._position.y), d));
