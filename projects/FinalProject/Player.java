@@ -49,8 +49,21 @@ public class Player {
         return this._max_actions;
     }
 
+    public void newTurn() {
+        this._actions_left = this._max_actions;
+    }
+
+    public void useAction() {
+        this._actions_left--;
+    }
+
     public boolean executeCommands() {
-        return false;
+        if (this._actions_left == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void generateUnits(int starting_side, int count, Dimension gridSize) {

@@ -48,7 +48,9 @@ public class Knight extends Unit {
         Dimension d = new Dimension(this._size, this._size);
         ArrayList<GridSpace> s = new ArrayList<>();
         s.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size), d));
-        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size), d));
+        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size * 2), d));
+        s.add(new GridSpace(c, new Point(this._position.x + this._size, this._position.y + this._size), d));
+        s.add(new GridSpace(c, new Point(this._position.x - this._size, this._position.y + this._size), d));
         return s;
     }
 }

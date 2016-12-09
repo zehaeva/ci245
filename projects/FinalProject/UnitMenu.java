@@ -40,7 +40,6 @@ public class UnitMenu extends JFrame {
 
         this.add(p);
         this.pack();
-        this.setLocationRelativeTo(parent);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(unit);
     }
 }

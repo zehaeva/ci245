@@ -103,6 +103,7 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                 for (GridSpace p : x.getPossibleMoves()) {
                     if (p.contains(e.getX(), e.getY())) {
                         moved = true;
+                        this._players[this._gl.currentPlayer()].useAction();
                         x.unSelect();
                         x.setMoving(false);
                         this._map.deHighlightSpaces(x.getPossibleMoves());
@@ -197,11 +198,24 @@ public class Game extends JFrame implements MouseListener, ActionListener {
         //  are we a human?
             if (_players[this._current_player].isHuman()) {
                 if(_players[this._current_player].executeCommands()) {
-                    this._current_player++;
+                    this._current_player = 1;
+                    _players[this._current_player].newTurn();
                 }
             }
+        //  THE AI!
             else {
-
+                Player me = _players[this._current_player];
+                Unit u = me.getUnits().get(0);
+                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - u.getUnitSize()));
+                me.useAction();
+                u = me.getUnits().get(1);
+                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - u.getUnitSize()));
+                me.useAction();
+                u = me.getUnits().get(1);
+                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - u.getUnitSize()));
+                me.useAction();
+                this._current_player = 0;
+                _players[this._current_player].newTurn();
             }
         }
 
