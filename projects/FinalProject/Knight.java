@@ -20,9 +20,12 @@ public class Knight extends Unit {
 //  needs new shape!
         GeneralPath gp = new GeneralPath();
 
-        gp.moveTo(this._position.x, this._position.y);
-        gp.lineTo(this._position.x + this._size, this._position.y);
-        gp.lineTo((this._position.x + this._size / 2 ), (this._position.y + this._size));
+        int x = this._position.x * this._size;
+        int y = this._position.y * this._size;
+
+        gp.moveTo(x, y);
+        gp.lineTo(x + this._size, y);
+        gp.lineTo((x + this._size / 2 ), (y + this._size));
         gp.closePath();
 
         this._shape = gp;

@@ -52,12 +52,12 @@ public abstract class Unit extends JComponent {
 
     public void setPosition(Point position) {
     //  thx position should always be a multiple of the size
-        if (position.x % this._size != 0) {
-            position.x = (int)(position.x / this._size) * this._size;
-        }
-        if (position.y % this._size != 0) {
-            position.y = (int)(position.y / this._size) * this._size;
-        }
+//        if (position.x % this._size != 0) {
+//            position.x = (int)(position.x / this._size) * this._size;
+//        }
+//        if (position.y % this._size != 0) {
+//            position.y = (int)(position.y / this._size) * this._size;
+//        }
         this._position = position;
         this.drawShape();
     }
@@ -75,7 +75,8 @@ public abstract class Unit extends JComponent {
     }
 
     public void drawShape() {
-        this._shape = new Ellipse2D.Double(this._position.x, this._position.y, this._size, this._size);
+        this._shape = new Ellipse2D.Double(this._position.x * this._size, this._position.y * this._size,
+                this._size, this._size);
     }
 
     public void setUnitSize(int size) {
