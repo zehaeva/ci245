@@ -98,11 +98,9 @@ public class Game extends JFrame implements MouseListener, ActionListener {
             }
         //  did we click on an area that we can move to?
             else if(x.isSelected() && x.isMoving()) {
-                boolean moved = false;
-            //  let's see if we're moving him to where we clicked
+                //  let's see if we're moving him to where we clicked
                 for (GridSpace p : x.getPossibleMoves()) {
                     if (p.contains(e.getX(), e.getY())) {
-                        moved = true;
                         this._players[this._gl.currentPlayer()].useAction();
                         x.unSelect();
                         x.setMoving(false);
@@ -110,16 +108,19 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                         x.setPosition(new Point(e.getX(), e.getY()));
                     }
                 }
-            //  we didn't click on a valid move,  maybe we attacked?
-                if (!moved) {
+            }
+        //  we didn't click on a valid move,  maybe we attacked?
+            else if (x.isSelected()) {
+                for (GridSpace space:
+                        x.getPossibleAttacks()) {
                     for (Unit unit:
                             this._players[opponent].getUnits()) {
-                        for (GridSpace space:
-                                x.getPossibleAttacks()) {
-                            if (space.contains(unit.getPosition())) {
-                            //  resolve that attack
-                                this.resolveAttack(x, unit);
-                            }
+                        if (space.contains(unit.getPosition())) {
+                        //  resolve that attack
+                            this.resolveAttack(x, unit);
+                            x.unSelect();
+                            this._players[this._gl.currentPlayer()].useAction();
+                            this._map.deHighlightSpaces(x.getPossibleAttacks());
                         }
                     }
                 }
