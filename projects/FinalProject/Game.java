@@ -135,6 +135,17 @@ public class Game extends JFrame implements MouseListener, ActionListener {
      */
     private void resolveAttack(Unit attacker, Unit defender) {
         defender.takeDamage(defender.defend() - attacker.attack());
+        this.removeDeadUnits();
+    }
+
+    private void removeDeadUnits() {
+        for (Player p: this._players) {
+            for (Unit unit: p.getUnits()) {
+                if (! unit.isAlive()) {
+                    p.getUnits().remove(unit);
+                }
+            }
+        }
     }
 
     @Override

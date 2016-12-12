@@ -112,6 +112,15 @@ public abstract class Unit extends JComponent {
         this._size = size;
     }
 
+    public boolean isAlive() {
+        if (this._hit_points > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public Color getColor() {
         return _color;
     }
