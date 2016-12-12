@@ -46,30 +46,59 @@ public abstract class Unit extends JComponent {
         this.setPosition(new Point(x, y));
     }
 
+    /**
+     * returns the grids coordinates of the unit
+     * @return
+     */
     public Point getPosition() {
         return _position;
     }
 
+    /**
+     * sets the grids coordinates of the unit
+     */
     public void setPosition(Point position) {
-    //  thx position should always be a multiple of the size
-//        if (position.x % this._size != 0) {
-//            position.x = (int)(position.x / this._size) * this._size;
-//        }
-//        if (position.y % this._size != 0) {
-//            position.y = (int)(position.y / this._size) * this._size;
-//        }
         this._position = position;
         this.drawShape();
     }
 
+    /**
+     * returns the pixel position of this object
+     * @return
+     */
+    public Point getPixelPosition() {
+        return new Point(this._position.x * this._size, this._position.y * this._size);
+    }
+
+    /**
+     * sets the grid position of the unit based on the pixel position
+     * @return
+     */
+    public void setPixelPosition(Point point) {
+        this.setPosition(new Point(((point.x / this._size) * this._size) / this._size,
+                ((point.y / this._size) * this._size) / this._size));
+    }
+
+    /**
+     * returns unit's name
+     * @return
+     */
     public String getName() {
         return _name;
     }
 
+    /**
+     * sets unit's name
+     * @param Name
+     */
     public void setName(String Name) {
         this._name = Name;
     }
 
+    /**
+     * gets the unit's pixel size
+     * @return
+     */
     public int getUnitSize() {
         return _size;
     }

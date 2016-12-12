@@ -36,11 +36,11 @@ public class Knight extends Unit {
         Color c = Color.green;
         Dimension d = new Dimension(this._size, this._size);
         this._possible_moves.clear();
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x + this._size, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x - this._size, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size * 2), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y - this._size), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x + 1, this._position.y), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x - 1, this._position.y), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + 2), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y - 1), d));
 
         return this._possible_moves;
     }
@@ -50,10 +50,10 @@ public class Knight extends Unit {
         Color c = Color.red;
         Dimension d = new Dimension(this._size, this._size);
         ArrayList<GridSpace> s = new ArrayList<>();
-        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size), d));
-        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + this._size * 2), d));
-        s.add(new GridSpace(c, new Point(this._position.x + this._size, this._position.y + this._size), d));
-        s.add(new GridSpace(c, new Point(this._position.x - this._size, this._position.y + this._size), d));
+        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1), d));
+        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 2), d));
+        s.add(new GridSpace(c, new Point(this._position.x + 1, this._position.y + 1), d));
+        s.add(new GridSpace(c, new Point(this._position.x - 1, this._position.y + 1), d));
         return s;
     }
 }

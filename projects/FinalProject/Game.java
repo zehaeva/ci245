@@ -80,23 +80,23 @@ public class Game extends JFrame implements MouseListener, ActionListener {
             opponent = 0;
         }
 
-    //  find the unit that was clicked on!
+        //  find the unit that was clicked on!
         for (Unit x : this._players[this._gl.currentPlayer()].getUnits()) {
-        //  if this unit was clicked on
+            //  if this unit was clicked on
             if (x.getShape().contains(e.getX(), e.getY())) {
-            //  if he's not selected then we must have meant to select him!
+                //  if he's not selected then we must have meant to select him!
                 if (!x.isSelected()) {
                     x.select();
                     UnitMenu menu = new UnitMenu(this, x);
                     menu.setVisible(true);
-                //  highlight where he can move too
+                    //  highlight where he can move too
                 } else {
-                //  I guess we're unselecting him,
+                    //  I guess we're unselecting him,
                     x.unSelect();
                     this._map.deHighlightSpaces(x.getPossibleMoves());
                 }
             }
-        //  did we click on an area that we can move to?
+            //  did we click on an area that we can move to?
             else if(x.isSelected() && x.isMoving()) {
                 //  let's see if we're moving him to where we clicked
                 for (GridSpace p : x.getPossibleMoves()) {
@@ -105,18 +105,18 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                         x.unSelect();
                         x.setMoving(false);
                         this._map.deHighlightSpaces(x.getPossibleMoves());
-                        x.setPosition(new Point(e.getX(), e.getY()));
+                        x.setPixelPosition(new Point(e.getX(), e.getY()));
                     }
                 }
             }
-        //  we didn't click on a valid move,  maybe we attacked?
+            //  we didn't click on a valid move,  maybe we attacked?
             else if (x.isSelected()) {
                 for (GridSpace space:
                         x.getPossibleAttacks()) {
                     for (Unit unit:
                             this._players[opponent].getUnits()) {
                         if (space.contains(unit.getPosition())) {
-                        //  resolve that attack
+                            //  resolve that attack
                             this.resolveAttack(x, unit);
                             x.unSelect();
                             this._players[this._gl.currentPlayer()].useAction();
@@ -196,24 +196,24 @@ public class Game extends JFrame implements MouseListener, ActionListener {
          * runs the main gameUpdates, keeps track of who's turn it is
          */
         private void doGameUpdates() {
-        //  are we a human?
+            //  are we a human?
             if (_players[this._current_player].isHuman()) {
                 if(_players[this._current_player].executeCommands()) {
                     this._current_player = 1;
                     _players[this._current_player].newTurn();
                 }
             }
-        //  THE AI!
+            //  THE AI!
             else {
                 Player me = _players[this._current_player];
                 Unit u = me.getUnits().get(0);
-                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - u.getUnitSize()));
+                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
                 me.useAction();
                 u = me.getUnits().get(1);
-                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - u.getUnitSize()));
+                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
                 me.useAction();
                 u = me.getUnits().get(1);
-                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - u.getUnitSize()));
+                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
                 me.useAction();
                 this._current_player = 0;
                 _players[this._current_player].newTurn();

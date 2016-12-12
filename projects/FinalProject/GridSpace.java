@@ -30,6 +30,10 @@ public class GridSpace {
         this._position = position;
     }
 
+    public Point getPixelPosition() {
+        return new Point(this._position.x * this._size.width, this._position.y * this._size.height);
+    }
+
     public Dimension getSize() {
         return _size;
     }
@@ -43,8 +47,8 @@ public class GridSpace {
     }
 
     public boolean contains(int x, int y) {
-        if ((this._position.x + this._size.width) > x && (this._position.x) < x &&
-                (this._position.y + this._size.height) > y && (this._position.y) < y) {
+        if ((this._position.x * this._size.width + this._size.width) > x && (this._position.x * this._size.width) < x &&
+                (this._position.y * this._size.height + this._size.height) > y && (this._position.y * this._size.height) < y) {
             return true;
         } else {
             return false;

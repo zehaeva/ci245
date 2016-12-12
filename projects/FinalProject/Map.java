@@ -90,7 +90,7 @@ public class Map extends JComponent {
 
     public void drawUnits(Graphics g) {
         g.clearRect(0,0, this._width, this._height);
-    //  Grid!
+        //  Grid!
         for (int i = 0; i < this._width; i += this._grid_width) {
             g.drawLine(0, i, this._width, i);
         }
@@ -98,7 +98,7 @@ public class Map extends JComponent {
             g.drawLine(i, 0, i, this._height);
         }
 
-    //  units on the field!
+        //  units on the field!
         Graphics2D g2d = (Graphics2D) g;
 
         for (Unit x :
@@ -109,10 +109,10 @@ public class Map extends JComponent {
             }
         }
 
-    //  if there is anything to highlight, highlight it!
+        //  if there is anything to highlight, highlight it!
         for (GridSpace p : this._highlight_space) {
             g.setColor(p.getBorderColor());
-            g.drawRect(p.getPosition().x, p.getPosition().y, p.getSize().width, p.getSize().height);
+            g.drawRect(p.getPixelPosition().x, p.getPixelPosition().y, p.getSize().width, p.getSize().height);
         }
     }
 }
