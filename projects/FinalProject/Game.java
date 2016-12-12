@@ -89,10 +89,19 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     x.select();
                     UnitMenu menu = new UnitMenu(this, x);
                     menu.setVisible(true);
+                    this._panel.add(menu);
                     //  highlight where he can move too
                 } else {
                     //  I guess we're unselecting him,
                     x.unSelect();
+                    for (Component comp :
+                            this._panel.getComponents()) {
+                        if (comp instanceof UnitMenu) {
+                            if (((UnitMenu) comp).getUnit().equals(x)) {
+                                this._panel.remove(comp);
+                            }
+                        }
+                    }
                     this._map.deHighlightSpaces(x.getPossibleMoves());
                 }
             }

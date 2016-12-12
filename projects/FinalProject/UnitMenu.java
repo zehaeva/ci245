@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by zehaeva on 12/8/16.
  */
-public class UnitMenu extends JFrame {
+public class UnitMenu extends JPanel {
     private Game _parent;
     private Unit _unit;
 
@@ -14,7 +14,13 @@ public class UnitMenu extends JFrame {
         this._parent = parent;
         this._unit = unit;
 
-        JPanel p = new JPanel();
+        this.setLayout(new GridLayout());
+
+        this.setBounds(unit.getPixelPosition().x + unit.getUnitSize() + 3,
+                unit.getPixelPosition().y + unit.getUnitSize() + 3,
+                100, 100);
+
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JButton b = new JButton();
         b.setText("Move");
@@ -22,10 +28,10 @@ public class UnitMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _parent.actionPerformed(_unit, "move");
-               dispose();
             }
         });
-        p.add(b);
+        b.setBounds(0,0,100, 24);
+        this.add(b);
 
         b = new JButton();
         b.setText("Attack");
@@ -33,13 +39,13 @@ public class UnitMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 _parent.actionPerformed(_unit, "attack");
-                dispose();
             }
         });
-        p.add(b);
+        b.setBounds(0,26,100, 24);
+        this.add(b);
+    }
 
-        this.add(p);
-        this.pack();
-        this.setLocationRelativeTo(unit);
+    public Unit getUnit() {
+        return this._unit;
     }
 }

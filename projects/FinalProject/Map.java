@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +22,7 @@ public class Map extends JComponent {
     }
 
     private void initialize(int width, int height, int gridWidth, int gridHeight) {
+        this.setLayout(null);
         this._width = width;
         this._height = height;
         this._grid_width = gridWidth;
