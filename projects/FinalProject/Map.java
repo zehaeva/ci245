@@ -81,6 +81,11 @@ public class Map extends JComponent {
         this._grid_height = gridHeight;
     }
 
+    /**
+     * gets the grid coordinate based on the pixel
+     * @param point Pixel location
+     * @return Grid Coordinate
+     */
     public Point getGridCoordinate(Point point) {
         return new Point(((point.x / this._grid_width) * this._grid_width) / this._grid_width,
                 ((point.y / this._grid_height) * this._grid_height) / this._grid_height);
