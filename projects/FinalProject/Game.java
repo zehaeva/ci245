@@ -96,7 +96,6 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                 }
             }
             //  did we click on an area that we can move to?
-            //  did we click on an area that we can move to?
             else if(x.isSelected() && x.isMoving()) {
                 //  let's see if we're moving him to where we clicked
                 for (GridSpace p : x.getPossibleMoves()) {
