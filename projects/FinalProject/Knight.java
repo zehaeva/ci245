@@ -13,6 +13,7 @@ public class Knight extends Unit {
 
     public Knight(int x, int y, int size, int speedX, int speedY, Color color) {
         super(x, y, size, speedX, speedY, color);
+        this._hit_points = 10;
     }
 
     @Override

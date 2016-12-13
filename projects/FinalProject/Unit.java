@@ -24,7 +24,7 @@ public abstract class Unit extends JComponent {
     protected int _damage_modifier;
 
     protected int _defense;
-    private int _hit_points;
+    protected int _hit_points;
     private boolean _moving;
 
     public Unit(int x, int y, int size, Color color) {

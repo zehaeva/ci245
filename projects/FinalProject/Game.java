@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Timer;
 
 /**
@@ -90,18 +91,12 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     UnitMenu menu = new UnitMenu(this, x);
                     menu.setVisible(true);
                     this._panel.add(menu);
+                    this._panel.setComponentZOrder(menu, this._panel.getComponentCount());
                     //  highlight where he can move too
                 } else {
                     //  I guess we're unselecting him,
                     x.unSelect();
-                    for (Component comp :
-                            this._panel.getComponents()) {
-                        if (comp instanceof UnitMenu) {
-                            if (((UnitMenu) comp).getUnit().equals(x)) {
-                                this._panel.remove(comp);
-                            }
-                        }
-                    }
+                    this.removeMenu(x);
                     this._map.deHighlightSpaces(x.getPossibleMoves());
                 }
             }
@@ -112,6 +107,7 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     if (p.contains(e.getX(), e.getY())) {
                         this._players[this._gl.currentPlayer()].useAction();
                         x.unSelect();
+                        this.removeMenu(x);
                         x.setMoving(false);
                         this._map.deHighlightSpaces(x.getPossibleMoves());
                         x.setPixelPosition(new Point(e.getX(), e.getY()));
@@ -128,10 +124,22 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                             //  resolve that attack
                             this.resolveAttack(x, unit);
                             x.unSelect();
+                            this.removeMenu(x);
                             this._players[this._gl.currentPlayer()].useAction();
                             this._map.deHighlightSpaces(x.getPossibleAttacks());
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private void removeMenu(Unit x) {
+        for (Component comp :
+                this._panel.getComponents()) {
+            if (comp instanceof UnitMenu) {
+                if (((UnitMenu) comp).getUnit().equals(x)) {
+                    this._panel.remove(comp);
                 }
             }
         }
@@ -226,15 +234,45 @@ public class Game extends JFrame implements MouseListener, ActionListener {
             //  THE AI!
             else {
                 Player me = _players[this._current_player];
-                Unit u = me.getUnits().get(0);
-                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
-                me.useAction();
-                u = me.getUnits().get(1);
-                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
-                me.useAction();
-                u = me.getUnits().get(1);
-                u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
-                me.useAction();
+                Player human = _players[0];
+            //  Attack
+            //  ********************************************************************************************************
+            //  find out if any of our units are in striking distance to any of his units
+                for (Unit unit: me.getUnits()) {
+                    ArrayList<GridSpace> attacks = unit.getPossibleAttacks();
+                    for (Unit defender: human.getUnits()) {
+                        for (GridSpace attack : attacks) {
+                            if (defender.contains(attack.getPosition())) {
+                                resolveAttack(unit, defender);
+                                me.useAction();
+                                if (me.getActionsLeft() == 0) {
+                                    break;
+                                }
+                            }
+                        }
+                        if (me.getActionsLeft() == 0) {
+                            break;
+                        }
+                    }
+                    if (me.getActionsLeft() == 0) {
+                        break;
+                    }
+                }
+            //  ********************************************************************************************************
+
+                if (me.getActionsLeft() > 0) {
+                    //  now move closer!
+                    Unit u = me.getUnits().get(0);
+                    u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
+                    me.useAction();
+                    u = me.getUnits().get(1);
+                    u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
+                    me.useAction();
+                    u = me.getUnits().get(1);
+                    u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
+                    me.useAction();
+                }
+            //  turns over!
                 this._current_player = 0;
                 _players[this._current_player].newTurn();
             }

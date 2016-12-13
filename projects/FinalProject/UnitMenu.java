@@ -16,11 +16,17 @@ public class UnitMenu extends JPanel {
 
         this.setLayout(new GridLayout());
 
-        this.setBounds(unit.getPixelPosition().x + unit.getUnitSize() + 3,
-                unit.getPixelPosition().y + unit.getUnitSize() + 3,
+        this.setBounds(unit.getPixelPosition().x + unit.getUnitSize() * 2,
+                unit.getPixelPosition().y + 3,
                 100, 100);
 
         this.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        Rectangle bound = new Rectangle(3, 0, 94, 24);
+
+        JLabel l = new JLabel("HP: " + this._unit.getHitPoints());
+        l.setBounds(bound);
+        this.add(l);
 
         JButton b = new JButton();
         b.setText("Move");
@@ -30,7 +36,8 @@ public class UnitMenu extends JPanel {
                 _parent.actionPerformed(_unit, "move");
             }
         });
-        b.setBounds(0,0,100, 24);
+        bound.setLocation(3, 26);
+        b.setBounds(bound);
         this.add(b);
 
         b = new JButton();
@@ -41,7 +48,8 @@ public class UnitMenu extends JPanel {
                 _parent.actionPerformed(_unit, "attack");
             }
         });
-        b.setBounds(0,26,100, 24);
+        bound.setLocation(3, 52);
+        b.setBounds(bound);
         this.add(b);
     }
 
