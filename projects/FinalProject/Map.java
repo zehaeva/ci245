@@ -81,6 +81,11 @@ public class Map extends JComponent {
         this._grid_height = gridHeight;
     }
 
+    public Point getGridCoordinate(Point point) {
+        return new Point(((point.x / this._grid_width) * this._grid_width) / this._grid_width,
+                ((point.y / this._grid_height) * this._grid_height) / this._grid_height);
+    }
+
     public void highlightSpaces(ArrayList<GridSpace> list) {
         for (GridSpace p :list) {
             if (! this._highlight_space.contains(p)) {
