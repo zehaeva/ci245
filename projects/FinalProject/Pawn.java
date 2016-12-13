@@ -25,10 +25,10 @@ public class Pawn extends Unit {
         Color c = Color.cyan;
         Dimension d = new Dimension(this._size, this._size);
         this._possible_moves.clear();
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x + 1, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x - 1, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y - 1), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x + 1 * this._facing.x, this._position.y), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x - 1 * this._facing.x, this._position.y), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1 * this._facing.y), d));
+        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y - 1 * this._facing.y), d));
         return this._possible_moves;
     }
 
@@ -37,8 +37,8 @@ public class Pawn extends Unit {
         Color c = Color.red;
         Dimension d = new Dimension(this._size, this._size);
         ArrayList<GridSpace> s = new ArrayList<>();
-        s.add(new GridSpace(c, new Point(this._position.x + 1, this._position.y + 1), d));
-        s.add(new GridSpace(c, new Point(this._position.x - 1, this._position.y + 1), d));
+        s.add(new GridSpace(c, new Point(this._position.x + 1 * this._facing.x, this._position.y + 1 * this._facing.y), d));
+        s.add(new GridSpace(c, new Point(this._position.x - 1 * this._facing.x, this._position.y + 1 * this._facing.y), d));
         return s;
     }
 }
