@@ -11,6 +11,7 @@ public class Map extends JComponent {
     private int _grid_width;
     private int _grid_height;
     private ArrayList<Unit> _units;
+    private Player[] _players;
     private ArrayList<GridSpace> _highlight_space;
 
     public Map(int width, int height, int gridWidth, int gridHeight) {
@@ -27,6 +28,7 @@ public class Map extends JComponent {
         this._height = height;
         this._grid_width = gridWidth;
         this._grid_height = gridHeight;
+        this._players = new Player[2];
         this._units = new ArrayList<>();
         this._highlight_space = new ArrayList<>();
     }
@@ -37,6 +39,14 @@ public class Map extends JComponent {
 
     public void setUnits(ArrayList<Unit> Units) {
         this._units = Units;
+    }
+
+    public Player[] getPlayers() {
+        return _players;
+    }
+
+    public void setPlayers(Player[] players) {
+        this._players = players;
     }
 
     public int getWidth() {
@@ -99,11 +109,12 @@ public class Map extends JComponent {
         //  units on the field!
         Graphics2D g2d = (Graphics2D) g;
 
-        for (Unit x :
-                this._units) {
-            if (this._width >= x.getPosition().getX() && this._height >= x.getPosition().getY()) {
-                g2d.setColor(x.getColor());
-                g2d.fill(x.getShape());
+        for (Player player : this._players) {
+            for (Unit x : player.getUnits()) {
+                if (this._width >= x.getPosition().getX() && this._height >= x.getPosition().getY()) {
+                    g2d.setColor(x.getColor());
+                    g2d.fill(x.getShape());
+                }
             }
         }
 

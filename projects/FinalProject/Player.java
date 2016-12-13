@@ -57,6 +57,15 @@ public class Player {
         this._actions_left--;
     }
 
+    public void removeUnit(Unit unit) {
+        try {
+            this._units.remove(unit);
+        }
+        catch (Exception ex) {
+            System.out.println("Error Removing Unit");
+        }
+    }
+
     public boolean executeCommands() {
         if (this._actions_left == 0) {
             return true;

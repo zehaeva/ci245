@@ -14,6 +14,7 @@ public class Knight extends Unit {
     public Knight(int x, int y, int size, int speedX, int speedY, Color color) {
         super(x, y, size, speedX, speedY, color);
         this._hit_points = 10;
+        this._damage_modifier = 200;
     }
 
     @Override
@@ -53,6 +54,8 @@ public class Knight extends Unit {
         ArrayList<GridSpace> s = new ArrayList<>();
         s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1), d));
         s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 2), d));
+        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 3), d));
+        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 4), d));
         s.add(new GridSpace(c, new Point(this._position.x + 1, this._position.y + 1), d));
         s.add(new GridSpace(c, new Point(this._position.x - 1, this._position.y + 1), d));
         return s;

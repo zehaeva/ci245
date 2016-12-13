@@ -38,13 +38,7 @@ public class Game extends JFrame implements MouseListener, ActionListener {
         this._players[0].generateUnits(2, 5, this._grid_size);
         this._players[1].generateUnits(18, 5, this._grid_size);
 
-        for (Player p:
-                this._players) {
-            for (Unit u :
-                    p.getUnits()) {
-                this._map.getUnits().add(u);
-            }
-        }
+        this._map.setPlayers(this._players);
 
         this._gl = new GameLoop();
 
@@ -98,28 +92,29 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     x.unSelect();
                     this.removeMenu(x);
                     this._map.deHighlightSpaces(x.getPossibleMoves());
+                    this._map.deHighlightSpaces(x.getPossibleAttacks());
                 }
             }
+            //  did we click on an area that we can move to?
             //  did we click on an area that we can move to?
             else if(x.isSelected() && x.isMoving()) {
                 //  let's see if we're moving him to where we clicked
                 for (GridSpace p : x.getPossibleMoves()) {
-                    if (p.contains(e.getX(), e.getY())) {
+                    if (p.containsPixel(e.getX(), e.getY())) {
                         this._players[this._gl.currentPlayer()].useAction();
                         x.unSelect();
                         this.removeMenu(x);
                         x.setMoving(false);
                         this._map.deHighlightSpaces(x.getPossibleMoves());
+                        this._map.deHighlightSpaces(x.getPossibleAttacks());
                         x.setPixelPosition(new Point(e.getX(), e.getY()));
                     }
                 }
             }
             //  we didn't click on a valid move,  maybe we attacked?
             else if (x.isSelected()) {
-                for (GridSpace space:
-                        x.getPossibleAttacks()) {
-                    for (Unit unit:
-                            this._players[opponent].getUnits()) {
+                for (GridSpace space: x.getPossibleAttacks()) {
+                    for (Unit unit: this._players[opponent].getUnits()) {
                         if (space.contains(unit.getPosition())) {
                             //  resolve that attack
                             this.resolveAttack(x, unit);
@@ -151,17 +146,25 @@ public class Game extends JFrame implements MouseListener, ActionListener {
      * @param defender
      */
     private void resolveAttack(Unit attacker, Unit defender) {
-        defender.takeDamage(defender.defend() - attacker.attack());
+        defender.takeDamage(attacker.attack() - defender.defend());
         this.removeDeadUnits();
     }
 
     private void removeDeadUnits() {
-        for (Player p: this._players) {
-            for (Unit unit: p.getUnits()) {
-                if (! unit.isAlive()) {
-                    p.getUnits().remove(unit);
+        try {
+            ArrayList<Unit> remove_me;
+            for (Player p : this._players) {
+                remove_me = new ArrayList<>();
+                for (Unit unit : p.getUnits()) {
+                    if (!unit.isAlive()) {
+                        remove_me.add(unit);
+                    }
                 }
+                p.getUnits().removeAll(remove_me);
             }
+        }
+        catch (Exception ex) {
+            System.out.println("Error deleting dead unit");
         }
     }
 
@@ -194,9 +197,11 @@ public class Game extends JFrame implements MouseListener, ActionListener {
             case "move":
                 unit.setMoving(true);
                 this._map.highlightSpaces(unit.getPossibleMoves());
+                this._map.deHighlightSpaces(unit.getPossibleAttacks());
                 break;
             case "attack":
                 this._map.highlightSpaces(unit.getPossibleAttacks());
+                this._map.deHighlightSpaces(unit.getPossibleMoves());
                 break;
         }
     }
@@ -261,16 +266,15 @@ public class Game extends JFrame implements MouseListener, ActionListener {
             //  ********************************************************************************************************
 
                 if (me.getActionsLeft() > 0) {
-                    //  now move closer!
-                    Unit u = me.getUnits().get(0);
-                    u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
-                    me.useAction();
-                    u = me.getUnits().get(1);
-                    u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
-                    me.useAction();
-                    u = me.getUnits().get(1);
-                    u.setPosition(new Point(u.getPosition().x, u.getPosition().y - 1));
-                    me.useAction();
+                //  now move closer!
+                //  simple, always move something forward
+                    for (Unit unit : me.getUnits()) {
+                        if (me.getActionsLeft() == 0) {
+                            break;
+                        }
+                        unit.setPosition(new Point(unit.getPosition().x, unit.getPosition().y - 1));
+                        me.useAction();
+                    }
                 }
             //  turns over!
                 this._current_player = 0;

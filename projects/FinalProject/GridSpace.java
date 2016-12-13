@@ -47,8 +47,21 @@ public class GridSpace {
     }
 
     public boolean contains(int x, int y) {
-        if ((this._position.x * this._size.width + this._size.width) > x && (this._position.x * this._size.width) < x &&
-                (this._position.y * this._size.height + this._size.height) > y && (this._position.y * this._size.height) < y) {
+        if (this._position.x == x && this._position.y == y) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean containsPixel(Point point) {
+        return this.containsPixel(point.x, point.y);
+    }
+
+    public boolean containsPixel(int x, int y) {
+        Rectangle rect = new Rectangle(this._position.x * this._size.width, this._position.y * this._size.height,
+                this._size.width, this._size.height);
+        if (rect.contains(x, y)) {
             return true;
         } else {
             return false;

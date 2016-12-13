@@ -12,6 +12,7 @@ public class Pawn extends Unit {
 
     public Pawn(int x, int y, int size, int speedX, int speedY, Color color) {
         super(x, y, size, speedX, speedY, color);
+        this._hit_points = 5;
     }
 
     @Override
