@@ -35,8 +35,8 @@ public class Game extends JFrame implements MouseListener, ActionListener {
 
         this._map = new Map(480, 480, this._grid_size);
 
-        this._players[0].generateUnits(2, 5, this._grid_size);
-        this._players[1].generateUnits(18, 5, this._grid_size);
+        this._players[0].generateUnits(2, 5, this._grid_size, new Point(0, 1));
+        this._players[1].generateUnits(18, 5, this._grid_size, new Point(0, -1));
 
         this._map.setPlayers(this._players);
 

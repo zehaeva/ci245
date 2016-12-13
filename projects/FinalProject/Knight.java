@@ -1,18 +1,17 @@
 import java.awt.*;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
  * Created by hcanaway on 12/1/2016.
  */
 public class Knight extends Unit {
-    public Knight(int x, int y, int size, Color color) {
-        this(x, y, size, 0, 0, color);
+    public Knight(int x, int y, int size, Color color, Point facing) {
+        this(x, y, size, 0, 0, color, facing);
     }
 
-    public Knight(int x, int y, int size, int speedX, int speedY, Color color) {
-        super(x, y, size, speedX, speedY, color);
+    public Knight(int x, int y, int size, int speedX, int speedY, Color color, Point facing) {
+        super(x, y, size, speedX, speedY, color, facing);
         this._hit_points = 10;
         this._damage_modifier = 200;
     }

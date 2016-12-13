@@ -75,11 +75,11 @@ public class Player {
         }
     }
 
-    public void generateUnits(int starting_side, int count, Dimension gridSize) {
-        this._units.add(new Pawn(0, starting_side, gridSize.height, 0, 0, this._color));
+    public void generateUnits(int starting_side, int count, Dimension gridSize, Point facing) {
+        this._units.add(new Pawn(0, starting_side, gridSize.height, 0, 0, this._color, facing));
         for (int i = 1; i < count - 1; i++) {
-            this._units.add(new Knight(i,  starting_side, gridSize.height, 0, 0, this._color));
+            this._units.add(new Knight(i,  starting_side, gridSize.height, 0, 0, this._color,facing));
         }
-        this._units.add(new Pawn((count - 1), starting_side, gridSize.height, 0, 0, this._color));
+        this._units.add(new Pawn((count - 1), starting_side, gridSize.height, 0, 0, this._color, facing));
     }
 }

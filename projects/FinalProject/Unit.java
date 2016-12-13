@@ -27,11 +27,17 @@ public abstract class Unit extends JComponent {
     protected int _hit_points;
     private boolean _moving;
 
-    public Unit(int x, int y, int size, Color color) {
-        this(x, y, size, 0, 0, color);
+//  so facing works like this,
+//  0 then there's no facing
+//  1 then you're facing in the positive direction on that axis
+//  -1 facing the negative direction on that axis
+    protected Point _facing;
+
+    public Unit(int x, int y, int size, Color color, Point facing) {
+        this(x, y, size, 0, 0, color, facing);
     }
 
-    public Unit(int x, int y, int size, int speedX, int speedY, Color color) {
+    public Unit(int x, int y, int size, int speedX, int speedY, Color color, Point facing) {
         this._size = size;
         this._velocity = new Point(speedX, speedY);
         this._color = color;
@@ -44,6 +50,7 @@ public abstract class Unit extends JComponent {
         this._defense = 0;
         this._possible_moves = new ArrayList<>();
         this.setPosition(new Point(x, y));
+        this._facing = facing;
     }
 
     /**
@@ -110,6 +117,30 @@ public abstract class Unit extends JComponent {
 
     public void setUnitSize(int size) {
         this._size = size;
+    }
+
+    /**
+     * returns the unit vector the unit is facing
+     * (1, 0) facing in the positive x axis
+     * (-1, 0) facing in the negative x axis
+     * (0, 1) facing in the positive y axis
+     * (0, -1) facing in negative y axis
+     * @return
+     */
+    public Point getFacing() {
+        return _facing;
+    }
+
+    /**
+     * returns the unit vector the unit is facing
+     * (1, 0) facing in the positive x axis
+     * (-1, 0) facing in the negative x axis
+     * (0, 1) facing in the positive y axis
+     * (0, -1) facing in negative y axis
+     * @return
+     */
+    public void setFacing(Point facing) {
+        this._facing = facing;
     }
 
     public boolean isAlive() {
