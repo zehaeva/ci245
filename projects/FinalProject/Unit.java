@@ -51,8 +51,8 @@ public abstract class Unit extends JComponent {
         this._defense = 0;
         this._possible_moves = new ArrayList<>();
         this._attack_patterns = new ArrayList<>();
-        this.setPosition(new Point(x, y));
         this._facing = facing;
+        this.setPosition(new Point(x, y));
     }
 
     /**
@@ -67,6 +67,18 @@ public abstract class Unit extends JComponent {
      * sets the grids coordinates of the unit
      */
     public void setPosition(Point position) {
+    //  figure out new facing direction
+        if (this._position != null) {
+            if ((this._position.y - position.y) > 0) {
+                this._facing = new Point(0, -1);
+            } else if ((this._position.y - position.y) < 0) {
+                this._facing = new Point(0, 1);
+            } else if ((this._position.x - position.x) < 0) {
+                this._facing = new Point(1, 0);
+            } else {
+                this._facing = new Point(-1, 0);
+            }
+        }
         this._position = position;
         this.drawShape();
     }
@@ -299,6 +311,11 @@ public abstract class Unit extends JComponent {
         return this._moving;
     }
 
+    /**
+     * Helps with generating the facing modifiers for figuring out where the pattern should be
+     * @param point
+     * @return
+     */
     protected Point getFacingModifier(Point point) {
         Point my_return;
         if (this._facing.y == 1) {
