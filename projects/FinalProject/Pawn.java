@@ -13,32 +13,16 @@ public class Pawn extends Unit {
     public Pawn(int x, int y, int size, int speedX, int speedY, Color color, Point facing) {
         super(x, y, size, speedX, speedY, color, facing);
         this._hit_points = 5;
+        this._possible_moves.add(new Point(0, 1));
+        this._possible_moves.add(new Point(1, 0));
+        this._possible_moves.add(new Point(0, -1));
+        this._possible_moves.add(new Point(-1, 0));
+        this._attack_patterns.add(new Point(1, 1));
+        this._attack_patterns.add(new Point(-1,1));
     }
 
     @Override
     public void drawShape() {
         this._shape = new Ellipse2D.Double(this._position.x * this._size, this._position.y * this._size, this._size, this._size);
-    }
-
-    @Override
-    public ArrayList<GridSpace> getPossibleMoves() {
-        Color c = Color.cyan;
-        Dimension d = new Dimension(this._size, this._size);
-        this._possible_moves.clear();
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x + 1 * this._facing.x, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x - 1 * this._facing.x, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1 * this._facing.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y - 1 * this._facing.y), d));
-        return this._possible_moves;
-    }
-
-    @Override
-    public ArrayList<GridSpace> getPossibleAttacks() {
-        Color c = Color.red;
-        Dimension d = new Dimension(this._size, this._size);
-        ArrayList<GridSpace> s = new ArrayList<>();
-        s.add(new GridSpace(c, new Point(this._position.x + 1 * this._facing.x, this._position.y + 1 * this._facing.y), d));
-        s.add(new GridSpace(c, new Point(this._position.x - 1 * this._facing.x, this._position.y + 1 * this._facing.y), d));
-        return s;
     }
 }

@@ -14,6 +14,20 @@ public class Knight extends Unit {
         super(x, y, size, speedX, speedY, color, facing);
         this._hit_points = 10;
         this._damage_modifier = 200;
+
+        this._attack_patterns.add(new Point(0, 2));
+        this._attack_patterns.add(new Point(0, 3));
+        this._attack_patterns.add(new Point(0, 1));
+        this._attack_patterns.add(new Point(1, 0));
+        this._attack_patterns.add(new Point(0, -1));
+        this._attack_patterns.add(new Point(-1, 0));
+
+        this._possible_moves.add(new Point(0, 2));
+        this._possible_moves.add(new Point(0, 1));
+        this._possible_moves.add(new Point(1, 0));
+        this._possible_moves.add(new Point(0, -1));
+        this._possible_moves.add(new Point(-1, 0));
+
     }
 
     @Override
@@ -30,33 +44,5 @@ public class Knight extends Unit {
         gp.closePath();
 
         this._shape = gp;
-    }
-
-    @Override
-    public ArrayList<GridSpace> getPossibleMoves() {
-        Color c = Color.green;
-        Dimension d = new Dimension(this._size, this._size);
-        this._possible_moves.clear();
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x + 1 * this._facing.x, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x - 1 * this._facing.x, this._position.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1 * this._facing.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y + 2 * this._facing.y), d));
-        this._possible_moves.add(new GridSpace(c, new Point(this._position.x, this._position.y - 1 * this._facing.y), d));
-
-        return this._possible_moves;
-    }
-
-    @Override
-    public ArrayList<GridSpace> getPossibleAttacks() {
-        Color c = Color.red;
-        Dimension d = new Dimension(this._size, this._size);
-        ArrayList<GridSpace> s = new ArrayList<>();
-        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 1 * this._facing.y), d));
-        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 2 * this._facing.y), d));
-        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 3 * this._facing.y), d));
-        s.add(new GridSpace(c, new Point(this._position.x, this._position.y + 4 * this._facing.y), d));
-        s.add(new GridSpace(c, new Point(this._position.x + 1 * this._facing.x, this._position.y + 1 * this._facing.y), d));
-        s.add(new GridSpace(c, new Point(this._position.x - 1 * this._facing.x, this._position.y + 1 * this._facing.y), d));
-        return s;
     }
 }

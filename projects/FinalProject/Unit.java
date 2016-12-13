@@ -17,7 +17,8 @@ public abstract class Unit extends JComponent {
     protected Color _color_selected;
     protected Shape _shape;
     protected boolean _selected;
-    protected ArrayList<GridSpace> _possible_moves;
+    protected ArrayList<Point> _possible_moves;
+    protected ArrayList<Point> _attack_patterns;
 
     protected int _damage_dice_sides;
     protected int _damage_dice_count;
@@ -49,6 +50,7 @@ public abstract class Unit extends JComponent {
         this._damage_modifier = 0;
         this._defense = 0;
         this._possible_moves = new ArrayList<>();
+        this._attack_patterns = new ArrayList<>();
         this.setPosition(new Point(x, y));
         this._facing = facing;
     }
@@ -255,9 +257,39 @@ public abstract class Unit extends JComponent {
         return this._hit_points;
     }
 
-    public abstract ArrayList<GridSpace> getPossibleMoves();
+    /**
+     * Returns an ArrayList of all the GridSpaces this unit can move to
+     * Based on the _possible_moves pattern
+     * @return
+     */
+    public ArrayList<GridSpace> getPossibleMoves() {
+        Color c = Color.green;
+        Dimension d = new Dimension(this._size, this._size);
+        ArrayList<GridSpace> s = new ArrayList<>();
+        Point point;
+        for (Point p : this._possible_moves) {
+            point = this.getFacingModifier(p);
+            s.add(new GridSpace(c, new Point(this._position.x + point.x, this._position.y + point.y), d));
+        }
+        return s;
+    }
 
-    public abstract ArrayList<GridSpace> getPossibleAttacks();
+    /**
+     * Returns an ArrayList of all the Grid Spaces that this unit can attack
+     * Based on the _attack_patterns defined in the constructors
+     * @return
+     */
+    public ArrayList<GridSpace> getPossibleAttacks() {
+       Color c = Color.red;
+        Dimension d = new Dimension(this._size, this._size);
+        ArrayList<GridSpace> s = new ArrayList<>();
+        Point point;
+        for (Point p : this._attack_patterns) {
+            point = this.getFacingModifier(p);
+            s.add(new GridSpace(c, new Point(this._position.x + point.x, this._position.y + point.y), d));
+        }
+        return s;
+    }
 
     public void setMoving(boolean moving) {
         this._moving = moving;
@@ -265,5 +297,22 @@ public abstract class Unit extends JComponent {
 
     public boolean isMoving() {
         return this._moving;
+    }
+
+    protected Point getFacingModifier(Point point) {
+        Point my_return;
+        if (this._facing.y == 1) {
+            my_return = new Point(point.x, point.y);
+        }
+        else if(this._facing.y == -1) {
+            my_return = new Point(point.x * -1, point.y * -1);
+        }
+        else if(this._facing.x == 1) {
+            my_return = new Point(point.y , point.x * -1);
+        }
+        else {
+            my_return = new Point(point.y * -1, point.x * -1);
+        }
+        return my_return;
     }
 }
