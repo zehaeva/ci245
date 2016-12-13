@@ -13,10 +13,10 @@ public class UnitFactory {
     public static Unit createUnit(String unitName, Point position, Color color) {
         switch (unitName.toLowerCase()) {
             case "knight":
-                return new Knight(position.x, position.y, _grid_size.height, color);
+                return new Knight(position.x, position.y, _grid_size.height, color, new Point(0, 1));
             case "pawn":
             default:
-                return new Pawn(position.x, position.y, _grid_size.height, color);
+                return new Pawn(position.x, position.y, _grid_size.height, color, new Point(0, 1));
         }
     }
 }
