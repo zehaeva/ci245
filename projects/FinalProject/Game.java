@@ -232,7 +232,7 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     _players) {
                 if (player.getUnits().size() == 0) {
                     JPanel p = new JPanel();
-                    JLabel l = new JLabel("Player %s Has lost!");
+                    JLabel l = new JLabel(String.format("Player %s Has lost!", player.getName()));
                     l.setBounds(_panel.getBounds());
                     l.setHorizontalTextPosition(SwingConstants.CENTER);
                     p.add(l);
@@ -260,7 +260,7 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                         ArrayList<GridSpace> attacks = unit.getPossibleAttacks();
                         for (Unit defender : human.getUnits()) {
                             for (GridSpace attack : attacks) {
-                                if (defender.contains(attack.getPosition())) {
+                                if (defender.getPosition().equals(attack.getPosition())) {
                                     resolveAttack(unit, defender);
                                     me.useAction();
                                     if (me.getActionsLeft() == 0) {
