@@ -85,7 +85,6 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     UnitMenu menu = new UnitMenu(this, x);
                     menu.setVisible(true);
                     this._panel.add(menu);
-                    this._panel.setComponentZOrder(menu, this._panel.getComponentCount());
                     //  highlight where he can move too
                 } else {
                     //  I guess we're unselecting him,
@@ -228,56 +227,72 @@ public class Game extends JFrame implements MouseListener, ActionListener {
          * runs the main gameUpdates, keeps track of who's turn it is
          */
         private void doGameUpdates() {
-            //  are we a human?
-            if (_players[this._current_player].isHuman()) {
-                if(_players[this._current_player].executeCommands()) {
-                    this._current_player = 1;
-                    _players[this._current_player].newTurn();
+        //  Check to see if someone has lost!
+            for (Player player :
+                    _players) {
+                if (player.getUnits().size() == 0) {
+                    JPanel p = new JPanel();
+                    JLabel l = new JLabel("Player %s Has lost!");
+                    l.setBounds(_panel.getBounds());
+                    l.setHorizontalTextPosition(SwingConstants.CENTER);
+                    p.add(l);
+                    p.setBounds(_panel.getBounds());
+                    _panel.add(p);
+                    _isRunning = false;
                 }
             }
-            //  THE AI!
-            else {
-                Player me = _players[this._current_player];
-                Player human = _players[0];
-            //  Attack
-            //  ********************************************************************************************************
-            //  find out if any of our units are in striking distance to any of his units
-                for (Unit unit: me.getUnits()) {
-                    ArrayList<GridSpace> attacks = unit.getPossibleAttacks();
-                    for (Unit defender: human.getUnits()) {
-                        for (GridSpace attack : attacks) {
-                            if (defender.contains(attack.getPosition())) {
-                                resolveAttack(unit, defender);
-                                me.useAction();
-                                if (me.getActionsLeft() == 0) {
-                                    break;
+            if (_isRunning) {
+                //  are we a human?
+                if (_players[this._current_player].isHuman()) {
+                    if (_players[this._current_player].executeCommands()) {
+                        this._current_player = 1;
+                        _players[this._current_player].newTurn();
+                    }
+                }
+                //  THE AI!
+                else {
+                    Player me = _players[this._current_player];
+                    Player human = _players[0];
+                    //  Attack
+                    //  ********************************************************************************************************
+                    //  find out if any of our units are in striking distance to any of his units
+                    for (Unit unit : me.getUnits()) {
+                        ArrayList<GridSpace> attacks = unit.getPossibleAttacks();
+                        for (Unit defender : human.getUnits()) {
+                            for (GridSpace attack : attacks) {
+                                if (defender.contains(attack.getPosition())) {
+                                    resolveAttack(unit, defender);
+                                    me.useAction();
+                                    if (me.getActionsLeft() == 0) {
+                                        break;
+                                    }
                                 }
+                            }
+                            if (me.getActionsLeft() == 0) {
+                                break;
                             }
                         }
                         if (me.getActionsLeft() == 0) {
                             break;
                         }
                     }
-                    if (me.getActionsLeft() == 0) {
-                        break;
-                    }
-                }
-            //  ********************************************************************************************************
+                    //  ********************************************************************************************************
 
-                if (me.getActionsLeft() > 0) {
-                //  now move closer!
-                //  simple, always move something forward
-                    for (Unit unit : me.getUnits()) {
-                        if (me.getActionsLeft() == 0) {
-                            break;
+                    if (me.getActionsLeft() > 0) {
+                        //  now move closer!
+                        //  simple, always move something forward
+                        for (Unit unit : me.getUnits()) {
+                            if (me.getActionsLeft() == 0) {
+                                break;
+                            }
+                            unit.setPosition(new Point(unit.getPosition().x, unit.getPosition().y - 1));
+                            me.useAction();
                         }
-                        unit.setPosition(new Point(unit.getPosition().x, unit.getPosition().y - 1));
-                        me.useAction();
                     }
+                    //  turns over!
+                    this._current_player = 0;
+                    _players[this._current_player].newTurn();
                 }
-            //  turns over!
-                this._current_player = 0;
-                _players[this._current_player].newTurn();
             }
         }
 

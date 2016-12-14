@@ -82,4 +82,8 @@ public class Player {
         }
         this._units.add(new Pawn((count - 1), starting_side, gridSize.height, 0, 0, this._color, facing));
     }
+
+    public String getName() {
+        return this._name;
+    }
 }
