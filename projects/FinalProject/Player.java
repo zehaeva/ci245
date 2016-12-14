@@ -67,7 +67,7 @@ public class Player {
     }
 
     public boolean executeCommands() {
-        if (this._actions_left == 0) {
+        if (this._actions_left <= 0) {
             return true;
         }
         else {
