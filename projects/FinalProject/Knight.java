@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.geom.GeneralPath;
-import java.util.ArrayList;
 
 /**
  * Created by hcanaway on 12/1/2016.

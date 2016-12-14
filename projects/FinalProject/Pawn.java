@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
 /**
  * Created by zehaeva on 12/7/2016.
