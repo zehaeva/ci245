@@ -14,7 +14,7 @@ public class UnitMenu extends JPanel {
         this._parent = parent;
         this._unit = unit;
 
-        this.setLayout(new GridLayout());
+        this.setLayout(null);
 
         this.setBounds(unit.getPixelPosition().x + unit.getUnitSize() * 2,
                 unit.getPixelPosition().y + 3,

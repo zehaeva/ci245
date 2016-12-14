@@ -120,6 +120,7 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                         if (space.contains(unit.getPosition())) {
                             //  resolve that attack
                             this.resolveAttack(x, unit);
+                            this.removeDeadUnits();
                             x.unSelect();
                             this.removeMenu(x);
                             this._players[this._gl.currentPlayer()].useAction();
@@ -149,7 +150,6 @@ public class Game extends JFrame implements MouseListener, ActionListener {
      */
     private void resolveAttack(Unit attacker, Unit defender) {
         defender.takeDamage(attacker.attack() - defender.defend());
-        this.removeDeadUnits();
     }
 
     private void removeDeadUnits() {
@@ -264,6 +264,12 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                 //  are we a human?
                 if (_players[this._current_player].isHuman()) {
                     if (_players[this._current_player].executeCommands()) {
+                        for (Unit unit :
+                                _players[this._current_player].getUnits()) {
+                            unit.setSelected(false);
+                        //  remove all the menus once my turn is over
+                            removeMenu(unit);
+                        }
                         this._current_player = 1;
                         _players[this._current_player].newTurn();
                     }
@@ -277,30 +283,29 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     //  find out if any of our units are in striking distance to any of his units
                     for (Unit unit : me.getUnits()) {
                         ArrayList<GridSpace> attacks = unit.getPossibleAttacks();
-                        boolean still_attacking = true;
-                        while (still_attacking) {
-                            for (Unit defender : human.getUnits()) {
+                        for (Unit defender : human.getUnits()) {
+                        //  only attack living things
+                            if (defender.getHitPoints() > 0) {
                                 for (GridSpace attack : attacks) {
                                     if (defender.getPosition().equals(attack.getPosition())) {
-                                        if (me.getActionsLeft() == 0) {
-                                            still_attacking = false;
-                                            break;
-                                        }
                                         resolveAttack(unit, defender);
                                         me.useAction();
-                                        break;
+                                        if (me.getActionsLeft() == 0) {
+                                            break;
+                                        }
                                     }
                                 }
-                                if (me.getActionsLeft() == 0) {
-                                    still_attacking = false;
-                                    break;
-                                }
+                            }
+                            if (me.getActionsLeft() == 0) {
+                                break;
                             }
                         }
                         if (me.getActionsLeft() == 0) {
                             break;
                         }
                     }
+                //  clear out any units that have died
+                    removeDeadUnits();
                     //  ********************************************************************************************************
 
                     if (me.getActionsLeft() > 0) {
