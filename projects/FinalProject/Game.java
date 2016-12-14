@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Timer;
 
@@ -18,7 +15,9 @@ public class Game extends JFrame implements MouseListener, ActionListener {
     private Player[] _players;
     private Dimension _grid_size;
     private GameLoop _gl;
+    private InfoPanel _info_panel;
     private String _action;
+    private GameMouseMoveListener _gmml;
 
     /**
      * initalization of the main Game loop
@@ -40,6 +39,8 @@ public class Game extends JFrame implements MouseListener, ActionListener {
 
         this._map.setPlayers(this._players);
 
+        this._gmml = new GameMouseMoveListener();
+
         this._gl = new GameLoop();
 
         this._panel = new JPanel() {
@@ -47,12 +48,15 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                 _map.drawUnits(g);
             }
         };
-
+        this._panel.setLayout(null);
         this._panel.addMouseListener(this);
-
-        this._panel.setPreferredSize(new Dimension(this._map.getWidth(), this._map.getHeight()));
-
+        this._panel.addMouseMotionListener(this._gmml);
+        this._panel.setPreferredSize(new Dimension(this._map.getWidth(), this._map.getHeight() + 26));
         this.add(this._panel);
+
+        this._info_panel = new InfoPanel(new Point(0 + this._panel.getInsets().left, this._map.getHeight() + this._panel.getInsets().top), new Dimension(this._map.getWidth(), 26));
+        this._panel.add(this._info_panel);
+
         this.pack();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -178,7 +182,6 @@ public class Game extends JFrame implements MouseListener, ActionListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
@@ -190,6 +193,7 @@ public class Game extends JFrame implements MouseListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
 
     }
+
     public void actionPerformed(Unit unit, String action) {
         switch(action) {
             case "move":
@@ -201,6 +205,21 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                 this._map.highlightSpaces(unit.getPossibleAttacks());
                 this._map.deHighlightSpaces(unit.getPossibleMoves());
                 break;
+        }
+    }
+
+    private class GameMouseMoveListener implements  MouseMotionListener {
+        @Override
+        public void mouseDragged(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            PointerInfo info = MouseInfo.getPointerInfo();
+
+            _info_panel.setText(String.format("%s: Actions Left: %d", _players[_gl.currentPlayer()].getName(), _players[_gl.currentPlayer()].getActionsLeft()));
+
         }
     }
 
@@ -258,18 +277,24 @@ public class Game extends JFrame implements MouseListener, ActionListener {
                     //  find out if any of our units are in striking distance to any of his units
                     for (Unit unit : me.getUnits()) {
                         ArrayList<GridSpace> attacks = unit.getPossibleAttacks();
-                        for (Unit defender : human.getUnits()) {
-                            for (GridSpace attack : attacks) {
-                                if (defender.getPosition().equals(attack.getPosition())) {
-                                    resolveAttack(unit, defender);
-                                    me.useAction();
-                                    if (me.getActionsLeft() == 0) {
+                        boolean still_attacking = true;
+                        while (still_attacking) {
+                            for (Unit defender : human.getUnits()) {
+                                for (GridSpace attack : attacks) {
+                                    if (defender.getPosition().equals(attack.getPosition())) {
+                                        if (me.getActionsLeft() == 0) {
+                                            still_attacking = false;
+                                            break;
+                                        }
+                                        resolveAttack(unit, defender);
+                                        me.useAction();
                                         break;
                                     }
                                 }
-                            }
-                            if (me.getActionsLeft() == 0) {
-                                break;
+                                if (me.getActionsLeft() == 0) {
+                                    still_attacking = false;
+                                    break;
+                                }
                             }
                         }
                         if (me.getActionsLeft() == 0) {
