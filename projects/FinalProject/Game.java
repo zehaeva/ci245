@@ -34,8 +34,8 @@ public class Game extends JFrame implements MouseListener, ActionListener {
 
         this._map = new Map(480, 480, this._grid_size);
 
-        this._players[0].generateUnits(2, 5, this._grid_size, new Point(0, 1));
-        this._players[1].generateUnits(18, 5, this._grid_size, new Point(0, -1));
+        this._players[0].generateUnits(2, 8, this._grid_size, new Point(0, 1));
+        this._players[1].generateUnits(17,8, this._grid_size, new Point(0, -1));
 
         this._map.setPlayers(this._players);
 
@@ -217,9 +217,9 @@ public class Game extends JFrame implements MouseListener, ActionListener {
         @Override
         public void mouseMoved(MouseEvent e) {
             PointerInfo info = MouseInfo.getPointerInfo();
-
-            _info_panel.setText(String.format("%s: Actions Left: %d", _players[_gl.currentPlayer()].getName(), _players[_gl.currentPlayer()].getActionsLeft()));
-
+            int a = _gl.currentPlayer();
+            Player player = _players[a];
+            _info_panel.setText(String.format("%s: Actions Left: %d", player.getName(), player.getActionsLeft()));
         }
     }
 

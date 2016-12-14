@@ -12,7 +12,6 @@ public class Knight extends Unit {
     public Knight(int x, int y, int size, int speedX, int speedY, Color color, Point facing) {
         super(x, y, size, speedX, speedY, color, facing);
         this._hit_points = 10;
-        this._damage_modifier = 200;
 
         this._attack_patterns.add(new Point(0, 2));
         this._attack_patterns.add(new Point(0, 3));
@@ -22,6 +21,7 @@ public class Knight extends Unit {
         this._attack_patterns.add(new Point(-1, 0));
 
         this._possible_moves.add(new Point(0, 2));
+        this._possible_moves.add(new Point(0,3));
         this._possible_moves.add(new Point(0, 1));
         this._possible_moves.add(new Point(1, 0));
         this._possible_moves.add(new Point(0, -1));

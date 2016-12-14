@@ -76,11 +76,15 @@ public class Player {
     }
 
     public void generateUnits(int starting_side, int count, Dimension gridSize, Point facing) {
-        this._units.add(new Pawn(0, starting_side, gridSize.height, 0, 0, this._color, facing));
-        for (int i = 1; i < count - 1; i++) {
-            this._units.add(new Knight(i,  starting_side, gridSize.height, 0, 0, this._color,facing));
+        int grid = (20 - count) / 2;
+
+        this._units.add(new Pawn(0 + grid, starting_side, gridSize.height, 0, 0, this._color, facing));
+        this._units.add(new Bishop(1 + grid, starting_side, gridSize.height, 0, 0, this._color, facing));
+        for (int i = 2; i < count - 2; i++) {
+            this._units.add(new Knight(i + grid,  starting_side, gridSize.height, 0, 0, this._color,facing));
         }
-        this._units.add(new Pawn((count - 1), starting_side, gridSize.height, 0, 0, this._color, facing));
+        this._units.add(new Bishop((count - 2 + grid), starting_side, gridSize.height, 0, 0, this._color, facing));
+        this._units.add(new Pawn((count - 1 + grid), starting_side, gridSize.height, 0, 0, this._color, facing));
     }
 
     public String getName() {
